@@ -1,24 +1,30 @@
-<header>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-info">
-        <div class="container-fluid">
-            <!-- <a class="navbar-brand" href="{{ url_for('index') }}">Ampersand</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end me-auto" id="mynavbar">
-                <ul class="navbar-nav">
-                    <li class="nav-item {{ 'active' if active_page == 'index' else '' }}">
-                        <a class="nav-link" href="{{ url_for('index') }}">Home</a>
-                    </li>
-                </ul>
-            </div> -->
-
-            <div class="row">
-                <div class="col-12 text-center d-flex align-items-center justify-content-center">
-                    <p>This Website and Project is Not Afiliated or Endorsed by The College of William & Mary</p>
+<header class="header">
+    <div class="header-content responsive-wrapper">
+        <div class="header-logo">
+            <a href="#">
+                <div>
+                    
                 </div>
-            </div>
+            </a>
         </div>
-    </nav>
+        <div class="header-navigation">
+            <nav class="header-navigation-links">
+                <a href="/">Home</a>
+                <a href="/campus-routing">Campus Routing</a>
+            </nav>
+            <div class="header-navigation-actions">
+                <a href="#" class="icon-button">
+                    <span class="icon material-symbols-outlined">settings</span>
+                </a>
+                <button >
+                    <span class="icon material-symbols-outlined">bolt</span>
+                    <span>Log In</span>
+                </button>
+            </div>
+            <button id="menu-toggle" >
+                <span class="icon material-symbols-outlined">menu</span>
+                <span>Menu</span>
+            </button>
+        </div>
+    </div>
 </header>
-
