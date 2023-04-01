@@ -1,0 +1,60 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Campus Routing {% endblock %} 
+
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    
+<div>
+    <div class="container-fluid">
+
+        <h1>Campus Router</h1>
+
+        <p> Curious how long it will take you to get from Building A to Building B? This Website can help. </p>
+
+        <br>
+
+        <h2> Select The Buildings You Want A Travel Time Estimate For </h2>
+
+        <br>
+
+        {% if context.error_message != None %}
+            <h2> {{ context.error_message }}
+        {% endif %}
+
+        <form method="post" action="{{ url_for('campus-routing') }}">
+            <div class="form-group">
+
+                <!-- Building 1 -->
+
+                <div class="mb-3">
+                    <label for="subject_selections">Subject</label>
+                    <select class="form-select" id="subject_selections" name="subject_selections" required multiple>
+                        <option selected value="ALL">ALL</option>
+                        {% for subject in context.subjects_list %}
+                            <option value="{{ subject['SUBJ_CODE'] }}">{{ subject['SUBJ_DESC'] }} ({{ subject['SUBJ_CODE'] }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Building 2 -->
+
+                <div class="mb-3">
+                    <label for="attr_selections">Attribute</label>
+                    <select class="form-select" id="attribute_selections" name="attr_selections" required multiple>
+                        <option selected value="ALL">ALL</option>
+                        {% for attr in context.attr_list %}
+                            <option value="{{ attr['ATTR_CODE'] }}">{{ attr['ATTR_DESC'] }} ({{ attr['ATTR_CODE'] }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block javascripts %}{% endblock javascripts %}

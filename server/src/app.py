@@ -2,10 +2,10 @@ from flask import Flask, render_template, make_response, request, redirect, url_
 import os
 import time
 from datetime import datetime
-import googlemaps
 
 from courselist_wrapper import *
 from helper_functions import *
+from map_functions import *
 
 # Initiate Flask app.
 app = Flask(__name__)
@@ -132,20 +132,20 @@ def course_details(term, crn):
 def campus_routing():
     print('URL Reached - /campus_routing')
 
-    if request.methods == 'GET':
+    if (request.method == 'GET'):
 
-        lat1 = '18.997739;'
-        long1 = '72.841280'
+        lat_1 = '18.997739'
+        long_1 = '72.841280'
 
-        lat2 = '18.880253'
-        long2 = '72.945137'
+        lat_2 = '18.880253'
+        long_2 = '72.945137'
 
         travel_time_estimate = get_travel_time_estimate('walking', lat_1, long_1, lat_2, long_2)
 
         return f'travel_time_estimate is {travel_time_estimate}'
 
     else:
-        if len(dict(request.form)) > 0:
+        if (len(dict(request.form)) > 0):
 
             # term_selection = request.form.get('term_selection')
             # subject_selections = request.form.getlist('subject_selections')
