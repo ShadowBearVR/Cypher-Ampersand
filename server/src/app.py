@@ -25,8 +25,12 @@ def index():
 
     server_time = format_server_time()
 
+    subjects_list = get_all_subjects()
+    subjects_list = get_all_subjects()
+
     context = { 
-        'server_time': server_time
+        'server_time': server_time,
+        'subjects_list': subjects_list
     }
 
     return render_template('index.html', context=context)
@@ -34,9 +38,12 @@ def index():
 @app.route('/submit', methods=['GET', 'POST'])
 def submit():
     if request.method == 'POST' and len(dict(request.form)) > 0:
-        userdata = dict(request.form)
-        name = userdata["name"][0]
-        return f"Thank you! {name}"
+        form_data = dict(request.form)
+
+        term_selection = form_data["term-selection"]
+        subject_selection = form_data["subject-selection"]
+
+        return f"Search for {subject_selection} subject during {term_selection} term."
     else:
         return "Sorry, there was an error."
 

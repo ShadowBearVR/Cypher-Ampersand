@@ -9,14 +9,34 @@
     
 <div>
     <div class="container-fluid">
-        <h1>Hello World! It is currently {{ context.server_time }}</h1>
+        <h1>Welcome to Ampersand Courselist!</h1>
+
+        <p> Server Time: {{ context.server_time }} </p>
 
         <br>
 
         <h2> Search Your Classes </h2>
+
+        <br>
+
         <form method="post" action="/submit">
-            <p>Name: <input type="text" name="name"></p>
-            <p><input type="submit"></p>
+            <div class="form-group">
+
+                <label for="term-selection">Term</label>
+                <select class="form-control" id="term-selection" required>
+                    {% for term in context.terms_list %}
+                        <option value="{{ subject['TERM_CODE'] }}">{{ term['TERM_DESC'] }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="subject-selection">Subjects</label>
+                <select class="form-control" id="subject-selection" required>
+                    {% for subject in context.subjects_list %}
+                        <option value="{{ subject['SUBJ_CODE'] }}">{{ subject['SUBJ_DESC'] }} ({{ subject['SUBJ_CODE'] }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
 </div>
