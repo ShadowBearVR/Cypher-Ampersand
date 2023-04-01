@@ -51,11 +51,11 @@
 
                 <div class="mb-3">
                     <label for="attr_selections">Attribute</label>
-                    <select class="form-select" id="attribute_selections" name="attr_selections" onChange="changedSelectedAttr(this)" required multiple>
+                    <select class="form-select" id="attr_selections" name="attr_selections" onChange="changedSelectedAttr(this)" required multiple>
                         <option selected value="ALL">ALL</option>
                         {% for attr_type in context.attr_list %}
                             <optgroup label="Group">
-                            {% for attr in attr_type %}
+                            {% for attr in attr_type['attributes'] %}
                             <option value="{{ attr['ATTR_CODE'] }}">{{ attr['ATTR_DESC'] }} ({{ attr['ATTR_CODE'] }})</option>
                             {% endfor %}
                             </optgroup>
@@ -164,9 +164,9 @@ function changedSelectedAttr(attrSelect) {
 function changedSelectedLevel(levelSelect) {
     selectedOption = getSelectedOption(levelSelect);
     if(selectedOption == "ALL") {
-        document.getElementById("attribute_selections").removeAttribute("disabled");
+        document.getElementById("attr_selections").removeAttribute("disabled");
     } else {
-        document.getElementById("attribute_selections").disabled = true;
+        document.getElementById("attr_selections").disabled = true;
     }
 }
 </script>

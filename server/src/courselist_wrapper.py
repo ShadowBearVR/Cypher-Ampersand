@@ -644,12 +644,22 @@ def get_all_atrributes():
         {}
     ]
 
+    attr_dicts[0] = {
+        'label': 'COLL',
+        'attributes': []
+    }
+
+    attr_dicts[1] = {
+        'label': 'General',
+        'attributes': []
+    }
+
     for attr_doc in attr_docs:
         attr_dict = attr_doc.to_dict()
         if attr_dict['ATTR_CODE'] in coll_attr:
-            attr_dicts[0].append(attr_dict)
+            attr_dicts[0]['attributes'].append(attr_dict)
         else:
-            attr_dicts[1].append(attr_dict)
+            attr_dicts[1]['attributes'].append(attr_dict)
 
     return attr_dicts
 
