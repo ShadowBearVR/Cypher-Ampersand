@@ -2,30 +2,50 @@ from flask import Flask, render_template, make_response, request
 import os
 import time
 from datetime import datetime
-from dotenv import load_dotenv
 
 import firebase_admin
 from firebase_admin import credentials, firestore
 
+# Initiate Flask app.
 app = Flask(__name__)
 
+# Setup DB credentials.
 cred = credentials.Certificate("env/cypher-ampersand-firebase-adminsdk-2694w-0d791d1fab.json")
 firebase_admin.initialize_app(cred)
 
-load_dotenv('/env')
+# Get Courselist Secret.
 
-update_courselist_secret = os.environ.get('UPDATE_COURSELIST_SECRET')
+update_courselist_secret = ''
+
+with open('env/.env', 'r') as env_file:
+    for line in env_file:
+        update_courselist_secret = line.split('=')[1]
+
+# Functions
 
 def format_server_time():
     server_time = time.localtime()
     return time.strftime("%I:%M:%S %p", server_time)
+
+def update_courselist_database():
+
+    db = firestore.client()  # this connects to our Firestore database
+    collection = db.collection('terms')  # opens 'places' collection
+
+    creation_result = collection.document('TEST-TERM-3').set({
+        'TERM_CODE': '202410',
+        'TERM_DESC': 'Fall 2023',
+        'TERM_END_DATE': '2023-12-31T00:00:00'
+    })
+
+
+# URL Routes
 
 @app.route('/index')
 @app.route('/')
 def index():
 
     server_time = format_server_time()
-
 
     db = firestore.client()  # this connects to our Firestore database
     collection = db.collection('terms')  # opens 'places' collection
@@ -64,13 +84,15 @@ def submit():
 @app.route('/update-courselist', methods=['POST'])
 def update_courselist():
     if request.method == 'POST':
-        secret_input = request.get_data()
+        secret_input = request.get_data(as_text=True)
 
         if update_courselist_secret == secret_input:
-            print("SECRET MATCHED PRINTED")
-            return "SECRET MATCHED"
+            update_courselist_database()
+            return "Updated Database"
+        else:
+            return "Did Not Update Database"
     else:
-        return "Sorry, there was an error."
+        return "Invalid Request Method"
 
     
 
