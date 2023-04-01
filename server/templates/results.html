@@ -29,7 +29,7 @@
                         <!-- CRN | COURSE ID | ATTRIBUTES | TITLE | INSTRUCTOR | CREDIT HOURS | MEET DAY/TIME | PROJ ENG | CURR ENG | SEATS AVAIL | STATUS-->
 
                         {% for result in context.output.results.courses %}
-                           <p>{{ result.CRN_ID }}</p>
+                           <p>{{ result.CRN_ID }} | {{ result.COURSE_ID }} | {{ result.COURSE_ATTR }} | {{ result.TITLE }} | {{ result.INSTRUCTOR }} | {{ result.CREDIT_HRS }} | {{ result.COURSE_DAYS }} | {{ result.COURSE_PROJ_ENR }} | {{ result.CURRENT_ENR }} | {{ result.SEATS_AVAIL }} | {{ result.IS_OPEN }}</p>
                         {% endfor %}
 
                         <a class="btn btn-primary animate-hover" href="{{ url_for('index') }}">Return to Home</a>
