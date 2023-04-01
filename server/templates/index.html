@@ -51,7 +51,7 @@
 
                 <div class="mb-3">
                     <label for="attr_selections">Attribute</label>
-                    <select class="form-select" id="attribute_selections" name="attr_selections" required multiple>
+                    <select class="form-select" id="attribute_selections" name="attr_selections" onChange="changedSelectedAttr(this)" required multiple>
                         <option selected value="ALL">ALL</option>
                         {% for attr in context.attr_list %}
                             <option value="{{ attr['ATTR_CODE'] }}">{{ attr['ATTR_DESC'] }} ({{ attr['ATTR_CODE'] }})</option>
@@ -63,7 +63,7 @@
 
                 <div class="mb-3">
                     <label for="level_selections">Level</label>
-                    <select class="form-select" id="level_selections" name="level_selections" required multiple>
+                    <select class="form-select" id="level_selections" name="level_selections" onChange="changedSelectedLevel(this)" required multiple>
                         <option selected value="ALL">ALL</option>
                         {% for level in context.levels_list %}
                             <option value="{{ level['LEVEL_CODE'] }}">{{ level['LEVEL_DESC'] }} ({{ level['LEVEL_CODE'] }})</option>
@@ -125,7 +125,7 @@
                 <!-- Building / Room -->
 
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit">Submit</button>
         </form>
 
         <!-- Random Button -->
@@ -133,6 +133,38 @@
         <!-- All Courses -->
     </div>
 </div>
+
+<script>
+function getSelectedOption(sel) {
+    var opts = [], opt;
+
+    var len = sel.options.length;
+    for (var i = 0; i < len; i++) {
+    opt = sel.options[i];
+
+    if (opt.selected) {
+        return opt.value
+        }
+    }
+}
+function changedSelectedAttr(attrSelect) {
+    selectedOption = getSelectedOption(attrSelect);
+    if(selectedOp == "ALL") {
+        document.getElementById("level_selections").removeAttribute("disabled");
+    } else {
+        document.getElementById("level_selections").disabled = true;
+    }
+}
+
+function changedSelectedLevel(levelSelect) {
+    selectedOption = getSelectedOption(levelSelect);
+    if(selectedOp == "ALL") {
+        document.getElementById("attribute_selections").removeAttribute("disabled");
+    } else {
+        document.getElementById("attribute_selections").disabled = true;
+    }
+}
+</script>
 
 {% endblock content %}
 

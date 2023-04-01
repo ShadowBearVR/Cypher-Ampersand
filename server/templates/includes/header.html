@@ -1,4 +1,4 @@
-<header class="header">
+<header class="header-responsive">
     <div class="header-content responsive-wrapper">
         <div class="header-logo">
             <a href="#">
@@ -9,8 +9,8 @@
         </div>
         <div class="header-navigation">
             <nav class="header-navigation-links">
-                <a href="/">Home</a>
-                <a href="/campus-routing">Campus Routing</a>
+                <a {% if request.path == "/index" %} class="active"{% endif %} href="/">Home</a>
+                <a {% if request.path == "/campus-routing" %} class="active"{% endif %}href="/campus-routing">Campus Routing</a>
             </nav>
             <div class="header-navigation-actions">
                 <a href="#" class="icon-button">
