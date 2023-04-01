@@ -65,7 +65,7 @@ def results():
     
     else:
         context = {
-            'error-title': 'Unknown Error',
+            'error_title': 'Unknown Error',
             'error_message': 'Something went wrong submitting your request. Please try again later.'
         }
         return render_template('error.html', context=context)
@@ -76,7 +76,7 @@ def results():
 @app.errorhandler(403)
 def forbidden(e):
     context = {
-        'error-title': '403',
+        'error_title': '403',
         'error_message': 'Forbidden'
     }
     return render_template('error.html', context=context)
@@ -84,7 +84,7 @@ def forbidden(e):
 @app.errorhandler(404)
 def page_not_found(e):
     context = {
-        'error-title': '404',
+        'error_title': '404',
         'error_message': 'Page Not Found'
     }
     return render_template('error.html', context=context)
@@ -92,7 +92,7 @@ def page_not_found(e):
 @app.errorhandler(405)
 def method_not_allowed(e):
     context = {
-        'error-title': '405',
+        'error_title': '405',
         'error_message': 'Method Not Allowed'
     }
     return render_template('error.html', context=context)
@@ -100,7 +100,7 @@ def method_not_allowed(e):
 @app.errorhandler(500)
 def internal_server_error(e):
     context = {
-        'error-title': '500',
+        'error_title': '500',
         'error_message': 'Internal Server Error'
     }
     return render_template('error.html', context=context)
