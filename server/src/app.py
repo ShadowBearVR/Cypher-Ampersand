@@ -22,11 +22,12 @@ def index():
 
     server_time = format_server_time()
 
-    subjects_list = get_all_subjects()
+    terms_list = get_all_terms()
     subjects_list = get_all_subjects()
 
     context = { 
         'server_time': server_time,
+        'terms_list': terms_list,
         'subjects_list': subjects_list
     }
 

@@ -25,7 +25,7 @@
                 <label for="term-selection">Term</label>
                 <select class="form-control" id="term-selection" required>
                     {% for term in context.terms_list %}
-                        <option value="{{ subject['TERM_CODE'] }}">{{ term['TERM_DESC'] }}</option>
+                        <option value="{{ term['TERM_CODE'] }}">{{ term['TERM_DESC'] }}</option>
                     {% endfor %}
                 </select>
 
