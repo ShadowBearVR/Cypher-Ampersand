@@ -711,13 +711,13 @@ def get_results_for_query(inputs):
 
     term_selection = inputs.term_selection
 
-    subject_selections = inputs.subject_selections
-    attr_selections = inputs.attr_selections
-    level_selections = inputs.level_selections
-    status_selections = inputs.status_selections
-    part_of_term_selections = inputs.part_of_term_selections
-    instructor_selections = inputs.instructor_selections
-    credit_hours_selections = inputs.credit_hours_selections
+    subject_selections = inputs['subject_selections']
+    attr_selections = inputs['attr_selections']
+    level_selections = inputs['level_selections']
+    status_selections = inputs['status_selections']
+    part_of_term_selections = inputs['part_of_term_selections']
+    instructor_selections = inputs['instructor_selections']
+    credit_hours_selections = inputs['credit_hours_selections']
 
     courses_table_name = f'courses-{term_selection}'
 
