@@ -3,18 +3,11 @@ import os
 import time
 from datetime import datetime
 
-import firebase_admin
-from firebase_admin import credentials, firestore
-
 from courselist_wrapper import *
 from helper_functions import *
 
 # Initiate Flask app.
 app = Flask(__name__)
-
-# Setup DB credentials.
-cred = credentials.Certificate("env/cypher-ampersand-firebase-adminsdk-2694w-0d791d1fab.json")
-firebase_admin.initialize_app(cred)
 
 # Get Courselist Secret.
 
@@ -32,27 +25,8 @@ def index():
 
     server_time = format_server_time()
 
-    db = firestore.client()  # this connects to our Firestore database
-    collection = db.collection('terms')  # opens 'places' collection
-    
-    docs = collection.get()
-
-    for doc_raw in docs:
-        doc = doc_raw.to_dict()
-
-        results = f'{doc["TERM_CODE"]} {doc["TERM_DESC"]} {doc["TERM_END_DATE"]}'
-
-
-    creation_result = collection.document('TEST-TERM-2').set({
-        'TERM_CODE': '202410',
-        'TERM_DESC': 'Fall 2023',
-        'TERM_END_DATE': '2023-12-31T00:00:00'
-    })
-
     context = { 
-        'server_time': server_time,
-        'results': results,
-        'creation_result': creation_result
+        'server_time': server_time
     }
 
     return render_template('index.html', context=context)
@@ -72,7 +46,7 @@ def update_courselist():
         secret_input = request.get_data(as_text=True)
 
         if update_courselist_secret == secret_input:
-            update_courselist_database()
+            update_courselist_db()
             return "Updated Database"
         else:
             return "Did Not Update Database"
