@@ -26,9 +26,11 @@
 
                         <h1>Search Output</h1>
 
-                        <p>Outputs: {{ context.outputs.test }} </p>
-
                         <!-- CRN | COURSE ID | ATTRIBUTES | TITLE | INSTRUCTOR | CREDIT HOURS | MEET DAY/TIME | PROJ ENG | CURR ENG | SEATS AVAIL | STATUS-->
+
+                        {% for result in context.output.results %}
+                           <p>{{ result.test }}
+                        {% endfor %}
                     </div>
                 </div>
             </div>

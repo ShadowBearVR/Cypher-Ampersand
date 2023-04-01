@@ -336,7 +336,7 @@ def recreate_credit_hours_table(db):
             'CREDIT_HOURS_DESC': f'{credit_hours_desc}'
         })
 
-## PER QUERY FUNCTIONS ( DB / INTERNAL / External ) ##
+## PER QUERY FUNCTIONS ( DB / INTERNAL ) ##
 
 def get_and_update_course_details_table(db, term, crn):
 
@@ -696,7 +696,7 @@ def get_all_credit_hours():
 
     return credit_hours_dict
 
-## EXTERNAL FUNCTIONS ##
+## EXTERNAL DETAIL FUNCTIONS ##
 
 def get_course_details(term, crn):
 
@@ -706,3 +706,18 @@ def get_course_details(term, crn):
 
     return course_details_dict
         
+## EXTERNAL QUERY FUNCTIONS ##
+
+def get_results_for_query(inputs):
+
+    db = firestore.client()
+
+    ## BUILD OUT WHERE CLAUSES
+
+    results = {
+        [
+            'test': 'Hello World!'
+        ]
+    }
+
+    return results

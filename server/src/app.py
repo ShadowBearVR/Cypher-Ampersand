@@ -60,6 +60,30 @@ def results():
         instructor_selections = request.form.getlist('instructor_selections')
         credit_hours_selections = request.form.getlist('credit_hours_selections')
 
+        # If 'ALL' is included in a multi select dropdown,
+        # the multi select is ignored as a potential filter.
+
+        if (not subject_selections or 'All' in subject_selections):
+            subject_selections = []
+
+        if (not attr_selections or 'All' in attr_selections):
+            attr_selections = []
+
+        if (not level_selections or 'All' in level_selections):
+            level_selections = []
+
+        if (not status_selections or 'All' in status_selections):
+            status_selections = []
+
+        if (not part_of_term_selections or 'All' in part_of_term_selections):
+            part_of_term_selections = []
+
+        if (not instructor_selections or 'All' in instructor_selections):
+            instructor_selections = []
+
+        if (not credit_hours_selections or 'All' in credit_hours_selections):
+            credit_hours_selections = []
+
         inputs = {
             'term_selection': term_selection,
             'subject_selections': subject_selections,
@@ -71,16 +95,16 @@ def results():
             'credit_hours_selections': credit_hours_selections,
         }
 
-        outputs = {
-            'test': "Hello World!"
+        results = get_results_for_query(inputs)
+
+        output = {
+            'results': results
         }
 
         context = {
             'inputs': inputs,
-            'outputs': outputs
+            'output': output
         }
-
-        ## DO COMPLICATED LOGIC HERE
 
         return render_template('results.html', context=context)
     
