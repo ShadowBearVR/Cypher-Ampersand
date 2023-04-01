@@ -37,14 +37,15 @@
 
 </head>
 
-<body class="d-flex flex-column min-vh-100">
+<body class="">
 
     {% include 'includes/header.html' %}
 
     <main>
-
-        {% block content %}{% endblock content %}
-
+        <div class="main responsive-wrapper">
+        {% block content %}
+        {% endblock content %}
+        </div>
     </main>
 
     {% include 'includes/footer.html' %}
