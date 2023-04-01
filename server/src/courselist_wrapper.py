@@ -11,7 +11,7 @@ firebase_admin.initialize_app(cred)
 
 auth_headers = {}
 
-def get_access_token():
+def open_api_get_access_token():
     headers = {
         "accept": "application/json", 
         "Content-Type": "application/json"
@@ -35,60 +35,59 @@ def set_auth_headers(access_token):
 
 def is_valid_auth(response):
     if response.status_code == 401:
-        set_auth_headers(get_access_token())
+        set_auth_headers(open_api_get_access_token())
         return False
     return True
 
-def get_active_terms(second_attempt = False):
+def open_api_get_active_terms(second_attempt = False):
     response = requests.get("https://openapi.it.wm.edu/courses/development/v1/activeterms", headers = auth_headers)
     
     if not is_valid_auth(response) and not second_attempt:
        print('Attempting to get active terms again with updated token')
-       response = get_active_terms(True)
+       response = open_api_get_active_terms(True)
 
     return response
 
-def get_subjects(second_attempt = False):
+def open_api_get_subjects(second_attempt = False):
     response = requests.get("https://openapi.it.wm.edu/courses/development/v1/subjectlist", headers = auth_headers)
 
     if not is_valid_auth(response) and not second_attempt:
        print('Attempting to get subjects again with updated token')
-       response = get_subjects(True)
+       response = open_api_get_subjects(True)
 
     return response
 
-def get_open_courses(subject, term, second_attempt = False):
+def open_api_get_open_courses(subject, term, second_attempt = False):
     response = requests.get(f"https://openapi.it.wm.edu/courses/development/v1/opencourses/{subject}/{term}", headers = auth_headers)
     
     if not is_valid_auth(response) and not second_attempt:
         print('Attempting to get open courses again with updated token')
-        response = get_open_courses(subject, term, True)
+        response = open_api_get_open_courses(subject, term, True)
 
     return response
 
-def get_course_details(term, crn, second_attempt = False):
+def open_api_get_course_details(term, crn, second_attempt = False):
     response = requests.get(f"https://openapi.it.wm.edu/courses/development/v2/coursesections/{term}/{crn}", headers = auth_headers)
     
     if not is_valid_auth(response) and not second_attempt:
-        print('Attempting to get open courses again with updated token')
-        response = get_open_courses(subject, term, True)
+        print('Attempting to get open course details again with updated token')
+        response = open_api_get_course_details(term, crn, True)
 
     return response
 
 ## UPDATE TABLE FUNCTIONS ##
 
-def update_courselist_db():
+def update_courselist_db(recreate_perm_tables=True):
     db = firestore.client() 
-    set_auth_headers(get_access_token())
+    set_auth_headers(open_api_get_access_token())
+
+    # HARD CODED
+
+    term = "202320"
 
     # FAST (NO DATA LOSS)
     create_terms_table(db)
     create_subjects_table(db)
-
-    # FAST (DATA LOSS)
-    recreate_attributes_table(db)
-    recreate_levels_table(db)
-    recreate_part_of_term_codes_table(db)
 
     # VERY SLOW (NO DATA LOSS)
 
@@ -107,6 +106,17 @@ def update_courselist_db():
     #     time.sleep(60)
     #     print("ENDED SLEEP OF", term)
 
+    # FAST (DATA LOSS)
+
+    if recreate_perm_tables:
+        print("did recreate perm tables")
+
+        recreate_attributes_table(db)
+        recreate_levels_table(db)
+        recreate_part_of_term_codes_table(db)
+    else:
+        print("did not recreate perm tables")
+
 ## CREATE TABLE FUNCTIONS ##
 
 def create_terms_table(db):
@@ -117,7 +127,7 @@ def create_terms_table(db):
     delete_collection(terms_collection)
 
     # Repopulate Terms
-    active_terms = get_active_terms().json()
+    active_terms = open_api_get_active_terms().json()
     for term in active_terms:
         term_code = term['TERM_CODE']
         term_desc = term['TERM_DESC']
@@ -138,7 +148,7 @@ def create_subjects_table(db):
     delete_collection(subjects_collection)
 
     # Repopulate Subjects
-    subjects = get_subjects().json()
+    subjects = open_api_get_subjects().json()
     for subject in subjects:
         subj_code = subject['STVSUBJ_CODE']
         subj_desc = subject['STVSUBJ_DESC']
@@ -160,7 +170,7 @@ def create_courses_table(db, term):
 
     # Repopulate Courses
     for subject in get_all_subjects():
-        courses = get_open_courses(subject['SUBJ_CODE'], term).json()
+        courses = open_api_get_open_courses(subject['SUBJ_CODE'], term).json()
         for course in courses:
 
             if (course['COURSE_ATTR'] == 'Not Available'):
@@ -301,7 +311,7 @@ def get_and_update_course_details_table(db, term, crn):
     course_details_collection.document(course_details_doc_name).delete()
 
     # Get new course details JSON
-    course_details = get_course_details(term, crn).json()
+    course_details = open_api_get_course_details(term, crn).json()
 
     co_req = course_details['COREQ']
     course_desc = course_details['COURSEDESC']
@@ -388,15 +398,20 @@ def delete_collection(coll_ref, batch_size=500):
 def get_all_atrributes_from_courses():
 
     db = firestore.client()
-    collection = db.collection('courses')
-
-    courses_docs = collection.get()
+    term_dicts = get_all_terms()
 
     attr_list = []
 
-    for course_doc in courses_docs:
-        course_attrs = course_doc.to_dict()["COURSE_ATTR"]
-        attr_list.extend(course_attrs)
+    for term_dict in term_dicts:
+        term = term_dict['TERM_CODE']
+        courses_table_name = f'courses-{term}'
+        
+        collection = db.collection(courses_table_name)
+        courses_docs = collection.get()
+
+        for course_doc in courses_docs:
+            course_attrs = course_doc.to_dict()["COURSE_ATTR"]
+            attr_list.extend(course_attrs)
 
     attr_set = set(attr_list)
     attr_list = list(attr_set)
@@ -408,15 +423,20 @@ def get_all_atrributes_from_courses():
 def get_all_levels_from_courses():
 
     db = firestore.client()
-    collection = db.collection('courses')
-
-    courses_docs = collection.get()
+    term_dicts = get_all_terms()
 
     levels_list = []
 
-    for course_doc in courses_docs:
-        course_levels = course_doc.to_dict()["COURSE_LEVEL"]
-        levels_list.extend(course_levels)
+    for term_dict in term_dicts:
+        term = term_dict['TERM_CODE']
+        courses_table_name = f'courses-{term}'
+        
+        collection = db.collection(courses_table_name)
+        courses_docs = collection.get()
+
+        for course_doc in courses_docs:
+            course_attrs = course_doc.to_dict()["COURSE_LEVEL"]
+            levels_list.extend(course_attrs)
 
     levels_set = set(levels_list)
     levels_list = list(levels_set)
@@ -428,22 +448,27 @@ def get_all_levels_from_courses():
 def get_all_part_of_term_codes_from_courses():
 
     db = firestore.client()
-    collection = db.collection('courses')
+    term_dicts = get_all_terms()
 
-    courses_docs = collection.get()
+    part_of_codes_list = []
 
-    part_of_term_codes_list = []
+    for term_dict in term_dicts:
+        term = term_dict['TERM_CODE']
+        courses_table_name = f'courses-{term}'
+        
+        collection = db.collection(courses_table_name)
+        courses_docs = collection.get()
 
-    for course_doc in courses_docs:
-        course_part_of_term_code = course_doc.to_dict()["PART_OF_TERM"]
-        part_of_term_codes_list.extend(course_part_of_term_code)
+        for course_doc in courses_docs:
+            course_attrs = course_doc.to_dict()["PART_OF_TERM"]
+            part_of_codes_list.append(course_attrs)
 
-    part_of_term_codes_set = set(part_of_term_codes_list)
-    part_of_term_codes_list = list(part_of_term_codes_set)
+    part_of_codes_set = set(part_of_codes_list)
+    part_of_codes_list = list(part_of_codes_set)
 
-    part_of_term_codes_list.sort()
+    part_of_codes_list.sort()
 
-    return part_of_term_codes_list
+    return part_of_codes_list
 
 ## EXTERNAL FUNCTIONS ##
 

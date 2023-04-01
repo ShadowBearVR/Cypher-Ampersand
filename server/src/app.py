@@ -19,6 +19,7 @@ update_courselist_secret = get_env_var('UPDATE_COURSELIST_SECRET')
 @app.route('/index')
 @app.route('/')
 def index():
+    print('URL Reached - /index')
 
     server_time = format_server_time()
 
@@ -41,6 +42,7 @@ def index():
 
 @app.route('/results', methods=['POST'])
 def results():
+    print('URL Reached - /results')
 
     if len(dict(request.form)) > 0:
         form_data = dict(request.form)
@@ -74,6 +76,7 @@ def results():
 
 @app.route('/course-details/<term>/<crn>')
 def course_details(term, crn):
+    print(f'URL Reached - /course-details/{term}/{crn}')
 
     course_details = get_course_details(term, crn)
 
@@ -127,7 +130,7 @@ def api_update_courselist():
     secret_input = request.get_data(as_text=True)
 
     if update_courselist_secret == secret_input:
-        update_courselist_db()
+        update_courselist_db(recreate_perm_tables=True)
         return 'Updated Database'
     else:
         return 'Did Not Update Database'
