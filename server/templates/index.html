@@ -28,80 +28,95 @@
         <form method="post" action="{{ url_for('results') }}">
             <div class="form-group">
 
-                <label for="term_selection">Term</label>
-                <select class="form-control" id="term_selection"  name="term_selection" required>
-                    <option value="ALL">ALL</option>
-                    {% for term in context.terms_list %}
-                        <option value="{{ term['TERM_CODE'] }}">{{ term['TERM_DESC'] }}</option>
-                    {% endfor %}
-                </select>
+                <div class="mb-3">
+                    <label for="term_selection">Term</label>
+                    <select class="form-control" id="term_selection"  name="term_selection" required>
+                        {% for term in context.terms_list %}
+                            <option value="{{ term['TERM_CODE'] }}">{{ term['TERM_DESC'] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
-                <label for="subject_selection">Subject</label>
-                <select class="form-control" id="subject_selection" name="subject_selection" required>
-                    <option value="ALL">ALL</option>
-                    {% for subject in context.subjects_list %}
-                        <option value="{{ subject['SUBJ_CODE'] }}">{{ subject['SUBJ_DESC'] }} ({{ subject['SUBJ_CODE'] }})</option>
-                    {% endfor %}
-                </select>
+                <div class="mb-3">
+                    <label for="subject_selections">Subject</label>
+                    <select class="form-select" id="subject_selections" name="subject_selections" required multiple>
+                        <option selected value="ALL">ALL</option>
+                        {% for subject in context.subjects_list %}
+                            <option value="{{ subject['SUBJ_CODE'] }}">{{ subject['SUBJ_DESC'] }} ({{ subject['SUBJ_CODE'] }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
                 <!-- Attributes -->
 
-                <label for="attr_selection">Attribute</label>
-                <select class="form-control" id="attribute_selection" name="attr_selection" required>
-                    <option value="ALL">ALL</option>
-                    {% for attr in context.attr_list %}
-                        <option value="{{ attr['ATTR_CODE'] }}">{{ attr['ATTR_DESC'] }} ({{ attr['ATTR_CODE'] }})</option>
-                    {% endfor %}
-                </select>
+                <div class="mb-3">
+                    <label for="attr_selections">Attribute</label>
+                    <select class="form-select" id="attribute_selections" name="attr_selections" required multiple>
+                        <option selected value="ALL">ALL</option>
+                        {% for attr in context.attr_list %}
+                            <option value="{{ attr['ATTR_CODE'] }}">{{ attr['ATTR_DESC'] }} ({{ attr['ATTR_CODE'] }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
                 <!-- Level -->
 
-                <label for="level_selection">Level</label>
-                <select class="form-control" id="level_selection" name="level_selection" required>
-                    <option value="ALL">ALL</option>
-                    {% for level in context.levels_list %}
-                        <option value="{{ level['LEVEL_CODE'] }}">{{ level['LEVEL_DESC'] }} ({{ level['LEVEL_CODE'] }})</option>
-                    {% endfor %}
-                </select>
+                <div class="mb-3">
+                    <label for="level_selections">Level</label>
+                    <select class="form-select" id="level_selections" name="level_selections" required multiple>
+                        <option selected value="ALL">ALL</option>
+                        {% for level in context.levels_list %}
+                            <option value="{{ level['LEVEL_CODE'] }}">{{ level['LEVEL_DESC'] }} ({{ level['LEVEL_CODE'] }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
                 <!-- Status -->
 
-                <label for="status_selection">Status</label>
-                <select class="form-control" id="status_selection" name="status_selection" required>
-                    <option value="ALL">ALL</option>
-                    <option value="True">Open</option>
-                    <option value="False">Closed</option>
-                </select>
+                <div class="mb-3">
+                    <label for="status_selections">Status</label>
+                    <select class="form-select" id="status_selections" name="status_selections" required multiple>
+                        <option selected value="ALL">ALL</option>
+                        <option value="True">Open</option>
+                        <option value="False">Closed</option>
+                    </select>
+                </div>
 
                 <!-- Part of Term -->
 
-                <label for="part_of_term_selection">Part Of Term</label>
-                <select class="form-control" id="part_of_term_selection" name="part_of_term_selection" required>
-                    <option value="ALL">ALL</option>
-                    {% for part_of_term_code in context.part_of_term_codes_list %}
-                        <option value="{{ part_of_term_code['PART_TERM_CODE'] }}">{{ part_of_term_code['PART_TERM_DESC'] }} ({{ part_of_term_code['PART_TERM_CODE'] }})</option>
-                    {% endfor %}
-                </select>
+                <div class="mb-3">
+                    <label for="part_of_term_selections">Part Of Term</label>
+                    <select class="form-select" id="part_of_term_selections" name="part_of_term_selections" required multiple>
+                        <option selected value="ALL">ALL</option>
+                        {% for part_of_term_code in context.part_of_term_codes_list %}
+                            <option value="{{ part_of_term_code['PART_TERM_CODE'] }}">{{ part_of_term_code['PART_TERM_DESC'] }} ({{ part_of_term_code['PART_TERM_CODE'] }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
                 <!-- Professor -->
 
-                <label for="professor_selection">Professor</label>
-                <select class="form-control" id="professor_selection" name="professor_selection" required>
-                    <option value="ALL">ALL</option>
-                    {% for professor in context.professors_list %}
-                        <option value="{{ professor['PROF_CODE'] }}">{{ professor['PROF_FULL_NAME'] }}</option>
-                    {% endfor %}
-                </select>
+                <div class="mb-3">
+                    <label for="professor_selections">Professor</label>
+                    <select class="form-select" id="professor_selections" name="professor_selections" required multiple>
+                        <option selected value="ALL">ALL</option>
+                        {% for professor in context.professors_list %}
+                            <option value="{{ professor['PROF_CODE'] }}">{{ professor['PROF_FULL_NAME'] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
                 <!-- Credit Hours -->
 
-                <label for="credit_hours_selection">Credit Hour</label>
-                <select class="form-control" id="credit_hours_selection" name="credit_hours_selection" required>
-                    <option value="ALL">ALL</option>
-                    {% for credit_hours in context.credit_hours_list %}
-                        <option value="{{ credit_hours['CREDIT_HOURS_CODE'] }}">{{ credit_hours['CREDIT_HOURS_DESC'] }}</option>
-                    {% endfor %}
-                </select>
+                <div class="mb-3">
+                    <label for="credit_hours_selections">Credit Hour</label>
+                    <select class="form-select" id="credit_hours_selections" name="credit_hours_selections" required multiple>
+                        <option selected value="ALL">ALL</option>
+                        {% for credit_hours in context.credit_hours_list %}
+                            <option value="{{ credit_hours['CREDIT_HOURS_CODE'] }}">{{ credit_hours['CREDIT_HOURS_DESC'] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
                 <!-- DAY -->
 

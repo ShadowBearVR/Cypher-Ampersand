@@ -50,26 +50,25 @@ def results():
     print('URL Reached - /results')
 
     if len(dict(request.form)) > 0:
-        form_data = dict(request.form)
 
-        term_selection = form_data['term_selection']
-        subject_selection = form_data['subject_selection']
-        attr_selection = form_data['attr_selection']
-        level_selection = form_data['level_selection']
-        status_selection = form_data['status_selection']
-        part_of_term_selection = form_data['part_of_term_selection']
-        professor_selection = form_data['professor_selection']
-        credit_hours_selection = form_data['credit_hours_selection']
+        term_selections = request.form.get('term_selections')
+        subject_selections = request.form.getlist('subject_selections')
+        attr_selections = request.form.getlist('attr_selections')
+        level_selections = request.form.getlist('level_selections')
+        status_selections = request.form.getlist('status_selections')
+        part_of_term_selections = request.form.getlist('part_of_term_selections')
+        professor_selections = request.form.getlist('professor_selections')
+        credit_hours_selections = request.form.getlist('credit_hours_selections')
 
         inputs = {
-            'term_selection': term_selection,
-            'subject_selection': subject_selection,
-            'attr_selection': attr_selection,
-            'level_selection': level_selection,
-            'status_selection': status_selection,
-            'part_of_term_selection': part_of_term_selection,
-            'professor_selection': professor_selection,
-            'credit_hours_selection': credit_hours_selection,
+            'term_selections': term_selections,
+            'subject_selections': subject_selections,
+            'attr_selections': attr_selections,
+            'level_selections': level_selections,
+            'status_selections': status_selections,
+            'part_of_term_selections': part_of_term_selections,
+            'professor_selections': professor_selections,
+            'credit_hours_selections': credit_hours_selections,
         }
 
         outputs = {
@@ -148,7 +147,7 @@ def api_update_courselist():
     secret_input = request.get_data(as_text=True)
 
     if update_courselist_secret == secret_input:
-        update_courselist_db(recreate_perm_tables=True)
+        update_courselist_db(recreate_perm_tables=False)
         return 'Updated Database'
     else:
         return 'Did Not Update Database'
