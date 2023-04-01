@@ -6,6 +6,9 @@ from datetime import datetime
 import firebase_admin
 from firebase_admin import credentials, firestore
 
+from courselist_wrapper import *
+from helper_functions import *
+
 # Initiate Flask app.
 app = Flask(__name__)
 
@@ -20,24 +23,6 @@ update_courselist_secret = ''
 with open('env/.env', 'r') as env_file:
     for line in env_file:
         update_courselist_secret = line.split('=')[1]
-
-# Functions
-
-def format_server_time():
-    server_time = time.localtime()
-    return time.strftime("%I:%M:%S %p", server_time)
-
-def update_courselist_database():
-
-    db = firestore.client()  # this connects to our Firestore database
-    collection = db.collection('terms')  # opens 'places' collection
-
-    creation_result = collection.document('TEST-TERM-3').set({
-        'TERM_CODE': '202410',
-        'TERM_DESC': 'Fall 2023',
-        'TERM_END_DATE': '2023-12-31T00:00:00'
-    })
-
 
 # URL Routes
 
