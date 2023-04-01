@@ -77,7 +77,7 @@ def open_api_get_course_details(term, crn, second_attempt = False):
 
 ## UPDATE TABLE FUNCTIONS ##
 
-def update_courselist_db(recreate_perm_tables=True):
+def update_courselist_db(recreate_perm_tables=False):
     db = firestore.client() 
     set_auth_headers(open_api_get_access_token())
 
