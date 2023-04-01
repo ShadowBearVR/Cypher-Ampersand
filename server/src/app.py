@@ -2,6 +2,7 @@ from flask import Flask, render_template, make_response, request, redirect, url_
 import os
 import time
 from datetime import datetime
+import googlemaps
 
 from courselist_wrapper import *
 from helper_functions import *
@@ -127,7 +128,68 @@ def course_details(term, crn):
 
     return render_template('course-details.html', context=context)
 
+@app.route('/campus-routing', methods=['GET', 'POST'])
+def campus_routing():
+    print('URL Reached - /campus_routing')
 
+    if request.methods == 'GET':
+
+        lat1 = '18.997739;'
+        long1 = '72.841280'
+
+        lat2 = '18.880253'
+        long2 = '72.945137'
+
+        travel_time_estimate = get_travel_time_estimate('walking', lat_1, long_1, lat_2, long_2)
+
+        return f'travel_time_estimate is {travel_time_estimate}'
+
+    else:
+        if len(dict(request.form)) > 0:
+
+            # term_selection = request.form.get('term_selection')
+            # subject_selections = request.form.getlist('subject_selections')
+            # attr_selections = request.form.getlist('attr_selections')
+            # level_selections = request.form.getlist('level_selections')
+            # status_selections = request.form.getlist('status_selections')
+            # part_of_term_selections = request.form.getlist('part_of_term_selections')
+            # instructor_selections = request.form.getlist('instructor_selections')
+            # credit_hours_selections = request.form.getlist('credit_hours_selections')
+
+            # inputs = {
+            #     'term_selection': term_selection,
+            #     'subject_selections': subject_selections,
+            #     'attr_selections': attr_selections,
+            #     'level_selections': level_selections,
+            #     'status_selections': status_selections,
+            #     'part_of_term_selections': part_of_term_selections,
+            #     'instructor_selections': instructor_selections,
+            #     'credit_hours_selections': credit_hours_selections,
+            # }
+
+            # results = get_results_for_query(inputs)
+
+            # output = {
+            #     'results': results
+            # }
+
+            # context = {
+            #     'inputs': inputs,
+            #     'output': output
+            # }
+
+            # return render_template('results.html', context=context)
+
+            return "POST not yet implemented"
+        
+        else:
+            context = {
+                'error_title': 'Unknown Error',
+                'error_message': 'Something went wrong submitting your request. Please try again later.'
+            }
+            return render_template('error.html', context=context)
+
+   
 
 ## ERROR HANDLING ##
 

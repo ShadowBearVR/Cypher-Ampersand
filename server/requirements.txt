@@ -10,3 +10,4 @@ Werkzeug==2.2.1
 zipp==3.8.1
 firebase-admin
 requests
+googlemaps

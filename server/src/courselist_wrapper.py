@@ -11,6 +11,12 @@ firebase_admin.initialize_app(cred)
 
 auth_headers = {}
 
+set_env_vars()
+maps_api_key = get_env_var('GOOGLE_MAPS_API_KEY')
+gmaps = googlemaps.Client(key=maps_api_key)
+
+## OPEN API FUNCTIONS ##
+
 def open_api_get_access_token():
     headers = {
         "accept": "application/json", 
@@ -75,15 +81,35 @@ def open_api_get_course_details(term, crn, second_attempt = False):
 
     return response
 
+## MAPS API FUNCTIONS ##
+
+def get_travel_time_estimate(mode, lat_1, long_1, lat_2, long_2):
+
+    print('get_travel_time_estimate', mode, lat_1, long_1, lat_2, long_2)
+
+    now = datetime.now()
+
+    loc_1 = f'{lat_1}, {long_1}'
+    loc_2 = f'{lat_2}, {long_2}'
+
+    directions_result = gmaps.directions(loc_1,
+                                         loc_2,
+                                         mode=mode,
+                                         departure_time=now
+                                        )
+
+    travel_time_estimate = directions_result[0]['legs'][0]['duration']['text']
+
+    print('travel_time_estimate', travel_time_estimate)
+
+    return travel_time_estimate
+
+
 ## UPDATE TABLE FUNCTIONS ##
 
 def update_courselist_db(recreate_perm_tables=False):
     db = firestore.client() 
     set_auth_headers(open_api_get_access_token())
-
-    # HARD CODED
-
-    term = "202320"
 
     # FAST (NO DATA LOSS)
     create_terms_table(db)
