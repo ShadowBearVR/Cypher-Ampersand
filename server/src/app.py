@@ -12,6 +12,9 @@ def format_server_time():
 @app.route('/index')
 @app.route('/')
 def index():
+
+	server_time = format_server_time()
+
 	context = { 'server_time': server_time }
 	return render_template('index.html', context=context)
 
