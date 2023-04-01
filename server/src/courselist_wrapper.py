@@ -753,7 +753,7 @@ def get_results_for_query(inputs):
         print('filtering by credit_hours_selections')
         query = query.where(u'CREDIT_HRS', u'in', credit_hours_selections)
 
-    docs = query.docs()
+    docs = query.get()
 
     courses = []
 

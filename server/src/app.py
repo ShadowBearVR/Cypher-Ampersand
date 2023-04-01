@@ -61,6 +61,7 @@ def results():
     if len(dict(request.form)) > 0:
 
         term_selection = request.form.get('term_selection')
+
         subject_selections = request.form.getlist('subject_selections')
         attr_selections = request.form.getlist('attr_selections')
         level_selections = request.form.getlist('level_selections')
@@ -72,25 +73,32 @@ def results():
         # If 'ALL' is included in a multi select dropdown,
         # the multi select is ignored as a potential filter.
 
-        if (not subject_selections or 'All' in subject_selections):
+        if ('ALL' not in attr_selections and 'All' not in level_selections):
+            context = {
+                'error_title': 'Incompatible Selection',
+                'error_message': 'Either Attribute or Course Level must be ALL'
+            }
+            return render_template('error.html', context=context)
+
+        if (not subject_selections or 'ALL' in subject_selections):
             subject_selections = []
 
-        if (not attr_selections or 'All' in attr_selections):
+        if (not attr_selections or 'ALL' in attr_selections):
             attr_selections = []
 
-        if (not level_selections or 'All' in level_selections):
+        if (not level_selections or 'ALL' in level_selections):
             level_selections = []
 
         if (not status_selections or 'All' in status_selections):
             status_selections = []
 
-        if (not part_of_term_selections or 'All' in part_of_term_selections):
+        if (not part_of_term_selections or 'ALL' in part_of_term_selections):
             part_of_term_selections = []
 
-        if (not instructor_selections or 'All' in instructor_selections):
+        if (not instructor_selections or 'ALL' in instructor_selections):
             instructor_selections = []
 
-        if (not credit_hours_selections or 'All' in credit_hours_selections):
+        if (not credit_hours_selections or 'ALL' in credit_hours_selections):
             credit_hours_selections = []
 
         inputs = {
