@@ -723,28 +723,35 @@ def get_results_for_query(inputs):
     courses_table_name = f'courses-{term_selection}'
 
     db = firestore.client()
-    collection = db.collection(courses_table_name)
+    query = db.collection(courses_table_name)
 
-    if (subject_selections):
-        query = collection.where(u'SUBJECT_CODE', u'in', subject_selections)
+    if (subject_selections and len(subject_selections) > 0):
+        print('filtering by subject_selections')
+        query = query.where(u'SUBJECT_CODE', u'in', subject_selections)
 
-    if (attr_selections):
-        query = collection.where(u'COURSE_ATTR', u'array_contains_any', attr_selections)
+    if (attr_selections and len(attr_selections) > 0):
+        print('filtering by attr_selections')
+        query = query.where(u'COURSE_ATTR', u'array_contains_any', attr_selections)
 
-    if (level_selections):
-        query = collection.where(u'COURSE_LEVEL', u'array_contains_any', level_selections)
+    if (level_selections and len(level_selections) > 0):
+        print('filtering by level_selections')
+        query = query.where(u'COURSE_LEVEL', u'array_contains_any', level_selections)
 
-    if (status_selections):
-        query = collection.where(u'IS_OPEN', u'in', status_selections)
+    if (status_selections and len(status_selections) > 0):
+        print('filtering by status_selections')
+        query = query.where(u'IS_OPEN', u'in', status_selections)
 
-    if (part_of_term_selections):
-        query = collection.where(u'PART_OF_TERM', u'in', part_of_term_selections)
+    if (part_of_term_selections and len(part_of_term_selections) > 0):
+        print('filtering by part_of_term_selections')
+        query = query.where(u'PART_OF_TERM', u'in', part_of_term_selections)
 
-    if (instructor_selections):
-        query = collection.where(u'INSTRUCTOR', u'in', instructor_selections)
+    if (instructor_selections and len(instructor_selections) > 0):
+        print('filtering by instructor_selections')
+        query = query.where(u'INSTRUCTOR', u'in', instructor_selections)
 
-    if (credit_hours_selections):
-        query = collection.where(u'CREDIT_HRS', u'in', credit_hours_selections)
+    if (credit_hours_selections and len(credit_hours_selections) > 0):
+        print('filtering by credit_hours_selections')
+        query = query.where(u'CREDIT_HRS', u'in', credit_hours_selections)
 
     docs = query.stream()
 
