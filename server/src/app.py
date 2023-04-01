@@ -89,7 +89,7 @@ def results():
         if (not level_selections or 'ALL' in level_selections):
             level_selections = []
 
-        if (not status_selections or 'All' in status_selections):
+        if (not status_selections or 'ALL' in status_selections):
             status_selections = []
 
         if (not part_of_term_selections or 'ALL' in part_of_term_selections):
