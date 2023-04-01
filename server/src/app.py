@@ -59,6 +59,7 @@ def submit():
         }
 
         return render_template('results.html', context=context)
+    
     else:
 
         context = { 
@@ -73,7 +74,7 @@ def update_courselist():
         secret_input = request.get_data(as_text=True)
 
         if update_courselist_secret == secret_input:
-            update_courselist_db()
+            update_courselist_db(True)
             return 'Updated Database'
         else:
             return 'Did Not Update Database'
