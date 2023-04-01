@@ -46,7 +46,7 @@ def index():
 
 	context = { 
 		'server_time': server_time,
-		'results': results
+		'results': results,
 		'creation_result': creation_result
 	}
 
