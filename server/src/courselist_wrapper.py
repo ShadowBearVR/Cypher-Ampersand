@@ -731,35 +731,56 @@ def get_results_for_query(inputs):
                 print('filtering by subject_selections')
                 crns_to_remove.append(course_dict['CRN_ID'])
 
+        if course_dict['CRN_ID'] in crns_to_remove:
+            continue
+
         if (attr_selections and len(attr_selections) > 0):
             if (any(x in course_dict['COURSE_ATTR'] for x in attr_selections)):
                 print('filtering by attr_selections')
                 crns_to_remove.append(course_dict['CRN_ID'])  
+
+        if course_dict['CRN_ID'] in crns_to_remove:
+            continue
 
         if (level_selections and len(level_selections) > 0):
             if (any(x in course_dict['COURSE_LEVEL'] for x in level_selections)):
                 print('filtering by level_selections')
                 crns_to_remove.append(course_dict['CRN_ID'])  
 
+        if course_dict['CRN_ID'] in crns_to_remove:
+            continue
+
         if (status_selections and len(status_selections) > 0):
             if (course_dict['IS_OPEN'] not in status_selections):
                 print('filtering by status_selections')
                 crns_to_remove.append(course_dict['CRN_ID'])
+
+        if course_dict['CRN_ID'] in crns_to_remove:
+            continue
 
         if (part_of_term_selections and len(part_of_term_selections) > 0):
             if (course_dict['PART_OF_TERM'] not in part_of_term_selections):
                 print('filtering by part_of_term_selections')
                 crns_to_remove.append(course_dict['CRN_ID'])
 
+        if course_dict['CRN_ID'] in crns_to_remove:
+            continue
+
         if (instructor_selections and len(instructor_selections) > 0):
             if (course_dict['INSTRUCTOR'] not in instructor_selections):
                 print('filtering by instructor_selections')
                 crns_to_remove.append(course_dict['CRN_ID'])
 
+        if course_dict['CRN_ID'] in crns_to_remove:
+            continue
+
         if (credit_hours_selections and len(credit_hours_selections) > 0):
             if (course_dict['CREDIT_HRS'] not in credit_hours_selections):
                 print('filtering by credit_hours_selections')
                 crns_to_remove.append(course_dict['CREDIT_HRS'])
+
+        if course_dict['CRN_ID'] in crns_to_remove:
+            continue
 
     courses = []
 
