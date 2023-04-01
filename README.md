@@ -1,2 +1,2 @@
-# Cypher-Ampersand
+# Ampersand
 Cypher VIII Hackathon Project.
