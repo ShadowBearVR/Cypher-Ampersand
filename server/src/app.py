@@ -18,7 +18,7 @@ update_courselist_secret = get_env_var('UPDATE_COURSELIST_SECRET')
 
 academic_buildings_list = []
 
-with open('academic_buildings.json', 'r') as academics_buildings_file:
+with open('data/academic_buildings.json', 'r') as academics_buildings_file:
     academic_buildings_list = json.load(academics_buildings_file)
 
 # URL Routes
