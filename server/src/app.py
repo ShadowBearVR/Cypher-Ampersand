@@ -54,83 +54,87 @@ def index():
 
     return render_template('index.html', context=context)
 
-@app.route('/results', methods=['POST'])
+@app.route('/results', methods=['GET', 'POST'])
 def results():
     print('URL Reached - /results')
 
-    if len(dict(request.form)) > 0:
+    if (request.method == 'GET'):
+        return redirect(for_url('/index'))
+    else:
 
-        term_selection = request.form.get('term_selection')
+        if len(dict(request.form)) > 0:
 
-        subject_selections = request.form.getlist('subject_selections')
-        attr_selections = request.form.getlist('attr_selections')
-        level_selections = request.form.getlist('level_selections')
-        status_selections = request.form.getlist('status_selections')
-        part_of_term_selections = request.form.getlist('part_of_term_selections')
-        instructor_selections = request.form.getlist('instructor_selections')
-        credit_hours_selections = request.form.getlist('credit_hours_selections')
+            term_selection = request.form.get('term_selection')
 
-        # If 'ALL' is included in a multi select dropdown,
-        # the multi select is ignored as a potential filter.
+            subject_selections = request.form.getlist('subject_selections')
+            attr_selections = request.form.getlist('attr_selections')
+            level_selections = request.form.getlist('level_selections')
+            status_selections = request.form.getlist('status_selections')
+            part_of_term_selections = request.form.getlist('part_of_term_selections')
+            instructor_selections = request.form.getlist('instructor_selections')
+            credit_hours_selections = request.form.getlist('credit_hours_selections')
 
-        if ('ALL' not in attr_selections and 'All' not in level_selections):
+            # If 'ALL' is included in a multi select dropdown,
+            # the multi select is ignored as a potential filter.
+
+            if ('ALL' not in attr_selections and 'All' not in level_selections):
+                context = {
+                    'error_title': 'Incompatible Selection',
+                    'error_message': 'Either Attribute or Course Level must be ALL'
+                }
+                return render_template('error.html', context=context)
+
+            if (not subject_selections or 'ALL' in subject_selections):
+                subject_selections = []
+
+            if (not attr_selections or 'ALL' in attr_selections):
+                attr_selections = []
+
+            if (not level_selections or 'ALL' in level_selections):
+                level_selections = []
+
+            if (not status_selections or 'ALL' in status_selections):
+                status_selections = []
+
+            if (not part_of_term_selections or 'ALL' in part_of_term_selections):
+                part_of_term_selections = []
+
+            if (not instructor_selections or 'ALL' in instructor_selections):
+                instructor_selections = []
+
+            if (not credit_hours_selections or 'ALL' in credit_hours_selections):
+                credit_hours_selections = []
+
+            inputs = {
+                'term_selection': term_selection,
+                'subject_selections': subject_selections,
+                'attr_selections': attr_selections,
+                'level_selections': level_selections,
+                'status_selections': status_selections,
+                'part_of_term_selections': part_of_term_selections,
+                'instructor_selections': instructor_selections,
+                'credit_hours_selections': credit_hours_selections,
+            }
+
+            results = get_results_for_query(inputs)
+
+            output = {
+                'results': results
+            }
+
             context = {
-                'error_title': 'Incompatible Selection',
-                'error_message': 'Either Attribute or Course Level must be ALL'
+                'inputs': inputs,
+                'output': output
+            }
+
+            return render_template('results.html', context=context)
+        
+        else:
+            context = {
+                'error_title': 'Unknown Error',
+                'error_message': 'Something went wrong submitting your request. Please try again later.'
             }
             return render_template('error.html', context=context)
-
-        if (not subject_selections or 'ALL' in subject_selections):
-            subject_selections = []
-
-        if (not attr_selections or 'ALL' in attr_selections):
-            attr_selections = []
-
-        if (not level_selections or 'ALL' in level_selections):
-            level_selections = []
-
-        if (not status_selections or 'ALL' in status_selections):
-            status_selections = []
-
-        if (not part_of_term_selections or 'ALL' in part_of_term_selections):
-            part_of_term_selections = []
-
-        if (not instructor_selections or 'ALL' in instructor_selections):
-            instructor_selections = []
-
-        if (not credit_hours_selections or 'ALL' in credit_hours_selections):
-            credit_hours_selections = []
-
-        inputs = {
-            'term_selection': term_selection,
-            'subject_selections': subject_selections,
-            'attr_selections': attr_selections,
-            'level_selections': level_selections,
-            'status_selections': status_selections,
-            'part_of_term_selections': part_of_term_selections,
-            'instructor_selections': instructor_selections,
-            'credit_hours_selections': credit_hours_selections,
-        }
-
-        results = get_results_for_query(inputs)
-
-        output = {
-            'results': results
-        }
-
-        context = {
-            'inputs': inputs,
-            'output': output
-        }
-
-        return render_template('results.html', context=context)
-    
-    else:
-        context = {
-            'error_title': 'Unknown Error',
-            'error_message': 'Something went wrong submitting your request. Please try again later.'
-        }
-        return render_template('error.html', context=context)
 
 @app.route('/course-details/<term>/<crn>')
 def course_details(term, crn):
