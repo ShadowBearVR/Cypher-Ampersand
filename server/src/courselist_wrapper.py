@@ -34,17 +34,19 @@ def set_auth_headers(access_token):
         "Authorization": f"Bearer {access_token}"
     }
 
-def check_response_auth(response):
+def is_valid_auth(response):
     if response.status_code == 401:
         set_auth_headers(get_access_token)
         return False
     return True
 
-def get_active_terms(secondary = False):
+def get_active_terms(second_attempt = False):
     response = requests.get("https://openapi.it.wm.edu/courses/development/v1/activeterms", headers = auth_headers)
-    #if secondary and not check_response_auth(response):
-    #    print('Attempting to get active terms again with updated token')
-    #    response = get_active_terms(True)
+    
+    if not is_valid_auth(response) and not second_attempt:
+       print('Attempting to get active terms again with updated token')
+       response = get_active_terms(True)
+
     return response
 
 def update_courselist_db():
