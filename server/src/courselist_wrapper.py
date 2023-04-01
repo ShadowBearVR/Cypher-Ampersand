@@ -720,50 +720,55 @@ def get_results_for_query(inputs):
     instructor_selections = inputs['instructor_selections']
     credit_hours_selections = inputs['credit_hours_selections']
 
-    courses_table_name = f'courses-{term_selection}'
+    courses_dicts = get_all_courses(term_selection)
 
-    db = firestore.client()
-    query = db.collection(courses_table_name)
+    crns_to_remove = []
 
-    if (subject_selections and len(subject_selections) > 0):
-        print('filtering by subject_selections')
-        query = query.where(u'SUBJECT_CODE', u'in', subject_selections)
+    for course_dict in courses_dicts:
 
-    if (attr_selections and len(attr_selections) > 0):
-        print('filtering by attr_selections')
-        query = query.where(u'COURSE_ATTR', u'array_contains_any', attr_selections)
+        if (subject_selections and len(subject_selections) > 0):
+            if (course_dict['SUBJECT_CODE'] not in subject_selections):
+                print('filtering by subject_selections')
+                crns_to_remove.append(course_dict['CRN_ID'])
 
-    if (level_selections and len(level_selections) > 0):
-        print('filtering by level_selections')
-        query = query.where(u'COURSE_LEVEL', u'array_contains_any', level_selections)
+        if (attr_selections and len(attr_selections) > 0):
+            if (any(x in course_dict['COURSE_ATTR'] for x in attr_selections)):
+                print('filtering by attr_selections')
+                crns_to_remove.append(course_dict['CRN_ID'])  
 
-    if (status_selections and len(status_selections) > 0):
-        print('filtering by status_selections')
-        query = query.where(u'IS_OPEN', u'in', status_selections)
+        if (level_selections and len(level_selections) > 0):
+            if (any(x in course_dict['COURSE_LEVEL'] for x in level_selections)):
+                print('filtering by level_selections')
+                crns_to_remove.append(course_dict['CRN_ID'])  
 
-    if (part_of_term_selections and len(part_of_term_selections) > 0):
-        print('filtering by part_of_term_selections')
-        query = query.where(u'PART_OF_TERM', u'in', part_of_term_selections)
+        if (status_selections and len(status_selections) > 0):
+            if (course_dict['IS_OPEN'] not in status_selections):
+                print('filtering by status_selections')
+                crns_to_remove.append(course_dict['CRN_ID'])
 
-    if (instructor_selections and len(instructor_selections) > 0):
-        print('filtering by instructor_selections')
-        query = query.where(u'INSTRUCTOR', u'in', instructor_selections)
+        if (part_of_term_selections and len(part_of_term_selections) > 0):
+            if (course_dict['PART_OF_TERM'] not in part_of_term_selections):
+                print('filtering by part_of_term_selections')
+                crns_to_remove.append(course_dict['CRN_ID'])
 
-    if (credit_hours_selections and len(credit_hours_selections) > 0):
-        print('filtering by credit_hours_selections')
-        query = query.where(u'CREDIT_HRS', u'in', credit_hours_selections)
+        if (instructor_selections and len(instructor_selections) > 0):
+            if (course_dict['INSTRUCTOR'] not in instructor_selections):
+                print('filtering by instructor_selections')
+                crns_to_remove.append(course_dict['CRN_ID'])
 
-    docs = query.stream()
+        if (credit_hours_selections and len(credit_hours_selections) > 0):
+            if (course_dict['CREDIT_HRS'] not in credit_hours_selections):
+                print('filtering by credit_hours_selections')
+                crns_to_remove.append(course_dict['CREDIT_HRS'])
 
     courses = []
+
+    for course_dict in courses_dicts:
+        if course_dict['CRN_ID'] not in crns_to_remove:
+            courses.append(course_dict)
 
     results = {
         'courses': courses
     }
-
-    for doc in docs:
-        doc_dict = doc.to_dict()
-        print(f'{doc.id} => {doc_dict}')
-        courses.append(doc_dict)
 
     return results
