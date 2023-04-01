@@ -708,6 +708,7 @@ def get_course_details(term, crn):
 ## EXTERNAL QUERY FUNCTIONS ##
 
 def get_results_for_query(inputs):
+    print('get_results_for_query', inputs)
 
     term_selection = inputs['term_selection']
 
