@@ -12,19 +12,7 @@
             <div class="row">
                 <div class="col-12 text-center d-flex align-items-center justify-content-center">
                     <div>
-                        <h1>Search Input</h1>
-                        <p>Term: {{ context.inputs.term_selection }} </p>
-                        <p>Subject: {{ context.inputs.subject_selections }} </p>
-                        <p>Attribute: {{ context.inputs.attr_selections }} </p>
-                        <p>Level: {{ context.inputs.level_selections }} </p>
-                        <p>Status: {{ context.inputs.status_selections }} </p>
-                        <p>Part of Term: {{ context.inputs.part_of_term_selections }} </p>
-                        <p>Instructor: {{ context.inputs.instructor_selections }} </p>
-                        <p>Credit Hours: {{ context.inputs.credit_hours_selections }} </p>
-
-                        <br>
-
-                        <h1>Search Output</h1>
+                        <h1>Results</h1>
 
                         <div class="table-responsive">
                             <table class="table align-middle table-hover table-striped">
@@ -60,7 +48,7 @@
                                         <td>{{ result.INSTRUCTOR }}</td>
                                         <td>{{ result.CREDIT_HRS }}</td>
                                         <td>{{ result.COURSE_DAYS }}</td>
-                                        <td>{{ result.COURSE_PROJ_ENR }}</td>
+                                        <td>{{ result.PROJ_ENR }}</td>
                                         <td>{{ result.CURRENT_ENR }}</td>
                                         <td>{{ result.SEATS_AVAIL }}</td>
 
@@ -71,7 +59,7 @@
                                         {% endif %}
 
                                         <td>
-                                            <a class="btn btn-primary animate-hover" href="{{ url_for('course_details', term=context.input.term_selection, crn=result.CRN_ID) }}">Details</a>
+                                            <a class="btn btn-primary animate-hover" href="{{ url_for('course_details', term=context.inputs.term_selection, crn=result.CRN_ID) }}">Details</a>
                                         </td>
                                     </tr>
                                     {% endfor %}
