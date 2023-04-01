@@ -32,7 +32,7 @@
                     <label for="building_1_selection">Building 1</label>
                     <select class="form-select" id="building_1_selection" name="building_1_selection" required>
                         {% for building in context.academic_buildings_list %}
-                            <option value="{{ building['ADDRESS'] }}">{{ building['NAME'] }}</option>
+                            <option value="{{ building['BUILDING_ADDRESS'] }}">{{ building['BUILDING_NAME'] }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -43,7 +43,7 @@
                     <label for="building_2_selection">Building 2</label>
                     <select class="form-select" id="building_2_selection" name="building_2_selection" required>
                         {% for building in context.academic_buildings_list %}
-                            <option value="{{ building['ADDRESS'] }}">{{ building['NAME'] }}</option>
+                            <option value="{{ building['BUILDING_ADDRESS'] }}">{{ building['BUILDING_NAME'] }}</option>
                         {% endfor %}
                     </select>
                 </div>
