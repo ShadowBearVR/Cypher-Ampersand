@@ -20,9 +20,17 @@ def update_courselist_db():
 
     # Update Terms
 
+
+
     # Clear Subjects
 
     # Update Subjects
+
+    
+
+    # Clear Courses
+
+    # Update Courses
 
 
 
@@ -50,8 +58,23 @@ def get_all_subjects():
 
     subjects_dicts = []
 
-    for subject_doc in subjects_dicts:
+    for subject_doc in subjects_docs:
         subject_dict = subject_doc.to_dict()
         subjects_dicts.append(subject_dict)
 
 	return subjects_dicts
+
+def get_all_courses():
+
+	db = firestore.client()
+    collection = db.collection('courses')
+
+    courses_docs = collection.get()
+
+    courses_dicts = []
+
+    for course_doc in courses_docs:
+        course_dict = course_doc.to_dict()
+        courses_dicts.append(course_dict)
+
+	return courses_dicts
