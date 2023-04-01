@@ -39,17 +39,19 @@ def index():
 
     return render_template('index.html', context=context)
 
-@app.route('/submit', methods=['GET', 'POST'])
+@app.route('/submit', methods=['POST'])
 def submit():
+    print('request.method', request.method)
+    print('request.form length', len(dict(request.form)))
     if request.method == 'POST' and len(dict(request.form)) > 0:
         form_data = dict(request.form)
 
-        term_selection = form_data['term-selection']
-        subject_selection = form_data['subject-selection']
-        attr_selection = form_data['attr-selection']
-        level_selection = form_data['level-selection']
-        status_selection = form_data['status-selection']
-        part_of_term_selection = form_data['part-of-term-selection']
+        term_selection = form_data['term_selection']
+        subject_selection = form_data['subject_selection']
+        attr_selection = form_data['attr_selection']
+        level_selection = form_data['level_selection']
+        status_selection = form_data['status_selection']
+        part_of_term_selection = form_data['part_of_term_selection']
 
         context = {
             'term_selection': term_selection,
@@ -60,15 +62,15 @@ def submit():
             'part_of_term_selection': part_of_term_selection
         }
 
-        return render_template('results.html', context=context)
+        return redirect(url_for('results', context=context))
     
     else:
 
         context = { 
-            'error-message': 'Something went wrong submitting your request. Please try again later.'
+            'error_message': 'Something went wrong submitting your request. Please try again later.'
         }
 
-        return render_template('index.html', context=context)
+        return redirect(url_for('index', context=context))
 
 @app.route('/update-courselist', methods=['POST'])
 def update_courselist():
