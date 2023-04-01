@@ -51,7 +51,7 @@ def results():
 
     if len(dict(request.form)) > 0:
 
-        term_selections = request.form.get('term_selections')
+        term_selection = request.form.get('term_selection')
         subject_selections = request.form.getlist('subject_selections')
         attr_selections = request.form.getlist('attr_selections')
         level_selections = request.form.getlist('level_selections')
@@ -61,7 +61,7 @@ def results():
         credit_hours_selections = request.form.getlist('credit_hours_selections')
 
         inputs = {
-            'term_selections': term_selections,
+            'term_selection': term_selection,
             'subject_selections': subject_selections,
             'attr_selections': attr_selections,
             'level_selections': level_selections,
