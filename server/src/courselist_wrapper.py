@@ -377,7 +377,7 @@ def get_all_atrributes():
 
     attr_dicts = []
 
-    for attr_doc in attr_dicts:
+    for attr_doc in attr_docs:
         attr_dict = attr_doc.to_dict()
         attr_dicts.append(attr_dict)
 
@@ -408,7 +408,7 @@ def get_all_part_of_term_codes():
     part_of_term_codes_dicts = []
 
     for part_of_term_codes_doc in part_of_term_codes_docs:
-        part_of_term_codes_dict = part_of_term_code_docs.to_dict()
+        part_of_term_codes_dict = part_of_term_codes_doc.to_dict()
         part_of_term_codes_dicts.append(part_of_term_codes_dict)
 
     return part_of_term_codes_dicts
