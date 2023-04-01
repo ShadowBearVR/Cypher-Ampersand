@@ -49,7 +49,13 @@
                                     <tr>
                                         <td>{{ result.CRN_ID }}</td>
                                         <td>{{ result.COURSE_ID }}</td>
-                                        <td>{{ result.COURSE_ATTR }}</td>
+
+                                        <td>
+                                            {% for course_attr in result.COURSE_ATTR %}
+                                            <p>{{ course_attr }}</p>
+                                            {% endfor %}
+                                        </td>
+
                                         <td>{{ result.TITLE }}</td>
                                         <td>{{ result.INSTRUCTOR }}</td>
                                         <td>{{ result.CREDIT_HRS }}</td>
@@ -60,7 +66,7 @@
 
                                         {% if result.IS_OPEN %}
                                             <td>Open</td>
-                                        {% else #}
+                                        {% else %}
                                             <td>Closed</td>
                                         {% endif %}
 
