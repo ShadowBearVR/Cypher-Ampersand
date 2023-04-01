@@ -115,7 +115,7 @@ def update_courselist_db(recreate_perm_tables=True):
         recreate_levels_table(db)
         recreate_part_of_term_codes_table(db)
 
-        recreate_professors_table(db)
+        recreate_instructors_table(db)
         recreate_credit_hours_table(db)
     else:
         print("did not recreate perm tables")
@@ -298,21 +298,21 @@ def recreate_part_of_term_codes_table(db):
             'PART_TERM_DESC': f'{part_term_desc}'
         })
 
-def recreate_professors_table(db):
-    print('recreate_professors_table')
+def recreate_instructors_table(db):
+    print('recreate_instructors_table')
 
-    # Clear Professors
-    professors_collection = db.collection('professors')
-    delete_collection(professors_collection)
+    # Clear instructors
+    instructors_collection = db.collection('instructors')
+    delete_collection(instructors_collection)
 
-    # Repopulate Professors
-    professors_list = get_all_professors_from_courses()
-    for professor in professors_list:
-        prof_code = ''.join(filter(str.isalnum, professor))
-        prof_full_name = professor
-        doc_name = f'professor-{prof_code}'
+    # Repopulate instructors
+    instructors_list = get_all_instructors_from_courses()
+    for instructor in instructors_list:
+        prof_code = ''.join(filter(str.isalnum, instructor))
+        prof_full_name = instructor
+        doc_name = f'instructor-{prof_code}'
 
-        professors_collection.document(doc_name).set({
+        instructors_collection.document(doc_name).set({
             'PROF_CODE': f'{prof_code}',
             'PROF_FULL_NAME': f'{prof_full_name}'
         })
@@ -355,7 +355,7 @@ def get_and_update_course_details_table(db, term, crn):
     course_details = open_api_get_course_details(term, crn).json()
 
     co_req = course_details['COREQ']
-    course_desc = course_details['COURSEDESC']
+    course_desc = course_details['COURSEDESC'][0][0]
 
     if (not course_details.get('CRSMEET')):
         course_meetings = []
@@ -523,12 +523,12 @@ def get_all_part_of_term_codes_from_courses():
 
     return part_of_codes_list
 
-def get_all_professors_from_courses():
+def get_all_instructors_from_courses():
 
     db = firestore.client()
     term_dicts = get_all_terms()
 
-    professors_list = []
+    instructors_list = []
 
     for term_dict in term_dicts:
         term = term_dict['TERM_CODE']
@@ -538,15 +538,15 @@ def get_all_professors_from_courses():
         courses_docs = collection.get()
 
         for course_doc in courses_docs:
-            course_professor = course_doc.to_dict()["INSTRUCTOR"]
-            professors_list.append(course_professor)
+            course_instructor = course_doc.to_dict()["INSTRUCTOR"]
+            instructors_list.append(course_instructor)
 
-    professors_set = set(professors_list)
-    professors_list = list(professors_set)
+    instructors_set = set(instructors_list)
+    instructors_list = list(instructors_set)
 
-    professors_list.sort()
+    instructors_list.sort()
 
-    return professors_list
+    return instructors_list
 
 def get_all_credit_hours_from_courses():
 
@@ -666,20 +666,20 @@ def get_all_part_of_term_codes():
 
     return part_of_term_codes_dicts
 
-def get_all_professors():
+def get_all_instructors():
 
     db = firestore.client()
-    collection = db.collection('professors')
+    collection = db.collection('instructors')
 
-    professors_docs = collection.get()
+    instructors_docs = collection.get()
 
-    professors_dict = []
+    instructors_dict = []
 
-    for professor_doc in professors_docs:
-        professor_dict = professor_doc.to_dict()
-        professors_dict.append(professor_dict)
+    for instructor_doc in instructors_docs:
+        instructor_dict = instructor_doc.to_dict()
+        instructors_dict.append(instructor_dict)
 
-    return professors_dict
+    return instructors_dict
 
 def get_all_credit_hours():
 

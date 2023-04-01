@@ -29,7 +29,7 @@ def index():
     levels_list = get_all_levels()
     part_of_term_codes_list = get_all_part_of_term_codes()
 
-    professors_list = get_all_professors()
+    instructors_list = get_all_instructors()
     credit_hours_list = get_all_credit_hours()
 
     context = { 
@@ -39,7 +39,7 @@ def index():
         'attr_list': attr_list,
         'levels_list': levels_list,
         'part_of_term_codes_list': part_of_term_codes_list,
-        'professors_list': professors_list,
+        'instructors_list': instructors_list,
         'credit_hours_list': credit_hours_list,
     }
 
@@ -57,7 +57,7 @@ def results():
         level_selections = request.form.getlist('level_selections')
         status_selections = request.form.getlist('status_selections')
         part_of_term_selections = request.form.getlist('part_of_term_selections')
-        professor_selections = request.form.getlist('professor_selections')
+        instructor_selections = request.form.getlist('instructor_selections')
         credit_hours_selections = request.form.getlist('credit_hours_selections')
 
         inputs = {
@@ -67,7 +67,7 @@ def results():
             'level_selections': level_selections,
             'status_selections': status_selections,
             'part_of_term_selections': part_of_term_selections,
-            'professor_selections': professor_selections,
+            'instructor_selections': instructor_selections,
             'credit_hours_selections': credit_hours_selections,
         }
 
@@ -148,8 +148,10 @@ def api_update_courselist():
 
     if update_courselist_secret == secret_input:
         update_courselist_db(recreate_perm_tables=False)
+        print('SECRET VALID - Updated Database')
         return 'Updated Database'
     else:
+        print('SECRET INVALID - Did Not Update Database')
         return 'Did Not Update Database'
 
 ## START UP ##

@@ -94,14 +94,14 @@
                     </select>
                 </div>
 
-                <!-- Professor -->
+                <!-- Instructor -->
 
                 <div class="mb-3">
-                    <label for="professor_selections">Professor</label>
-                    <select class="form-select" id="professor_selections" name="professor_selections" required multiple>
+                    <label for="instructor_selections">instructor</label>
+                    <select class="form-select" id="instructor_selections" name="instructor_selections" required multiple>
                         <option selected value="ALL">ALL</option>
-                        {% for professor in context.professors_list %}
-                            <option value="{{ professor['PROF_CODE'] }}">{{ professor['PROF_FULL_NAME'] }}</option>
+                        {% for instructor in context.instructors_list %}
+                            <option value="{{ instructor['PROF_CODE'] }}">{{ instructor['PROF_FULL_NAME'] }}</option>
                         {% endfor %}
                     </select>
                 </div>
