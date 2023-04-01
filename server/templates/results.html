@@ -13,12 +13,18 @@
                 <div class="col-12 text-center d-flex align-items-center justify-content-center">
                     <div>
                         <h1>Search Input</h1>
-                        <p>Term: {{ context.term_selection }} </p>
-                        <p>Subject: {{ context.subject_selection }} </p>
-                        <p>Attribute: {{ context.attr_selection }} </p>
-                        <p>Level: {{ context.level_selection }} </p>
-                        <p>Status: {{ context.status_selection }} </p>
-                        <p>Part of Term: {{ context.part_of_term_selection }} </p>
+                        <p>Term: {{ context.inputs.term_selection }} </p>
+                        <p>Subject: {{ context.inputs.subject_selection }} </p>
+                        <p>Attribute: {{ context.inputs.attr_selection }} </p>
+                        <p>Level: {{ context.inputs.level_selection }} </p>
+                        <p>Status: {{ context.inputs.status_selection }} </p>
+                        <p>Part of Term: {{ context.inputs.part_of_term_selection }} </p>
+                        <p>Professor: {{ context.inputs.professor_selection }} </p>
+                        <p>Credit Hours: {{ context.inputs.credit_hours_selection }} </p>
+
+                        <br>
+
+                        <p>Outputs: {{ context.outputs.test }} </p>
                     </div>
                 </div>
             </div>

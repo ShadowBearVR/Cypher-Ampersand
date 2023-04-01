@@ -29,6 +29,9 @@ def index():
     levels_list = get_all_levels()
     part_of_term_codes_list = get_all_part_of_term_codes()
 
+    professors_list = get_all_professors()
+    credit_hours_list = get_all_credit_hours()
+
     context = { 
         'server_time': server_time,
         'terms_list': terms_list,
@@ -36,6 +39,8 @@ def index():
         'attr_list': attr_list,
         'levels_list': levels_list,
         'part_of_term_codes_list': part_of_term_codes_list,
+        'professors_list': professors_list,
+        'credit_hours_list': credit_hours_list,
     }
 
     return render_template('index.html', context=context)
@@ -53,14 +58,27 @@ def results():
         level_selection = form_data['level_selection']
         status_selection = form_data['status_selection']
         part_of_term_selection = form_data['part_of_term_selection']
+        professor_selection = form_data['professor_selection']
+        credit_hours_selection = form_data['credit_hours_selection']
 
-        context = {
+        inputs = {
             'term_selection': term_selection,
             'subject_selection': subject_selection,
             'attr_selection': attr_selection,
             'level_selection': level_selection,
             'status_selection': status_selection,
-            'part_of_term_selection': part_of_term_selection
+            'part_of_term_selection': part_of_term_selection,
+            'professor_selection': professor_selection,
+            'credit_hours_selection': credit_hours_selection,
+        }
+
+        outputs = {
+            'test': "Hello World!"
+        }
+
+        context = {
+            'inputs': inputs,
+            'outputs': outputs
         }
 
         ## DO COMPLICATED LOGIC HERE

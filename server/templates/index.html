@@ -30,6 +30,7 @@
 
                 <label for="term_selection">Term</label>
                 <select class="form-control" id="term_selection"  name="term_selection" required>
+                    <option value="ALL">ALL</option>
                     {% for term in context.terms_list %}
                         <option value="{{ term['TERM_CODE'] }}">{{ term['TERM_DESC'] }}</option>
                     {% endfor %}
@@ -37,6 +38,7 @@
 
                 <label for="subject_selection">Subject</label>
                 <select class="form-control" id="subject_selection" name="subject_selection" required>
+                    <option value="ALL">ALL</option>
                     {% for subject in context.subjects_list %}
                         <option value="{{ subject['SUBJ_CODE'] }}">{{ subject['SUBJ_DESC'] }} ({{ subject['SUBJ_CODE'] }})</option>
                     {% endfor %}
@@ -46,6 +48,7 @@
 
                 <label for="attr_selection">Attribute</label>
                 <select class="form-control" id="attribute_selection" name="attr_selection" required>
+                    <option value="ALL">ALL</option>
                     {% for attr in context.attr_list %}
                         <option value="{{ attr['ATTR_CODE'] }}">{{ attr['ATTR_DESC'] }} ({{ attr['ATTR_CODE'] }})</option>
                     {% endfor %}
@@ -55,6 +58,7 @@
 
                 <label for="level_selection">Level</label>
                 <select class="form-control" id="level_selection" name="level_selection" required>
+                    <option value="ALL">ALL</option>
                     {% for level in context.levels_list %}
                         <option value="{{ level['LEVEL_CODE'] }}">{{ level['LEVEL_DESC'] }} ({{ level['LEVEL_CODE'] }})</option>
                     {% endfor %}
@@ -64,6 +68,7 @@
 
                 <label for="status_selection">Status</label>
                 <select class="form-control" id="status_selection" name="status_selection" required>
+                    <option value="ALL">ALL</option>
                     <option value="True">Open</option>
                     <option value="False">Closed</option>
                 </select>
@@ -72,23 +77,45 @@
 
                 <label for="part_of_term_selection">Part Of Term</label>
                 <select class="form-control" id="part_of_term_selection" name="part_of_term_selection" required>
+                    <option value="ALL">ALL</option>
                     {% for part_of_term_code in context.part_of_term_codes_list %}
                         <option value="{{ part_of_term_code['PART_TERM_CODE'] }}">{{ part_of_term_code['PART_TERM_DESC'] }} ({{ part_of_term_code['PART_TERM_CODE'] }})</option>
                     {% endfor %}
                 </select>
 
-                <!-- Building / Room -->
-
                 <!-- Professor -->
 
-                <!-- Credit Level -->
+                <label for="professor_selection">Professor</label>
+                <select class="form-control" id="professor_selection" name="professor_selection" required>
+                    <option value="ALL">ALL</option>
+                    {% for professor in context.professors_list %}
+                        <option value="{{ professor['PROF_CODE'] }}">{{ professor['PROF_FULL_NAME'] }}</option>
+                    {% endfor %}
+                </select>
 
-                <!-- All Courses -->
+                <!-- Credit Hours -->
 
-                <!-- Random Button -->
+                <label for="credit_hours_selection">Credit Hour</label>
+                <select class="form-control" id="credit_hours_selection" name="credit_hours_selection" required>
+                    <option value="ALL">ALL</option>
+                    {% for credit_hours in context.credit_hours_list %}
+                        <option value="{{ credit_hours['CREDIT_HOURS_CODE'] }}">{{ credit_hours['CREDIT_HOURS_DESC'] }}</option>
+                    {% endfor %}
+                </select>
+
+                <!-- DAY -->
+
+                <!-- TIME -->
+
+                <!-- Building / Room -->
+
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+
+        <!-- Random Button -->
+
+        <!-- All Courses -->
     </div>
 </div>
 

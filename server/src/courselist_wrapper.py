@@ -114,10 +114,13 @@ def update_courselist_db(recreate_perm_tables=True):
         recreate_attributes_table(db)
         recreate_levels_table(db)
         recreate_part_of_term_codes_table(db)
+
+        recreate_professors_table(db)
+        recreate_credit_hours_table(db)
     else:
         print("did not recreate perm tables")
 
-## CREATE TABLE FUNCTIONS ##
+## CREATE TABLE DB FUNCTIONS ##
 
 def create_terms_table(db):
     print('create_terms_table')
@@ -236,7 +239,7 @@ def create_courses_table(db, term):
                 'TITLE': f'{title}'
             })
 
-## RECREATE TABLE FUNCTIONS ##
+## RECREATE TABLE DB FUNCTIONS ##
 
 def recreate_attributes_table(db):
     print('recreate_attributes_table')
@@ -295,7 +298,45 @@ def recreate_part_of_term_codes_table(db):
             'PART_TERM_DESC': f'{part_term_desc}'
         })
 
-## PER QUERY FUNCTIONS ##
+def recreate_professors_table(db):
+    print('recreate_professors_table')
+
+    # Clear Professors
+    professors_collection = db.collection('professors')
+    delete_collection(professors_collection)
+
+    # Repopulate Professors
+    professors_list = get_all_professors_from_courses()
+    for professor in professors_list:
+        prof_code = ''.join(filter(str.isalnum, professor))
+        prof_full_name = professor
+        doc_name = f'professor-{prof_code}'
+
+        professors_collection.document(doc_name).set({
+            'PROF_CODE': f'{prof_code}',
+            'PROF_FULL_NAME': f'{prof_full_name}'
+        })
+
+def recreate_credit_hours_table(db):
+    print('recreate_credit_hours_table')
+
+    # Clear Credit Hours
+    credit_hours_collection = db.collection('credit-hours')
+    delete_collection(credit_hours_collection)
+
+    # Repopulate Credit Hours
+    credit_hours_list = get_all_credit_hours_from_courses()
+    for credit_hours in credit_hours_list:
+        credit_hours_code = ''.join(filter(str.isalnum, credit_hours))
+        credit_hours_desc = credit_hours
+        doc_name = f'credit-hours-{credit_hours_code}'
+
+        credit_hours_collection.document(doc_name).set({
+            'CREDIT_HOURS_CODE': f'{credit_hours_code}',
+            'CREDIT_HOURS_DESC': f'{credit_hours_desc}'
+        })
+
+## PER QUERY FUNCTIONS ( DB / INTERNAL / External ) ##
 
 def get_and_update_course_details_table(db, term, crn):
 
@@ -316,29 +357,44 @@ def get_and_update_course_details_table(db, term, crn):
     co_req = course_details['COREQ']
     course_desc = course_details['COURSEDESC']
 
-    course_meet_building = course_details['CRSMEET']['building']
-    course_meet_days = course_details['CRSMEET']['days']
-    course_meet_room = course_details['CRSMEET']['room']
-    course_meet_time = course_details['CRSMEET']['time']
+    if (not course_details.get('CRSMEET')):
+        course_meetings = []
+    else:
+        course_meetings = []
 
-    if (course_details['MAJOR']['Exclude'] is None):
+        for course_meeting_details in course_details['CRSMEET']: 
+            course_meet_building = course_meeting_details['building']
+            course_meet_days = course_meeting_details['days']
+            course_meet_room = course_meeting_details['room']
+            course_meet_time = course_meeting_details['time']
+
+            course_meeting = {
+                'course_meet_building': course_meet_building,
+                'course_meet_days': course_meet_days,
+                'course_meet_room': course_meet_room,
+                'course_meet_time': course_meet_time,
+            }
+
+            course_meetings.append(course_meeting)
+
+    if (not course_details.get('MAJOR') or course_details['MAJOR']['Exclude'] is None):
         major_exclude = []
     else:
         major_exclude = course_details['MAJOR']['Exclude'].split(', ')
     
-    if (course_details['MAJOR']['Include'] is None):
+    if (not course_details.get('MAJOR') or  course_details['MAJOR']['Include'] is None):
         major_include = []
     else:
         major_include = course_details['MAJOR']['Include'].split(', ')
 
     pre_req = course_details['PREREQ']
 
-    if (course_details['SCPROG']['Exclude'] is None):
+    if (not course_details.get('SCPROG') or  course_details['SCPROG']['Exclude'] is None):
         sc_prog_exclude = []
     else:
         sc_prog_exclude = course_details['SCPROG']['Exclude'].split(', ')
     
-    if (course_details['SCPROG']['Include'] is None):
+    if (not course_details.get('SCPROG') or course_details['SCPROG']['Include'] is None):
         sc_prog_include = []
     else:
         sc_prog_include = course_details['SCPROG']['Include'].split(', ')
@@ -356,10 +412,7 @@ def get_and_update_course_details_table(db, term, crn):
     course_details_doc_dict = {
         'CO_REQ': f'{co_req}',
         'COURSE_DESC': f'{course_desc}',
-        'MEET_BUILDING': f'{course_meet_building}',
-        'MEET_DAYS': f'{course_meet_days}',
-        'MEET_ROOM': f'{course_meet_room}',
-        'MEET_TIME': f'{course_meet_time}',
+        'COURSE_MEETINGS': course_meetings,
         'MAJOR_EXCLUDE': major_exclude,
         'MAJOR_INCLUDE': major_include,
         'PRE_REQ': f'{pre_req}',
@@ -470,7 +523,57 @@ def get_all_part_of_term_codes_from_courses():
 
     return part_of_codes_list
 
-## EXTERNAL FUNCTIONS ##
+def get_all_professors_from_courses():
+
+    db = firestore.client()
+    term_dicts = get_all_terms()
+
+    professors_list = []
+
+    for term_dict in term_dicts:
+        term = term_dict['TERM_CODE']
+        courses_table_name = f'courses-{term}'
+        
+        collection = db.collection(courses_table_name)
+        courses_docs = collection.get()
+
+        for course_doc in courses_docs:
+            course_professor = course_doc.to_dict()["INSTRUCTOR"]
+            professors_list.append(course_professor)
+
+    professors_set = set(professors_list)
+    professors_list = list(professors_set)
+
+    professors_list.sort()
+
+    return professors_list
+
+def get_all_credit_hours_from_courses():
+
+    db = firestore.client()
+    term_dicts = get_all_terms()
+
+    credit_hours_list = []
+
+    for term_dict in term_dicts:
+        term = term_dict['TERM_CODE']
+        courses_table_name = f'courses-{term}'
+        
+        collection = db.collection(courses_table_name)
+        courses_docs = collection.get()
+
+        for course_doc in courses_docs:
+            credit_hours = course_doc.to_dict()["CREDIT_HRS"]
+            credit_hours_list.append(credit_hours)
+
+    credit_hours_set = set(credit_hours_list)
+    credit_hours_list = list(credit_hours_set)
+
+    credit_hours_list.sort()
+
+    return credit_hours_list
+
+## EXTERNAL LIST FUNCTIONS ##
 
 def get_all_terms():
     db = firestore.client()
@@ -562,6 +665,38 @@ def get_all_part_of_term_codes():
         part_of_term_codes_dicts.append(part_of_term_codes_dict)
 
     return part_of_term_codes_dicts
+
+def get_all_professors():
+
+    db = firestore.client()
+    collection = db.collection('professors')
+
+    professors_docs = collection.get()
+
+    professors_dict = []
+
+    for professor_doc in professors_docs:
+        professor_dict = professor_doc.to_dict()
+        professors_dict.append(professor_dict)
+
+    return professors_dict
+
+def get_all_credit_hours():
+
+    db = firestore.client()
+    collection = db.collection('credit-hours')
+
+    credit_hours_docs = collection.get()
+
+    credit_hours_dict = []
+
+    for credit_hour_doc in credit_hours_docs:
+        credit_hour_dict = credit_hour_doc.to_dict()
+        credit_hours_dict.append(credit_hour_dict)
+
+    return credit_hours_dict
+
+## EXTERNAL FUNCTIONS ##
 
 def get_course_details(term, crn):
 
