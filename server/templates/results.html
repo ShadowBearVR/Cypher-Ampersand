@@ -59,7 +59,7 @@
                                         {% endif %}
 
                                         <td>
-                                            <a class="btn btn-primary animate-hover" href="{{ url_for('course_details', term=context.inputs.term_selection, crn=result.CRN_ID) }}">Details</a>
+                                            <a class="btn btn-primary animate-hover" href="{{ url_for('course_details', term=context.inputs.term_selection, crn=result.CRN_ID) }}" target="_blank">Details</a>
                                         </td>
                                     </tr>
                                     {% endfor %}
