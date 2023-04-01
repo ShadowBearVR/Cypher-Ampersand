@@ -24,7 +24,6 @@ def get_access_token():
 
     response = requests.post("https://openapi.it.wm.edu/auth/v1/login", headers = headers, json = data)
     access_token = response.json()['access_token']
-    print('Access token is', access_token)
     return access_token
 
 def set_auth_headers(access_token):
@@ -183,8 +182,6 @@ def delete_collection(coll_ref, batch_size=500):
 
     if deleted >= batch_size:
         return delete_collection(coll_ref, batch_size)
-
-
 
 def get_all_terms():
     db = firestore.client()
