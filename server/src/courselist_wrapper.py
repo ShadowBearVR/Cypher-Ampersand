@@ -36,7 +36,7 @@ def set_auth_headers(access_token):
 
 def is_valid_auth(response):
     if response.status_code == 401:
-        set_auth_headers(get_access_token)
+        set_auth_headers(get_access_token())
         return False
     return True
 
@@ -49,43 +49,74 @@ def get_active_terms(second_attempt = False):
 
     return response
 
+def get_subjects(second_attempt = False):
+    response = requests.get("https://openapi.it.wm.edu/courses/development/v1/subjectlist", headers = auth_headers)
+
+    if not is_valid_auth(response) and not second_attempt:
+       print('Attempting to get subjects again with updated token')
+       response = get_subjects(True)
+
+    return response
+
 def update_courselist_db():
-    db = firestore.client()  # this connects to our Firestore database
-    collection = db.collection('terms')  # opens 'terms' collection
-
-    creation_result = collection.document('TEST-TERM-3').set({
-        'TERM_CODE': '202410',
-        'TERM_DESC': 'Fall 2023',
-        'TERM_END_DATE': '2023-12-31T00:00:00'
-    })
-
-    # Clear Terms
-
+    db = firestore.client() 
     set_auth_headers(get_access_token())
 
-    # Update Terms
-    active_terms = get_active_terms().json()
-    print(active_terms)
-    for term in active_terms:
-        print(term)
-        doc_name = f'term-{term["TERM_CODE"]}'
-        collection.document(doc_name).set({
-            'TERM_CODE': f'{term["TERM_CODE"]}',
-            'TERM_DESC': f'{term["TERM_DESC"]}',
-            'TERM_END_DATE': f'{term["TERM_END_DATE"]}'
-        })
-
-
-
-    # Clear Subjects
-
-    # Update Subjects
-
-    
+    update_active_terms(db)
+    update_subjects(db)
 
     # Clear Courses
 
     # Update Courses
+
+def update_active_terms(db):
+    # Clear Terms
+    terms_collection = db.collection('terms')
+    delete_collection(terms_collection)
+
+    # Repopulate Terms
+    active_terms = get_active_terms().json()
+    for term in active_terms:
+        term_code = term['TERM_CODE']
+        term_desc = term['TERM_DESC']
+        term_end_date = term['TERM_END_DATE']
+        doc_name = f'term-{term_code}'
+
+        terms_collection.document(doc_name).set({
+            'TERM_CODE': f'{term_code}',
+            'TERM_DESC': f'{term_desc}',
+            'TERM_END_DATE': f'{term_end_date}'
+        })
+
+def update_subjects(db):
+    # Clear Subjects
+    subjects_collection = db.collection('subjects')
+    delete_collection(subjects_collection)
+
+    # Repopulate Subjects
+    subjects = get_subjects().json()
+    for subject in subjects:
+        subj_code = subject['STVSUBJ_CODE']
+        subj_desc = subject['STVSUBJ_DESC']
+        doc_name = f'subject-{subj_code}'
+
+        subjects_collection.document(doc_name).set({
+            'SUBJ_CODE': f'{subj_code}',
+            'SUBJ_DESC': f'{subj_desc}'
+        })
+
+
+def delete_collection(coll_ref, batch_size=500):
+    docs = coll_ref.list_documents(page_size=batch_size)
+    deleted = 0
+
+    for doc in docs:
+        #print(f'Deleting doc {doc.id} => {doc.get().to_dict()}')
+        doc.delete()
+        deleted = deleted + 1
+
+    if deleted >= batch_size:
+        return delete_collection(coll_ref, batch_size)
 
 
 
