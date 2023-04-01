@@ -714,12 +714,10 @@ def get_results_for_query(inputs):
 
     ## BUILD OUT WHERE CLAUSES
 
-    results = {
-        [
-            {
-                'test': 'Hello World!'
-            }
-        ]
-    }
+    results = [
+        {
+            'test': 'Hello World!'
+        }
+    ]
 
     return results
