@@ -716,7 +716,9 @@ def get_results_for_query(inputs):
 
     results = {
         [
-            'test': 'Hello World!'
+            {
+                'test': 'Hello World!'
+            }
         ]
     }
 
