@@ -66,23 +66,31 @@ def get_open_courses(subject, term, second_attempt = False):
 
     return response
 
+def get_course_details(term, crn, second_attempt = False):
+    response = requests.get(f"https://openapi.it.wm.edu/courses/development/v2/coursesections/{term}/{crn}", headers = auth_headers)
+    
+    if not is_valid_auth(response) and not second_attempt:
+        print('Attempting to get open courses again with updated token')
+        response = get_open_courses(subject, term, True)
+
+    return response
+
 ## UPDATE TABLE FUNCTIONS ##
 
-def update_courselist_db(full_reset=False):
+def update_courselist_db():
     db = firestore.client() 
     set_auth_headers(get_access_token())
 
-    # FAST
-    update_terms_table(db)
-    update_subjects_table(db)
+    # FAST (NO DATA LOSS)
+    create_terms_table(db)
+    create_subjects_table(db)
 
-    # FAST (BUT CAN CAUSE DATA LOSS!)
-    if full_reset:
-        reset_attributes_table(db)
-        reset_levels_table(db)
-        reset_part_of_term_codes_table(db)
+    # FAST (DATA LOSS)
+    recreate_attributes_table(db)
+    recreate_levels_table(db)
+    recreate_part_of_term_codes_table(db)
 
-    # VERY SLOW
+    # VERY SLOW (NO DATA LOSS)
 
     # term_dicts = get_all_terms()
 
@@ -99,7 +107,11 @@ def update_courselist_db(full_reset=False):
     #     time.sleep(60)
     #     print("ENDED SLEEP OF", term)
 
-def update_terms_table(db):
+## CREATE TABLE FUNCTIONS ##
+
+def create_terms_table(db):
+    print('create_terms_table')
+
     # Clear Terms
     terms_collection = db.collection('terms')
     delete_collection(terms_collection)
@@ -118,7 +130,9 @@ def update_terms_table(db):
             'TERM_END_DATE': f'{term_end_date}'
         })
 
-def update_subjects_table(db):
+def create_subjects_table(db):
+    print('create_subjects_table')
+
     # Clear Subjects
     subjects_collection = db.collection('subjects')
     delete_collection(subjects_collection)
@@ -135,7 +149,8 @@ def update_subjects_table(db):
             'SUBJ_DESC': f'{subj_desc}'
         })
 
-def update_courses_table(db, term):
+def create_courses_table(db, term):
+    print('create_courses_table')
 
     courses_table_name = f'courses-{term}'
 
@@ -211,9 +226,10 @@ def update_courses_table(db, term):
                 'TITLE': f'{title}'
             })
 
-## RESET TABLE FUNCTIONS ##
+## RECREATE TABLE FUNCTIONS ##
 
-def reset_attributes_table(db):
+def recreate_attributes_table(db):
+    print('recreate_attributes_table')
 
     # Clear Attributes
     attr_collection = db.collection('attributes')
@@ -231,7 +247,8 @@ def reset_attributes_table(db):
             'ATTR_DESC': f'{attr_desc}'
         })
 
-def reset_levels_table(db):
+def recreate_levels_table(db):
+    print('recreate_levels_table')
 
     # Clear Levels
     level_collection = db.collection('levels')
@@ -249,7 +266,8 @@ def reset_levels_table(db):
             'LEVEL_DESC': f'{level_desc}'
         })
 
-def reset_part_of_term_codes_table(db):
+def recreate_part_of_term_codes_table(db):
+    print('recreate_part_of_term_codes_table')
 
     # Clear Part of Term Codes
     part_of_term_codes_collection = db.collection('part-of-term-codes')
@@ -266,6 +284,92 @@ def reset_part_of_term_codes_table(db):
             'PART_TERM_CODE': f'{part_term_code}',
             'PART_TERM_DESC': f'{part_term_desc}'
         })
+
+## PER QUERY FUNCTIONS ##
+
+def get_and_update_course_details_table(db, term, crn):
+
+    print('get_and_update_course_details_table', term, crn)
+
+    course_details_table_name = f'course-details-{term}'
+
+    course_details_collection = db.collection(course_details_table_name)
+
+    course_details_doc_name = f'course-details-{crn}'
+
+    # Delete document if it already exists
+    course_details_collection.document(course_details_doc_name).delete()
+
+    # Get new course details JSON
+    course_details = get_course_details(term, crn).json()
+
+    co_req = course_details['COREQ']
+    course_desc = course_details['COURSEDESC']
+
+    course_meet_building = course_details['CRSMEET']['building']
+    course_meet_days = course_details['CRSMEET']['days']
+    course_meet_room = course_details['CRSMEET']['room']
+    course_meet_time = course_details['CRSMEET']['time']
+
+    if (course_details['MAJOR']['Exclude'] is None):
+        major_exclude = []
+    else:
+        major_exclude = course_details['MAJOR']['Exclude'].split(', ')
+    
+    if (course_details['MAJOR']['Include'] is None):
+        major_include = []
+    else:
+        major_include = course_details['MAJOR']['Include'].split(', ')
+
+    pre_req = course_details['PREREQ']
+
+    if (course_details['SCPROG']['Exclude'] is None):
+        sc_prog_exclude = []
+    else:
+        sc_prog_exclude = course_details['SCPROG']['Exclude'].split(', ')
+    
+    if (course_details['SCPROG']['Include'] is None):
+        sc_prog_include = []
+    else:
+        sc_prog_include = course_details['SCPROG']['Include'].split(', ')
+
+
+    crn_id = course_details['SSBSECT_CRN']
+    course_id = course_details['SSBSECT_CRSE_NUMB']
+    end_date = course_details['SSBSECT_PTRM_END_DATE']
+    start_date = course_details['SSBSECT_PTRM_START_DATE']
+    subject_code = course_details['SSBSECT_SUBJ_CODE']
+    term_code = course_details['SSBSECT_TERM_CODE']
+    wait_avail = course_details['SSBSECT_WAIT_AVAIL']
+    wait_capacity = course_details['SSBSECT_WAIT_CAPACITY']
+
+    course_details_doc_dict = {
+        'CO_REQ': f'{co_req}',
+        'COURSE_DESC': f'{course_desc}',
+        'MEET_BUILDING': f'{course_meet_building}',
+        'MEET_DAYS': f'{course_meet_days}',
+        'MEET_ROOM': f'{course_meet_room}',
+        'MEET_TIME': f'{course_meet_time}',
+        'MAJOR_EXCLUDE': major_exclude,
+        'MAJOR_INCLUDE': major_include,
+        'PRE_REQ': f'{pre_req}',
+        'SC_PROG_EXCLUDE': sc_prog_exclude,
+        'SC_PROG_INCLUDE': sc_prog_include,
+        'CRN_ID': f'{crn_id}',
+        'COURSE_ID': f'{course_id}',
+        'END_DATE': f'{end_date}',
+        'START_DATE': f'{start_date}',
+        'SUBJECT_CODE': f'{subject_code}',
+        'TERM_CODE': f'{term_code}',
+        'WAIT_AVAIL': f'{wait_avail}',
+        'WAIT_CAPACITY': f'{wait_capacity}',
+    }
+
+    course_details_collection.document(course_details_doc_name).set(course_details_doc_dict)
+
+    return course_details_doc_dict
+
+## DELETE FUNCTIONS ##
 
 def delete_collection(coll_ref, batch_size=500):
     docs = coll_ref.list_documents(page_size=batch_size)
@@ -433,3 +537,12 @@ def get_all_part_of_term_codes():
         part_of_term_codes_dicts.append(part_of_term_codes_dict)
 
     return part_of_term_codes_dicts
+
+def get_course_details(term, crn):
+
+    db = firestore.client()
+
+    course_details_dict = get_and_update_course_details_table(db, term, crn)
+
+    return course_details_dict
+        

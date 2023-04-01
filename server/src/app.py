@@ -72,6 +72,18 @@ def results():
         }
         return render_template('error.html', context=context)
 
+@app.route('/course-details/<term>/<crn>')
+def course_details(term, crn):
+
+    course_details = get_course_details(term, crn)
+
+    context = {
+        'course_details': course_details
+    }
+
+    return render_template('course-details.html', context=context)
+
+
 
 ## ERROR HANDLING ##
 
@@ -115,7 +127,7 @@ def api_update_courselist():
     secret_input = request.get_data(as_text=True)
 
     if update_courselist_secret == secret_input:
-        update_courselist_db(full_reset=False)
+        update_courselist_db()
         return 'Updated Database'
     else:
         return 'Did Not Update Database'
