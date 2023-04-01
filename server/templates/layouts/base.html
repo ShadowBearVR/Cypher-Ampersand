@@ -30,6 +30,8 @@
     <!-- Custom Site Wide CSS -->
     <link type="text/css" href="/css/styles.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+
     <!-- Specific Page CSS -->
     {% block stylesheets %}{% endblock stylesheets %}
 
@@ -39,22 +41,21 @@
 
 <body class="">
 
-    {% include 'includes/header.html' %}
+{% include 'includes/header.html' %}
 
-    <main>
-        <div class="main responsive-wrapper">
-        {% block content %}
-        {% endblock content %}
-        </div>
-    </main>
+<main>
+    <div class="main responsive-wrapper">
+    {% block content %}
+    {% endblock content %}
+    </div>
+</main>
 
-    {% include 'includes/footer.html' %}
+{% include 'includes/footer.html' %}
 
-    {% include 'includes/scripts.html' %}
+{% include 'includes/scripts.html' %}
 
-    <!-- Specific Page JS -->
-    {% block javascripts %}{% endblock javascripts %}
-
+<!-- Specific Page JS -->
+{% block javascripts %}{% endblock javascripts %}
 </body>
 
 </html>
