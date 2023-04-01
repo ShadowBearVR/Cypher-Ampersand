@@ -60,7 +60,7 @@
                                         <td>{{ result.INSTRUCTOR }}</td>
                                         <td>{{ result.CREDIT_HRS }}</td>
                                         <td>{{ result.COURSE_DAYS }}</td>
-                                        <td>{{ result.COURSE_PROJ_ENR }}</td>
+                                        <td>{{ result.PROJ_ENR }}</td>
                                         <td>{{ result.CURRENT_ENR }}</td>
                                         <td>{{ result.SEATS_AVAIL }}</td>
 
@@ -71,7 +71,7 @@
                                         {% endif %}
 
                                         <td>
-                                            <a class="btn btn-primary animate-hover" href="{{ url_for('course_details', term=context.input.term_selection, crn=result.CRN_ID) }}">Details</a>
+                                            <a class="btn btn-primary animate-hover" href="{{ url_for('course_details', term=context.inputs.term_selection, crn=result.CRN_ID) }}">Details</a>
                                         </td>
                                     </tr>
                                     {% endfor %}
