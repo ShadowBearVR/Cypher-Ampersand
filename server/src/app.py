@@ -64,6 +64,8 @@ def results():
 
         if len(dict(request.form)) > 0:
 
+            print(request.form)
+
             term_selection = request.form.get('term_selection')
 
             subject_selections = request.form.getlist('subject_selections')
