@@ -627,11 +627,29 @@ def get_all_atrributes():
 
     attr_docs = collection.get()
 
-    attr_dicts = []
+    coll_attr = [
+        'C100',
+        'C150',
+        'C200',
+        'C30C',
+        'C30C',
+        'C30D',
+        'C30G',
+        'C350',
+        'C400'
+    ]
+
+    attr_dicts = [
+        {},
+        {}
+    ]
 
     for attr_doc in attr_docs:
         attr_dict = attr_doc.to_dict()
-        attr_dicts.append(attr_dict)
+        if attr_dict['ATTR_CODE'] in coll_attr:
+            attr_dicts[0].append(attr_dict)
+        else:
+            attr_dicts[1].append(attr_dict)
 
     return attr_dicts
 

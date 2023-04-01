@@ -9,7 +9,7 @@
 	--c-border-primary: black;
 	--c-border-primary: #eff1f6;
 	--c-background-secondary: #fdfcff;
-	--c-background-tertiary: #789D4A; /* WM Moss */
+	--c-background-tertiary: #139b0d26; /* Modified WM Moss */
 	--c-background-quaternary: #e9ecf4;
 }
 
@@ -91,7 +91,7 @@ border: 3px solid var(--c-border-primary);
 .header-logo a div {
 	flex-shrink: 0;
 	position: relative;
-	width: 80px;
+	width: 60px;
 }
 
 .header-navigation {
