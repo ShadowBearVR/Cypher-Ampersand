@@ -22,7 +22,7 @@
         <br>
 
         {% if context.error_message != None %}
-            <h2> {{ context.error_message }}
+            <h2> {{ context.error_message }} </h2>
         {% endif %}
 
         <form method="post" action="{{ url_for('results') }}">

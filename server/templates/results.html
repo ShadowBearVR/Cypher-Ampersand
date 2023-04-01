@@ -31,16 +31,17 @@
                                 <thead>
                                     <tr>
                                         <td>CRN</td>
-                                        <td>COURSE ID</td>
-                                        <td>ATTRIBUTES</td>
-                                        <td>TITLE</td>
-                                        <td>INSTRUCTOR</td>
-                                        <td>CREDIT HOURS</td>
-                                        <td>MEET DAY/TIME</td>
-                                        <td>PROJ ENG </td>
-                                        <td>CURR ENG</td>
-                                        <td>SEATS AVAIL</td>
-                                        <td>STATUS</td>
+                                        <td>Course Id</td>
+                                        <td>Attributes</td>
+                                        <td>Title</td>
+                                        <td>Instructor(s)</td>
+                                        <td>Credit Hours</td>
+                                        <td>Meeting Day/Time</td>
+                                        <td>Projected Enrollment</td>
+                                        <td>Current Enrollment</td>
+                                        <td>Seats Available</td>
+                                        <td>Status</td>
+                                        <td>Details</td>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -56,7 +57,16 @@
                                         <td>{{ result.COURSE_PROJ_ENR }}</td>
                                         <td>{{ result.CURRENT_ENR }}</td>
                                         <td>{{ result.SEATS_AVAIL }}</td>
-                                        <td>{{ result.IS_OPEN }}</td>
+
+                                        {% if result.IS_OPEN %}
+                                            <td>Open</td>
+                                        {% else #}
+                                            <td>Closed</td>
+                                        {% endif %}
+
+                                        <td>
+                                            <a class="btn btn-primary animate-hover" href="{{ url_for('course_details', term=context.input.term_selection, crn=result.CRN_ID) }}">Details</a>
+                                        </td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
