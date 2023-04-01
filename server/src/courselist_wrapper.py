@@ -709,14 +709,49 @@ def get_course_details(term, crn):
 
 def get_results_for_query(inputs):
 
+    term_selection = inputs.term_selection
+
+    subject_selections = inputs.subject_selections
+    attr_selections = inputs.attr_selections
+    level_selections = inputs.level_selections
+    status_selections = inputs.status_selections
+    part_of_term_selections = inputs.part_of_term_selections
+    instructor_selections = inputs.instructor_selections
+    credit_hours_selections = inputs.credit_hours_selections
+
+    courses_table_name = f'courses-{term_selection}'
+
     db = firestore.client()
+    collection = db.collection(courses_table_name)
 
-    ## BUILD OUT WHERE CLAUSES
+    if (subject_selections):
+        query = collection.where(u'SUBJECT_CODE', u'in', subject_selections)
 
-    results = [
-        {
-            'test': 'Hello World!'
-        }
-    ]
+    if (attr_selections):
+        query = collection.where(u'COURSE_ATTR', u'array_contains_any', attr_selections)
+
+    if (level_selections):
+        query = collection.where(u'COURSE_LEVEL', u'array_contains_any', level_selections)
+
+    if (status_selections):
+        query = collection.where(u'IS_OPEN', u'in', status_selections)
+
+    if (part_of_term_selections):
+        query = collection.where(u'PART_OF_TERM', u'in', part_of_term_selections)
+
+    if (instructor_selections):
+        query = collection.where(u'INSTRUCTOR', u'in', instructor_selections)
+
+    if (credit_hours_selections):
+        query = collection.where(u'CREDIT_HRS', u'in', credit_hours_selections)
+
+    docs = query.stream()
+
+    results = []
+
+    for doc in docs:
+        doc_dict = doc.to_dict()
+        print(f'{doc.id} => {doc_dict}')
+        results.append(doc_dict)
 
     return results
