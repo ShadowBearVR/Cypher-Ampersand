@@ -1,6 +1,6 @@
 import firebase_admin
 from firebase_admin import credentials, firestore
-
+import time
 import requests
 
 from helper_functions import *
@@ -66,21 +66,38 @@ def get_open_courses(subject, term, second_attempt = False):
 
     return response
 
+## UPDATE TABLE FUNCTIONS ##
+
 def update_courselist_db(full_reset=False):
     db = firestore.client() 
     set_auth_headers(get_access_token())
 
+    # FAST
     update_terms_table(db)
     update_subjects_table(db)
 
-    # update_courses_table(db, '202320')
-
+    # FAST (BUT CAN CAUSE DATA LOSS!)
     if full_reset:
         reset_attributes_table(db)
         reset_levels_table(db)
         reset_part_of_term_codes_table(db)
 
+    # VERY SLOW
 
+    # term_dicts = get_all_terms()
+
+    # for term_dict in term_dicts:
+
+    #     term = term_dict['TERM_CODE']
+
+    #     print("STARTED UPDATE OF", term)
+        
+    #     update_courses_table(db, term)
+    #     print("ENDED UPDATE OF", term)
+
+    #     print("STARTED SLEEP OF", term)
+    #     time.sleep(60)
+    #     print("ENDED SLEEP OF", term)
 
 def update_terms_table(db):
     # Clear Terms
@@ -119,8 +136,11 @@ def update_subjects_table(db):
         })
 
 def update_courses_table(db, term):
+
+    courses_table_name = f'courses-{term}'
+
     # Clear Courses
-    courses_collection = db.collection('courses')
+    courses_collection = db.collection(courses_table_name)
     delete_collection(courses_collection)
 
     # Repopulate Courses
@@ -191,6 +211,8 @@ def update_courses_table(db, term):
                 'TITLE': f'{title}'
             })
 
+## RESET TABLE FUNCTIONS ##
+
 def reset_attributes_table(db):
 
     # Clear Attributes
@@ -208,7 +230,6 @@ def reset_attributes_table(db):
             'ATTR_CODE': f'{attr_code}',
             'ATTR_DESC': f'{attr_desc}'
         })
-
 
 def reset_levels_table(db):
 
@@ -228,7 +249,6 @@ def reset_levels_table(db):
             'LEVEL_DESC': f'{level_desc}'
         })
 
-
 def reset_part_of_term_codes_table(db):
 
     # Clear Part of Term Codes
@@ -247,7 +267,6 @@ def reset_part_of_term_codes_table(db):
             'PART_TERM_DESC': f'{part_term_desc}'
         })
 
-
 def delete_collection(coll_ref, batch_size=500):
     docs = coll_ref.list_documents(page_size=batch_size)
     deleted = 0
@@ -260,7 +279,7 @@ def delete_collection(coll_ref, batch_size=500):
     if deleted >= batch_size:
         return delete_collection(coll_ref, batch_size)
 
-# INTERNAL USE #
+## INTERNAL FUNCTIONS ##
 
 def get_all_atrributes_from_courses():
 
@@ -322,7 +341,7 @@ def get_all_part_of_term_codes_from_courses():
 
     return part_of_term_codes_list
 
-# EXTERNAL USE #
+## EXTERNAL FUNCTIONS ##
 
 def get_all_terms():
     db = firestore.client()
@@ -330,13 +349,13 @@ def get_all_terms():
 
     terms_docs = collection.get()
 
-    terms_dicts = []
+    term_dicts = []
 
     for term_doc in terms_docs:
         term_dict = term_doc.to_dict()
-        terms_dicts.append(term_dict)
+        term_dicts.append(term_dict)
 
-    return terms_dicts
+    return term_dicts
 
 def get_all_subjects():
 
@@ -353,10 +372,12 @@ def get_all_subjects():
 
     return subjects_dicts
 
-def get_all_courses():
+def get_all_courses(term):
+
+    courses_table_name = f'courses-{term}'
 
     db = firestore.client()
-    collection = db.collection('courses')
+    collection = db.collection(courses_table_name)
 
     courses_docs = collection.get()
 

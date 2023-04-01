@@ -61,6 +61,8 @@ def results():
             'part_of_term_selection': part_of_term_selection
         }
 
+        ## DO COMPLICATED LOGIC HERE
+
         return render_template('results.html', context=context)
     
     else:
@@ -113,7 +115,7 @@ def api_update_courselist():
     secret_input = request.get_data(as_text=True)
 
     if update_courselist_secret == secret_input:
-        update_courselist_db(False)
+        update_courselist_db(full_reset=False)
         return 'Updated Database'
     else:
         return 'Did Not Update Database'

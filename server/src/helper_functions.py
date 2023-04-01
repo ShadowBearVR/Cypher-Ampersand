@@ -1,6 +1,5 @@
 import time
 from datetime import datetime
-
 import json
 
 def format_server_time():
