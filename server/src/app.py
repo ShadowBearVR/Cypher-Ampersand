@@ -1,4 +1,4 @@
-from flask import Flask, render_template, make_response, request
+from flask import Flask, render_template, make_response, request, redirect, url_for
 import os
 import time
 from datetime import datetime
@@ -41,9 +41,8 @@ def index():
 
 @app.route('/submit', methods=['POST'])
 def submit():
-    print('request.method', request.method)
-    print('request.form length', len(dict(request.form)))
-    if request.method == 'POST' and len(dict(request.form)) > 0:
+
+    if len(dict(request.form)) > 0:
         form_data = dict(request.form)
 
         term_selection = form_data['term_selection']
@@ -74,16 +73,18 @@ def submit():
 
 @app.route('/update-courselist', methods=['POST'])
 def update_courselist():
-    if request.method == 'POST':
-        secret_input = request.get_data(as_text=True)
 
-        if update_courselist_secret == secret_input:
-            update_courselist_db(False)
-            return 'Updated Database'
-        else:
-            return 'Did Not Update Database'
+    secret_input = request.get_data(as_text=True)
+
+    if update_courselist_secret == secret_input:
+        update_courselist_db(False)
+        return 'Updated Database'
     else:
-        return 'Invalid Request Method'
+        return 'Did Not Update Database'
+
+@app.route('/results')
+def results():
+    return render_template('results.html', context=context)
 
 @app.errorhandler(403)
 def forbidden(e):
@@ -92,6 +93,10 @@ def forbidden(e):
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('error-pages/404.html')
+
+@app.errorhandler(405)
+def page_not_found(e):
+    return render_template('error-pages/405.html')
 
 @app.errorhandler(500)
 def internal_server_error(e):
