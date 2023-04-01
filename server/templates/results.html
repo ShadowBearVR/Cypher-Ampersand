@@ -28,8 +28,8 @@
 
                         <!-- CRN | COURSE ID | ATTRIBUTES | TITLE | INSTRUCTOR | CREDIT HOURS | MEET DAY/TIME | PROJ ENG | CURR ENG | SEATS AVAIL | STATUS-->
 
-                        {% for result in context.output.results %}
-                           <p>{{ result.test }}</p>
+                        {% for result in context.output.results.courses %}
+                           <p>{{ result.CRN_ID }}</p>
                         {% endfor %}
 
                         <a class="btn btn-primary animate-hover" href="{{ url_for('index') }}">Return to Home</a>

@@ -747,11 +747,15 @@ def get_results_for_query(inputs):
 
     docs = query.stream()
 
-    results = []
+    courses = []
+
+    results = {
+        'courses': courses
+    }
 
     for doc in docs:
         doc_dict = doc.to_dict()
         print(f'{doc.id} => {doc_dict}')
-        results.append(doc_dict)
+        courses.append(doc_dict)
 
     return results
