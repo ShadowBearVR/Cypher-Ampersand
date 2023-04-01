@@ -31,6 +31,8 @@
                         {% for result in context.output.results %}
                            <p>{{ result.test }}</p>
                         {% endfor %}
+
+                        <a class="btn btn-primary animate-hover" href="{{ url_for('index') }}">Return to Home</a>
                     </div>
                 </div>
             </div>

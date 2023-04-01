@@ -2,6 +2,7 @@ from flask import Flask, render_template, make_response, request, redirect, url_
 import os
 import time
 from datetime import datetime
+import json
 
 from courselist_wrapper import *
 from helper_functions import *
@@ -14,6 +15,11 @@ app = Flask(__name__)
 
 set_env_vars()
 update_courselist_secret = get_env_var('UPDATE_COURSELIST_SECRET')
+
+academic_buildings_list = []
+
+with open('academic_buildings.json', 'r') as academics_buildings_file:
+    academic_buildings_list = json.load(academics_buildings_file)
 
 # URL Routes
 
@@ -133,17 +139,6 @@ def campus_routing():
     print('URL Reached - /campus_routing')
 
     if (request.method == 'GET'):
-
-        academic_buildings_list = [
-            {
-                'NAME': 'Test Name 1'
-                'ADDRESS': '1105 Carter Braxton Lane Williamsburg VA'
-            },
-            {
-                'NAME': 'Test Name 2'
-                'ADDRESS': '1108 Carter Braxton Lane Williamsburg VA'
-            }
-        ]
 
         context = {
             'academic_buildings_list': academic_buildings_list

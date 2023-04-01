@@ -23,7 +23,7 @@
             <h2> {{ context.error_message }}
         {% endif %}
 
-        <form method="post" action="{{ url_for('campus-routing') }}">
+        <form method="post" action="{{ url_for('campus_routing') }}">
             <div class="form-group">
 
                 <!-- Building 1 -->
@@ -50,6 +50,8 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+
+        <a class="btn btn-primary animate-hover" href="{{ url_for('index') }}">Return to Home</a>
     </div>
 </div>
 
