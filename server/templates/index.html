@@ -1,0 +1,18 @@
+{% extends "layouts/base.html" %}
+{% set active_page = "index" %}
+
+{% block title %} Online Portfolio {% endblock %} 
+
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    
+<div>
+    <div class="container-fluid">
+        <h1>Hello World! It is currently {{ context.server_time }}<h1>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block javascripts %}{% endblock javascripts %}

@@ -1,0 +1,18 @@
+<header>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-custom-green">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('index') }}">Ampersand</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end me-auto" id="mynavbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item {{ 'active' if active_page == 'index' else '' }}">
+                        <a class="nav-link" href="{{ url_for('index') }}">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+

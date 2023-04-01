@@ -1,0 +1,7 @@
+FROM /server/
+
+gcloud builds submit --tag gcr.io/cypher-ampersand/api && gcloud run deploy api --region us-central1 --platform managed --image gcr.io/cypher-ampersand/api
+
+FROM /
+
+firebase deploy --only hosting
