@@ -59,7 +59,7 @@ def results():
     print('URL Reached - /results')
 
     if (request.method == 'GET'):
-        return redirect(for_url('/index'))
+        return redirect(url_for('/index'))
     else:
 
         if len(dict(request.form)) > 0:
