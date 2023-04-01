@@ -11,11 +11,8 @@ app = Flask(__name__)
 
 # Get Courselist Secret.
 
-update_courselist_secret = ''
-
-with open('env/.env', 'r') as env_file:
-    for line in env_file:
-        update_courselist_secret = line.split('=')[1]
+set_env_vars()
+update_courselist_secret = get_env_var('UPDATE_COURSELIST_SECRET')
 
 # URL Routes
 
