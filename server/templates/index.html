@@ -9,6 +9,8 @@
     
 <div>
     <div class="container-fluid">
+
+
         <h1>Welcome to Ampersand Courselist!</h1>
 
         <p> Server Time: {{ context.server_time }} </p>
@@ -18,6 +20,10 @@
         <h2> Search Your Classes </h2>
 
         <br>
+
+        {% if context.error_message != None %}
+            <h2> {{ context.error_message }}
+        {% endif %}
 
         <form method="post" action="/submit">
             <div class="form-group">
@@ -38,11 +44,32 @@
 
                 <!-- Attributes -->
 
+                <label for="attribute-selection">Attribute</label>
+                <select class="form-control" id="attribute-selection" required>
+                    {% for attr in context.attr_list %}
+                        <option value="{{ attr }}">{{ attr }}</option>
+                    {% endfor %}
+                </select>
+
                 <!-- Level -->
+
+                <label for="level-selection">Subjects</label>
+                <select class="form-control" id="level-selection" required>
+                    {% for level in context.levels_list %}
+                        <option value="{{ level }}">{{ level }}</option>
+                    {% endfor %}
+                </select>
 
                 <!-- Status -->
 
                 <!-- Part of Term -->
+
+                <label for="part-of-term-selection">Subjects</label>
+                <select class="form-control" id="part-of-term-selection" required>
+                    {% for part_of_term_code in context.part_of_term_codes_list %}
+                        <option value="{{ part_of_term_code }}">{{ part_of_term_code }}</option>
+                    {% endfor %}
+                </select>
 
                 <!-- Building / Room -->
 

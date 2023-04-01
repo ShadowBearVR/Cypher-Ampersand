@@ -163,3 +163,63 @@ def get_all_courses():
         courses_dicts.append(course_dict)
 
     return courses_dicts
+
+def get_all_atrributes():
+
+    db = firestore.client()
+    collection = db.collection('courses')
+
+    courses_docs = collection.get()
+
+    attr_list = []
+
+    for course_doc in courses_docs:
+        course_attrs = course_doc.to_dict()["COURSE_ATTR"]
+        attr_list.extend(course_attrs)
+
+    attr_set = set(attr_list)
+    attr_list = list(attr_set)
+
+    attr_list.sort()
+
+    return attr_list
+
+def get_all_levels():
+
+    db = firestore.client()
+    collection = db.collection('courses')
+
+    courses_docs = collection.get()
+
+    levels_list = []
+
+    for course_doc in courses_docs:
+        course_levels = course_doc.to_dict()["COURSE_LEVEL"]
+        levels_list.extend(course_levels)
+
+    levels_set = set(levels_list)
+    levels_list = list(levels_set)
+
+    levels_list.sort()
+
+    return levels_list
+
+def get_all_part_of_term_codes():
+
+    db = firestore.client()
+    collection = db.collection('courses')
+
+    courses_docs = collection.get()
+
+    part_of_term_codes_list = []
+
+    for course_doc in courses_docs:
+        course_part_of_term_code = course_doc.to_dict()["PART_OF_TERM"]
+        part_of_term_codes_list.extend(course_part_of_term_code)
+
+    part_of_term_codes_set = set(part_of_term_codes_list)
+    part_of_term_codes_list = list(part_of_term_codes_set)
+
+    part_of_term_codes_list.sort()
+
+    return part_of_term_codes_list

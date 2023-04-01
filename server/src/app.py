@@ -24,11 +24,17 @@ def index():
 
     terms_list = get_all_terms()
     subjects_list = get_all_subjects()
+    attr_list = get_all_atrributes()
+    levels_list = get_all_levels()
+    part_of_term_codes_list = get_all_part_of_term_codes()
 
     context = { 
         'server_time': server_time,
         'terms_list': terms_list,
-        'subjects_list': subjects_list
+        'subjects_list': subjects_list,
+        'attr_list': attr_list,
+        'levels_list': levels_list,
+        'part_of_term_codes_list': part_of_term_codes_list,
     }
 
     return render_template('index.html', context=context)
@@ -40,10 +46,26 @@ def submit():
 
         term_selection = form_data['term-selection']
         subject_selection = form_data['subject-selection']
+        attr_selection = form_data['attr-selection']
+        level_selection = form_data['level-selection']
+        part_of_term_selection = form_data['part-of-term-selection']
 
-        return f'Search for {subject_selection} subject during {term_selection} term.'
+        context = {
+            'term_selection': term_selection,
+            'subject_selection': subject_selection,
+            'attr_selection': attr_selection,
+            'level_selection': level_selection,
+            'part_of_term_selection': part_of_term_selection
+        }
+
+        return render_template('results.html', context=context)
     else:
-        return 'Sorry, there was an error.'
+
+        context = { 
+            'error-message': 'Something went wrong submitting your request. Please try again later.'
+        }
+
+        return render_template('index.html', context=context)
 
 @app.route('/update-courselist', methods=['POST'])
 def update_courselist():
