@@ -11,3 +11,4 @@ zipp==3.8.1
 firebase-admin
 requests
 googlemaps
+libsass
