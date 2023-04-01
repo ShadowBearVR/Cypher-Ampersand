@@ -73,7 +73,7 @@ def update_courselist_db(full_reset=False):
     update_terms_table(db)
     update_subjects_table(db)
 
-    update_courses_table(db, '202320')
+    # update_courses_table(db, '202320')
 
     if full_reset:
         reset_attributes_table(db)
@@ -131,7 +131,7 @@ def update_courses_table(db, term):
             if (course['COURSE_ATTR'] == 'Not Available'):
                 course_attr = []
             else:
-                course_attr = course['COURSE_ATTR'].split(', ')
+                course_attr = course['COURSE_ATTR'].replace('/','').split(', ')
 
             course_id = course['COURSE_ID']
             part_of_term = course['COURSE_PTRM']
@@ -367,3 +367,48 @@ def get_all_courses():
         courses_dicts.append(course_dict)
 
     return courses_dicts
+
+def get_all_atrributes():
+
+    db = firestore.client()
+    collection = db.collection('attributes')
+
+    attr_docs = collection.get()
+
+    attr_dicts = []
+
+    for attr_doc in attr_dicts:
+        attr_dict = attr_doc.to_dict()
+        attr_dicts.append(attr_dict)
+
+    return attr_dicts
+
+def get_all_levels():
+
+    db = firestore.client()
+    collection = db.collection('levels')
+
+    levels_docs = collection.get()
+
+    levels_dict = []
+
+    for level_doc in levels_docs:
+        level_dict = level_doc.to_dict()
+        levels_dict.append(level_dict)
+
+    return levels_dict
+
+def get_all_part_of_term_codes():
+
+    db = firestore.client()
+    collection = db.collection('part-of-term-codes')
+
+    part_of_term_codes_docs = collection.get()
+
+    part_of_term_codes_dicts = []
+
+    for part_of_term_codes_doc in part_of_term_codes_docs:
+        part_of_term_codes_dict = part_of_term_code_docs.to_dict()
+        part_of_term_codes_dicts.append(part_of_term_codes_dict)
+
+    return part_of_term_codes_dicts

@@ -48,6 +48,7 @@ def submit():
         subject_selection = form_data['subject-selection']
         attr_selection = form_data['attr-selection']
         level_selection = form_data['level-selection']
+        status_selection = form_data['status-selection']
         part_of_term_selection = form_data['part-of-term-selection']
 
         context = {
@@ -55,6 +56,7 @@ def submit():
             'subject_selection': subject_selection,
             'attr_selection': attr_selection,
             'level_selection': level_selection,
+            'status_selection': status_selection,
             'part_of_term_selection': part_of_term_selection
         }
 
@@ -74,7 +76,7 @@ def update_courselist():
         secret_input = request.get_data(as_text=True)
 
         if update_courselist_secret == secret_input:
-            update_courselist_db(True)
+            update_courselist_db(False)
             return 'Updated Database'
         else:
             return 'Did Not Update Database'

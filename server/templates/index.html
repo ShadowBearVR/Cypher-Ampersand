@@ -35,7 +35,7 @@
                     {% endfor %}
                 </select>
 
-                <label for="subject-selection">Subjects</label>
+                <label for="subject-selection">Subject</label>
                 <select class="form-control" id="subject-selection" required>
                     {% for subject in context.subjects_list %}
                         <option value="{{ subject['SUBJ_CODE'] }}">{{ subject['SUBJ_DESC'] }} ({{ subject['SUBJ_CODE'] }})</option>
@@ -47,27 +47,33 @@
                 <label for="attribute-selection">Attribute</label>
                 <select class="form-control" id="attribute-selection" required>
                     {% for attr in context.attr_list %}
-                        <option value="{{ attr }}">{{ attr }}</option>
+                        <option value="{{ attr['ATTR_CODE'] }}">{{ attr['ATTR_DESC'] }} ({{ attr['ATTR_CODE'] }})</option>
                     {% endfor %}
                 </select>
 
                 <!-- Level -->
 
-                <label for="level-selection">Subjects</label>
+                <label for="level-selection">Level</label>
                 <select class="form-control" id="level-selection" required>
                     {% for level in context.levels_list %}
-                        <option value="{{ level }}">{{ level }}</option>
+                        <option value="{{ level['LEVEL_CODE'] }}">{{ level['LEVEL_DESC'] }} ({{ level['LEVEL_CODE'] }})</option>
                     {% endfor %}
                 </select>
 
                 <!-- Status -->
 
+                <label for="status-selection">Status</label>
+                <select class="form-control" id="status-selection" required>
+                    <option value="True">Open</option>
+                    <option value="False">Closed</option>
+                </select>
+
                 <!-- Part of Term -->
 
-                <label for="part-of-term-selection">Subjects</label>
+                <label for="part-of-term-selection">Part Of Term</label>
                 <select class="form-control" id="part-of-term-selection" required>
                     {% for part_of_term_code in context.part_of_term_codes_list %}
-                        <option value="{{ part_of_term_code }}">{{ part_of_term_code }}</option>
+                        <option value="{{ part_of_term_code['PART_TERM_CODE'] }}">{{ part_of_term_code['PART_TERM_DESC'] }} ({{ part_of_term_code['PART_TERM_CODE'] }})</option>
                     {% endfor %}
                 </select>
 
