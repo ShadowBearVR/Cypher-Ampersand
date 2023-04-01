@@ -39,8 +39,8 @@ def index():
 
     return render_template('index.html', context=context)
 
-@app.route('/submit', methods=['POST'])
-def submit():
+@app.route('/results', methods=['POST'])
+def results():
 
     if len(dict(request.form)) > 0:
         form_data = dict(request.form)
@@ -61,18 +61,54 @@ def submit():
             'part_of_term_selection': part_of_term_selection
         }
 
-        return redirect(url_for('results', context=context))
+        return render_template('results.html', context=context)
     
     else:
-
-        context = { 
+        context = {
+            'error-title': 'Unknown Error',
             'error_message': 'Something went wrong submitting your request. Please try again later.'
         }
+        return render_template('error.html', context=context)
 
-        return redirect(url_for('index', context=context))
 
-@app.route('/update-courselist', methods=['POST'])
-def update_courselist():
+## ERROR HANDLING ##
+
+@app.errorhandler(403)
+def forbidden(e):
+    context = {
+        'error-title': '403',
+        'error_message': 'Forbidden'
+    }
+    return render_template('error.html', context=context)
+
+@app.errorhandler(404)
+def page_not_found(e):
+    context = {
+        'error-title': '404',
+        'error_message': 'Page Not Found'
+    }
+    return render_template('error.html', context=context)
+
+@app.errorhandler(405)
+def method_not_allowed(e):
+    context = {
+        'error-title': '405',
+        'error_message': 'Method Not Allowed'
+    }
+    return render_template('error.html', context=context)
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    context = {
+        'error-title': '500',
+        'error_message': 'Internal Server Error'
+    }
+    return render_template('error.html', context=context)
+
+## API METHODS ##
+
+@app.route('/api/update-courselist', methods=['POST'])
+def api_update_courselist():
 
     secret_input = request.get_data(as_text=True)
 
@@ -82,25 +118,7 @@ def update_courselist():
     else:
         return 'Did Not Update Database'
 
-@app.route('/results')
-def results():
-    return render_template('results.html', context=context)
-
-@app.errorhandler(403)
-def forbidden(e):
-    return render_template('errors-pages/403.html')
-
-@app.errorhandler(404)
-def page_not_found(e):
-    return render_template('error-pages/404.html')
-
-@app.errorhandler(405)
-def page_not_found(e):
-    return render_template('error-pages/405.html')
-
-@app.errorhandler(500)
-def internal_server_error(e):
-    return render_template('error-pages/500.html')
+## START UP ##
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 8080))
