@@ -134,53 +134,46 @@ def campus_routing():
 
     if (request.method == 'GET'):
 
-        lat_1 = '18.997739'
-        long_1 = '72.841280'
+        academic_buildings_list = [
+            {
+                'NAME': 'Test Name 1'
+                'ADDRESS': '1105 Carter Braxton Lane Williamsburg VA'
+            },
+            {
+                'NAME': 'Test Name 2'
+                'ADDRESS': '1108 Carter Braxton Lane Williamsburg VA'
+            }
+        ]
 
-        lat_2 = '18.880253'
-        long_2 = '72.945137'
+        context = {
+            'academic_buildings_list': academic_buildings_list
+        }
 
-        travel_time_estimate = get_travel_time_estimate('walking', lat_1, long_1, lat_2, long_2)
-
-        return f'travel_time_estimate is {travel_time_estimate}'
+        return render_template('campus-routing.html', context=context)
 
     else:
         if (len(dict(request.form)) > 0):
 
-            # term_selection = request.form.get('term_selection')
-            # subject_selections = request.form.getlist('subject_selections')
-            # attr_selections = request.form.getlist('attr_selections')
-            # level_selections = request.form.getlist('level_selections')
-            # status_selections = request.form.getlist('status_selections')
-            # part_of_term_selections = request.form.getlist('part_of_term_selections')
-            # instructor_selections = request.form.getlist('instructor_selections')
-            # credit_hours_selections = request.form.getlist('credit_hours_selections')
+            building_1_selection = request.form.get('building_1_selection')
+            building_2_selection = request.form.get('building_2_selection')
+            
+            inputs = {
+                'building_1_selection': building_1_selection,
+                'building_2_selection': building_2_selection,
+            }
 
-            # inputs = {
-            #     'term_selection': term_selection,
-            #     'subject_selections': subject_selections,
-            #     'attr_selections': attr_selections,
-            #     'level_selections': level_selections,
-            #     'status_selections': status_selections,
-            #     'part_of_term_selections': part_of_term_selections,
-            #     'instructor_selections': instructor_selections,
-            #     'credit_hours_selections': credit_hours_selections,
-            # }
+            results = get_travel_estimates('walking', building_1_selection, building_2_selection)
 
-            # results = get_results_for_query(inputs)
+            output = {
+                'results': results
+            }
 
-            # output = {
-            #     'results': results
-            # }
+            context = {
+                'inputs': inputs,
+                'output': output
+            }
 
-            # context = {
-            #     'inputs': inputs,
-            #     'output': output
-            # }
-
-            # return render_template('results.html', context=context)
-
-            return "POST not yet implemented"
+            return render_template('campus-routing-results.html', context=context)
         
         else:
             context = {

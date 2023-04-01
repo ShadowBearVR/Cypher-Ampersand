@@ -15,7 +15,7 @@
 
         <br>
 
-        <h2> Select The Buildings You Want A Travel Time Estimate For </h2>
+        <h2> Select the buildings you want a travel time estimate for below. </h2>
 
         <br>
 
@@ -29,11 +29,10 @@
                 <!-- Building 1 -->
 
                 <div class="mb-3">
-                    <label for="subject_selections">Subject</label>
-                    <select class="form-select" id="subject_selections" name="subject_selections" required multiple>
-                        <option selected value="ALL">ALL</option>
-                        {% for subject in context.subjects_list %}
-                            <option value="{{ subject['SUBJ_CODE'] }}">{{ subject['SUBJ_DESC'] }} ({{ subject['SUBJ_CODE'] }})</option>
+                    <label for="building_1_selection">Building 1</label>
+                    <select class="form-select" id="building_1_selection" name="building_1_selection" required>
+                        {% for building in context.academic_buildings_list %}
+                            <option value="{{ building['ADDRESS'] }}">{{ building['NAME'] }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -41,11 +40,10 @@
                 <!-- Building 2 -->
 
                 <div class="mb-3">
-                    <label for="attr_selections">Attribute</label>
-                    <select class="form-select" id="attribute_selections" name="attr_selections" required multiple>
-                        <option selected value="ALL">ALL</option>
-                        {% for attr in context.attr_list %}
-                            <option value="{{ attr['ATTR_CODE'] }}">{{ attr['ATTR_DESC'] }} ({{ attr['ATTR_CODE'] }})</option>
+                    <label for="building_2_selection">Building 2</label>
+                    <select class="form-select" id="building_2_selection" name="building_2_selection" required>
+                        {% for building in context.academic_buildings_list %}
+                            <option value="{{ building['ADDRESS'] }}">{{ building['NAME'] }}</option>
                         {% endfor %}
                     </select>
                 </div>

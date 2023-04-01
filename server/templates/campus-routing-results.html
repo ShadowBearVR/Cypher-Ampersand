@@ -1,0 +1,34 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Campus Routing Results  {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <section class="vh-100 d-flex align-items-center justify-content-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center d-flex align-items-center justify-content-center">
+                    <div>
+                        <h1>Search Input</h1>
+                        <p>Building 1: {{ context.inputs.building_1_selection }} </p>
+                        <p>Building 2: {{ context.inputs.building_2_selection }} </p>
+
+                        <br>
+
+                        <h1>Search Output</h1>
+
+                        <p>Distance Estimate: {{ context.output.results.travel_distance_estimate }}</p>
+                        <p>Time Estimate: {{ context.output.results.travel_time_estimate }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

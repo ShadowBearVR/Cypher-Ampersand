@@ -11,8 +11,8 @@ from helper_functions import *
 set_env_vars()
 maps_api_key = get_env_var('GOOGLE_MAPS_API_KEY')
 
-def get_travel_time_estimate(mode, lat_1, long_1, lat_2, long_2):
-    print('get_travel_time_estimate', mode, lat_1, long_1, lat_2, long_2)
+def get_travel_estimates(mode, lat_1, long_1, lat_2, long_2):
+    print('get_travel_estimates', mode, lat_1, long_1, lat_2, long_2)
 
     now = datetime.now()
 
@@ -27,14 +27,19 @@ def get_travel_time_estimate(mode, lat_1, long_1, lat_2, long_2):
                                          departure_time=now
                                         )
 
+    travel_distance_estimate = directions_result[0]['legs'][0]['distance']['text']
     travel_time_estimate = directions_result[0]['legs'][0]['duration']['text']
 
-    print('travel_time_estimate', travel_time_estimate)
+    results = {
+        'travel_distance_estimate': travel_distance_estimate,
+        'travel_time_estimate': travel_time_estimate,
 
-    return travel_time_estimate
+    }
 
-def get_travel_time_estimate(mode, address_1, address_2):
-    print('get_travel_time_estimate', mode, address_1, address_2)
+    return results
+
+def get_travel_estimates(mode, address_1, address_2):
+    print('get_travel_estimates', mode, address_1, address_2)
 
     now = datetime.now()
 
@@ -46,8 +51,13 @@ def get_travel_time_estimate(mode, address_1, address_2):
                                          departure_time=now
                                         )
 
+    travel_distance_estimate = directions_result[0]['legs'][0]['distance']['text']
     travel_time_estimate = directions_result[0]['legs'][0]['duration']['text']
 
-    print('travel_time_estimate', travel_time_estimate)
+    results = {
+        'travel_distance_estimate': travel_distance_estimate,
+        'travel_time_estimate': travel_time_estimate,
 
-    return travel_time_estimate
+    }
+    
+    return results
