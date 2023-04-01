@@ -8,15 +8,10 @@ from courselist_wrapper import *
 from helper_functions import *
 from map_functions import *
 
-from sassutils.wsgi import SassMiddleware
+
 
 # Initiate Flask app.
 app = Flask(__name__)
-
-app.wsgi_app = SassMiddleware(app.wsgi_app, {
-    'app': ('static/sass', 'static/css', '/static/css')
-})
-#sass.compile(dirname=('static//sass', 'path/to/css'))
 
 # Get Courselist Secret.
 
