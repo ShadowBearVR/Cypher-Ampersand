@@ -58,16 +58,23 @@ def get_subjects(second_attempt = False):
 
     return response
 
+def get_open_courses(subject, term, second_attempt = False):
+    response = requests.get(f"https://openapi.it.wm.edu/courses/development/v1/opencourses/{subject}/{term}", headers = auth_headers)
+    
+    if not is_valid_auth(response) and not second_attempt:
+        print('Attempting to get open courses again with updated token')
+        response = get_open_courses(subject, term, True)
+
+    return response
+
 def update_courselist_db():
     db = firestore.client() 
     set_auth_headers(get_access_token())
 
     update_active_terms(db)
-    update_subjects(db)
+    #update_subjects(db)
+    update_courses(db, '202320')
 
-    # Clear Courses
-
-    # Update Courses
 
 def update_active_terms(db):
     # Clear Terms
@@ -104,6 +111,65 @@ def update_subjects(db):
             'SUBJ_CODE': f'{subj_code}',
             'SUBJ_DESC': f'{subj_desc}'
         })
+
+def update_courses(db, term):
+    # Clear Courses
+    courses_collection = db.collection('courses')
+    delete_collection(courses_collection)
+
+    # Repopulate Courses
+    for subject in get_all_subjects():
+        courses = get_open_courses(subject['SUBJ_CODE'], term).json()
+        for course in courses:
+            if(course['COURSE_ATTR'] == 'Not Available'):
+                course_attr = []
+            else:
+                course_attr = course['COURSE_ATTR'].split(', ')
+            course_id = course['COURSE_ID']
+            part_of_term = course['COURSE_PTRM']
+            credit_hrs = course['CREDIT_HRS']
+            crn_id = course['CRN_ID']
+            if(course['CRS_DAYTIME'] == 'Not Available'):
+                course_days = ''
+                course_time = ''
+            else:
+                course_days = course['CRS_DAYTIME'].split(':')[0]
+                course_time = course['CRS_DAYTIME'].split(':')[1]
+            if(course['CRS_LEVL'] is None):
+                course_level = []
+            else:
+                course_level = course['CRS_LEVL'].split(',')
+            current_enr = course['CURRENT_ENR']
+            instructor = course['INSTRUCTOR']
+            open_closed = course['OPEN_CLOSED']
+            proj_enr = course['PROJ_ENR']
+            seats_avail = course['SEATS_AVAIL']
+            subject_code = course['SUBJECT_CODE']
+            term_code = course['TERM_CODE']
+            term_desc = course ['TERM_DESC']
+            title = course['TITLE']
+
+            doc_name = f'course-{crn_id}'
+
+            courses_collection.document(doc_name).set({
+                'COURSE_ATTR': course_attr,
+                'COURSE_ID': f'{course_id}',
+                'PART_OF_TERM': f'{part_of_term}',
+                'CREDIT_HRS': f'{credit_hrs}',
+                'CRN_ID': f'{crn_id}',
+                'COURSE_DAYS': f'{course_days}',
+                'COURSE_TIME': f'{course_time}',
+                'COURSE_LEVEL': course_level,
+                'CURRENT_ENR': f'{current_enr}',
+                'INSTRUCTOR': f'{instructor}',
+                'OPEN_CLOSED': f'{open_closed}',
+                'PROJ_ENR': f'{proj_enr}',
+                'SEATS_AVAIL': f'{seats_avail}',
+                'SUBJECT_CODE': f'{subject_code}',
+                'TERM_CODE': f'{term_code}',
+                'TERM_DESC': f'{term_desc}',
+                'TITLE': f'{title}'
+            })
 
 
 def delete_collection(coll_ref, batch_size=500):
