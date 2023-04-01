@@ -709,7 +709,7 @@ def get_course_details(term, crn):
 
 def get_results_for_query(inputs):
 
-    term_selection = inputs.term_selection
+    term_selection = inputs['term_selection']
 
     subject_selections = inputs['subject_selections']
     attr_selections = inputs['attr_selections']
