@@ -763,7 +763,6 @@ def get_results_for_query(inputs):
 
     for doc in docs:
         doc_dict = doc.to_dict()
-        print(f'{doc.id} => {doc_dict}')
         courses.append(doc_dict)
 
     return results
