@@ -217,13 +217,33 @@ def campus_routing():
 
     else:
         if (len(dict(request.form)) > 0):
+            # These are BUILDING_NAME
+            building_1_name = request.form.get('building_1_selection')
+            building_2_name = request.form.get('building_2_selection')
 
-            building_1_selection = request.form.get('building_1_selection')
-            building_2_selection = request.form.get('building_2_selection')
+            # These are BUILDING_ADDRESS
+            building_1_selection = ''
+            building_2_selection = ''
+
+            building_1_id = ''
+            building_2_id = ''
+
+            for building in academic_buildings_list:
+                if building['BUILDING_NAME'] == building_1_name:
+                    building_1_selection = building['BUILDING_ADDRESS']
+                    building_1_id = building.get('ID', '000')
+
+                if building['BUILDING_NAME'] == building_2_name:
+                    building_2_selection = building['BUILDING_ADDRESS']
+                    building_2_id = building.get('ID', '000')
             
             inputs = {
+                'building_1_name': building_1_name,
+                'building_2_name': building_2_name,
                 'building_1_selection': building_1_selection,
                 'building_2_selection': building_2_selection,
+                'building_1_id': building_1_id,
+                'building_2_id': building_2_id,
             }
 
             results = get_travel_estimates('walking', building_1_selection, building_2_selection)

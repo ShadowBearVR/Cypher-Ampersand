@@ -23,6 +23,8 @@
             <h2> {{ context.error_message }} </h2>
         {% endif %}
 
+        {% include 'includes/campus_map.html' %}
+
         <form method="post" action="{{ url_for('campus_routing') }}">
             <div class="form-group">
 
@@ -32,7 +34,7 @@
                     <label for="building_1_selection">Building 1</label>
                     <select class="form-select" id="building_1_selection" name="building_1_selection" required>
                         {% for building in context.academic_buildings_list %}
-                            <option value="{{ building['BUILDING_ADDRESS'] }}">{{ building['BUILDING_NAME'] }}</option>
+                            <option value="{{ building['BUILDING_NAME'] }}">{{ building['BUILDING_NAME'] }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -43,7 +45,7 @@
                     <label for="building_2_selection">Building 2</label>
                     <select class="form-select" id="building_2_selection" name="building_2_selection" required>
                         {% for building in context.academic_buildings_list %}
-                            <option value="{{ building['BUILDING_ADDRESS'] }}">{{ building['BUILDING_NAME'] }}</option>
+                            <option value="{{ building['BUILDING_NAME'] }}">{{ building['BUILDING_NAME'] }}</option>
                         {% endfor %}
                     </select>
                 </div>

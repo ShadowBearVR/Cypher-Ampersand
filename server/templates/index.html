@@ -85,7 +85,7 @@
 
                 <div class="mb-3">
                     <label for="status_selections">Status</label>
-                    <select class="form-select" id="status_selections" name="status_selections" required multiple>
+                    <select class="form-select" id="status_selections" name="status_selections" required>
                         <option selected value="ALL">ALL</option>
                         <option value="True">Open</option>
                         <option value="False">Closed</option>
@@ -96,7 +96,7 @@
 
                 <div class="mb-3">
                     <label for="part_of_term_selections">Part Of Term</label>
-                    <select class="form-select" id="part_of_term_selections" name="part_of_term_selections" required multiple>
+                    <select class="form-select" id="part_of_term_selections" name="part_of_term_selections" required>
                         <option selected value="ALL">ALL</option>
                         {% for part_of_term_code in context.part_of_term_codes_list %}
                             <option value="{{ part_of_term_code['PART_TERM_CODE'] }}">{{ part_of_term_code['PART_TERM_DESC'] }} ({{ part_of_term_code['PART_TERM_CODE'] }})</option>
@@ -107,7 +107,7 @@
                 <!-- Instructor -->
 
                 <div class="mb-3">
-                    <label for="instructor_selections">instructor</label>
+                    <label for="instructor_selections">Instructor</label>
                     <select class="form-select" id="instructor_selections" name="instructor_selections" required multiple>
                         <option selected value="ALL">ALL</option>
                         {% for instructor in context.instructors_list %}
