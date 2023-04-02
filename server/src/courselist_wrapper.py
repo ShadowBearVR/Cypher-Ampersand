@@ -381,7 +381,7 @@ def get_and_update_course_details_table(db, term, crn):
     else:
         major_exclude = course_details['MAJOR']['Exclude']
     
-    if (not course_details.get('MAJOR') or not course_details['MAJOR'].get('Include'))
+    if (not course_details.get('MAJOR') or not course_details['MAJOR'].get('Include')):
         major_include = []
     else:
         major_include = course_details['MAJOR']['Include']
