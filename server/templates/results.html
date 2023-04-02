@@ -24,7 +24,8 @@
                                         <td>Title</td>
                                         <td>Instructor(s)</td>
                                         <td>Credit Hours</td>
-                                        <td>Meeting Day/Time</td>
+                                        <td>Meeting Day</td>
+                                        <td>Meeting Time</td>
                                         <td>Projected Enrollment</td>
                                         <td>Current Enrollment</td>
                                         <td>Seats Available</td>
@@ -48,14 +49,15 @@
                                         <td>{{ result.INSTRUCTOR }}</td>
                                         <td>{{ result.CREDIT_HRS }}</td>
                                         <td>{{ result.COURSE_DAYS }}</td>
+                                        <td>{{ result.COURSE_TIMES }}</td>
                                         <td>{{ result.PROJ_ENR }}</td>
                                         <td>{{ result.CURRENT_ENR }}</td>
                                         <td>{{ result.SEATS_AVAIL }}</td>
 
                                         {% if result.IS_OPEN %}
-                                            <td>Open :)</td>
+                                            <td>Open</td>
                                         {% else %}
-                                            <td>Closed :(</td>
+                                            <td>Closed</td>
                                         {% endif %}
 
                                         <td>
