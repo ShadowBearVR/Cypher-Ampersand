@@ -9,10 +9,13 @@
     
 <div>
     <div class="container-fluid">
-        <h1>Welcome to Ampersand Courselist!</h1>
+        <h1>Welcome to <i>Ampersand Courselist</i>!</h1>
+        <p><i>Ampersand Courselist</i> is a comprehensive tool designed to help William & Mary students easily search for courses, prepare for registration, and navigate the campus more efficiently. With this website, you can easily search for courses based on a variety of criteria, including subject, instructor, credit hours, and more. This vastly expands the functionality of the open courselist website, while also providing a more modern, responsive user interface. Additionally, <i>Ampersand Courselist</i> provides students with information about building locations and distances to better fine-tune their schedule while planning their term.</p>
+        <p> Beyond course search and details, <i>Ampersand Courselist</i> also provides students with valuable information about campus layout, as mentioned above. This includes all academic buildings and an in-depth navigation assistant for ISC (everyone's favorite maze). In the future this will expand to include administrative and resident buildings as well, along with per-building maps to best navigate every environment. With <i>Ampersand Courselist</i>, you can quickly and easily find all the information you need so that you can make the most of your time at William & Mary!</p>
         <!--<p> Server Time: {{ context.server_time }} </p>-->
         <br>
         <h2> Search Your Classes </h2>
+        <p>Almost all search criteria can be multi-selected by clicking while pressing the command/control key, allowing for you to search courses that satisfy either of the criteria.
         <br>
 
         {% if context.error_message != None %}
@@ -125,7 +128,9 @@
                 <!-- Building / Room -->
 
             </div>
-            <button class="button" type="submit">Submit</button>
+            <div class="row justify-content-center align-items-center">
+                <button class="button special-button" type="submit">Submit</button>
+            </div>
         </form>
 
         <!-- Random Button -->
