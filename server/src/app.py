@@ -76,10 +76,13 @@ def results():
             instructor_selections = request.form.getlist('instructor_selections')
             credit_hours_selections = request.form.getlist('credit_hours_selections')
 
-            if (attr_selections is None):
+            print('attr_selections', attr_selections)
+            print('level_selections', level_selections)
+
+            if (not attr_selections):
                 attr_selections = ['ALL']
 
-            if (level_selections is None):
+            if (not level_selections):
                 level_selections = ['ALL']
 
             # If 'ALL' is included in a multi select dropdown,
@@ -124,6 +127,8 @@ def results():
                 'credit_hours_selections': credit_hours_selections,
             }
 
+            print('inputs', inputs)
+
             results = get_results_for_query(inputs)
 
             output = {
@@ -149,9 +154,11 @@ def course_details(term, crn):
     print(f'URL Reached - /course-details/{term}/{crn}')
 
     course_details = get_course_details(term, crn)
+    course = get_course(term, crn)
 
     context = {
-        'course_details': course_details
+        'course_details': course_details,
+        'course': course
     }
 
     return render_template('course-details.html', context=context)
