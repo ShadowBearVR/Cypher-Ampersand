@@ -19,7 +19,7 @@
                                 <thead>
                                     <tr>
                                         <td>CRN</td>
-                                        <td>Course Id</td>
+                                        <td>Course ID</td>
                                         <td>Attributes</td>
                                         <td>Title</td>
                                         <td>Instructor(s)</td>
@@ -49,7 +49,7 @@
                                         <td>{{ result.INSTRUCTOR }}</td>
                                         <td>{{ result.CREDIT_HRS }}</td>
                                         <td>{{ result.COURSE_DAYS }}</td>
-                                        <td>{{ result.COURSE_TIMES }}</td>
+                                        <td>{{ result.COURSE_TIME }}</td>
                                         <td>{{ result.PROJ_ENR }}</td>
                                         <td>{{ result.CURRENT_ENR }}</td>
                                         <td>{{ result.SEATS_AVAIL }}</td>
@@ -61,7 +61,7 @@
                                         {% endif %}
 
                                         <td>
-                                            <a class="btn btn-primary animate-hover" href="{{ url_for('course_details', term=context.inputs.term_selection, crn=result.CRN_ID) }}" target="_blank">Details</a>
+                                            <a class="button" href="{{ url_for('course_details', term=context.inputs.term_selection, crn=result.CRN_ID) }}" target="_blank">Details</a>
                                         </td>
                                     </tr>
                                     {% endfor %}
@@ -69,7 +69,7 @@
                             </table>
                         </div>
 
-                        <a class="btn btn-primary animate-hover" href="{{ url_for('index') }}">Return to Home</a>
+                        <a class="button" href="{{ url_for('index') }}">Return to Home</a>
                     </div>
                 </div>
             </div>
