@@ -39,18 +39,17 @@
 
 <script>
 function highlightBuildings(buildingID) {
-    console.log('trying to hightlight'.concat("", buildingID));
-    if(buildingID == "000") {
+    var element = "loc-".concat(buildingID);
+    if(buildingID == "999") {
         console.log("No match found");
     }
-    document.getElementById("lod-".concat("", buildingID)).classList.add('highlight');
+    document.getElementById(element).classList.add('highlight');
 }
 window.addEventListener('load', 
   function() { 
     console.log('loaded');
     highlightBuildings(document.getElementById("result_var").getAttribute('content'));
     highlightBuildings(document.getElementById("result_var2").getAttribute('content'));
-    alert('hello!');
   }, false);
 
 </script>

@@ -231,11 +231,11 @@ def campus_routing():
             for building in academic_buildings_list:
                 if building['BUILDING_NAME'] == building_1_name:
                     building_1_selection = building['BUILDING_ADDRESS']
-                    building_1_id = building.get('ID', '000')
+                    building_1_id = building.get('ID', '999')
 
                 if building['BUILDING_NAME'] == building_2_name:
                     building_2_selection = building['BUILDING_ADDRESS']
-                    building_2_id = building.get('ID', '000')
+                    building_2_id = building.get('ID', '999')
             
             inputs = {
                 'building_1_name': building_1_name,
