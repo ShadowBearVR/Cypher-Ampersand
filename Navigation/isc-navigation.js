@@ -26,16 +26,35 @@ function setEndingPoint(roomID) {
     document.getElementById(roomConnectors[roomID]).classList.add("ending-path");
 }
 
+traversalPath = []
 
 function computePaths() {
+    console.log("traversing from " + startingPathID + " " + endingPathID);
     var output = findShortestPath(pathDict[startingPathID], pathDict[endingPathID], pathDict);
     console.log(output);
+
+    colorTraversalPath(false);
+    traversalPath = [];
+
     while(output.length > 0) {
         path = output.shift();
-        //console.log("Path is " + path.id);
-        document.getElementById(path.id).classList.add('highlight-path');
+        traversalPath.push(path);
+        console.log("Path is " + path.id);
     }
+    console.log(traversalPath);
+    colorTraversalPath(true);
 
+}
+
+function colorTraversalPath(highlighted) {
+    for(let i = 0; i < traversalPath.length; i++) {
+        path = traversalPath[i];
+        if(highlighted) {
+            document.getElementById(path.id).classList.add('highlight-path');
+        } else {
+            document.getElementById(path.id).classList.remove('highlight-path');
+        }
+    }
 }
 
 function findShortestPath(startPath, endPath, paths) {
@@ -190,34 +209,52 @@ function highlightRooms(pathID, active) {
 	}
 }
 
-startingPathID = null;
+
 
 function mouseOver(pathObj) {
-    startingPathID = pathObj.id;
-    document.getElementById('path-name').firstChild.data = pathObj.id;
-    colorPath(pathObj.id);
-    if(startingPathID && endingPathID) {
-        computePaths();
-    }
+    //startingPathID = pathObj.id;
+    //document.getElementById('path-name').firstChild.data = pathObj.id;
+    //colorPath(pathObj.id);
 }
 
 function mouseOut(pathObj) {
-    startingPathID = null;
-    document.getElementById('path-name').firstChild.data = "blank";
-    document.getElementById(pathObj.id).classList.remove("trav");
-    highlightNeighbor(pathObj.id, false);
-    highlightRooms(pathObj.id, false);
+    //startingPathID = null;
+    //document.getElementById('path-name').firstChild.data = "blank";
+    //document.getElementById(pathObj.id).classList.remove("trav");
+    //highlightNeighbor(pathObj.id, false);
+    //highlightRooms(pathObj.id, false);
 }
 
+lastPickedStarting = false;
 var endingPathID = null;
+startingPathID = null;
 
 function mouseDown(element) {
-    if(endingPathID) {
-        document.getElementById(endingPathID).classList.remove("ending-path");
-        endingPathID = null;
+    if(lastPickedStarting == true) {
+        if(endingPathID) {
+            document.getElementById(endingPathID).classList.remove("ending-path");
+            endingPathID = null;
+        }
+        
+        endingPathID = element.id;
+        document.getElementById(endingPathID).classList.add("ending-path");
+        console.log("Set ending path to " + endingPathID);
+        console.log("Starting path is " + startingPathID);
+    } else {
+        if(startingPathID) {
+            document.getElementById(startingPathID).classList.remove("starting-path");
+            startingPathID = null;
+        }
+        
+        startingPathID = element.id;
+        document.getElementById(startingPathID).classList.add("starting-path");
+        console.log("Set starting path to " + startingPathID);
+        console.log("Ending path is " + endingPathID);
     }
-    endingPathID = element.id;
-    document.getElementById(endingPathID).classList.add("ending-path");
+    if(startingPathID && endingPathID && startingPathID != endingPathID) {
+        computePaths();
+    }
+    lastPickedStarting = !lastPickedStarting;
 }
 
 window.onload = function() {
