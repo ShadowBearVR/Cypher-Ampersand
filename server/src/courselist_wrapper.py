@@ -767,7 +767,7 @@ def get_course(term, crn):
 
     query = query.where(u'CRN_ID', u'==', crn)
 
-    courses_docs = collection.get()
+    courses_docs = query.get()
 
     courses_dicts = []
 
