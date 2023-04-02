@@ -7,49 +7,73 @@
 
 {% block content %}
 
-    <section class="d-flex align-items-center justify-content-center">
-        <div class="container">
-            <div>
-                <h5>{{ context.course['TERM_DESC'] }}</h5>
-                <h1>{{ context.course['TITLE'] }} ({{ context.course['COURSE_ID'] }})</h1>
-                <div class="row">
-                <div class="col-6">
+<section class="d-flex align-items-center justify-content-center">
+    <div class="container">
+        <div>
+            <h5>{{ context.course['TERM_DESC'] }}</h5>
+            <div class="row">
+                <div class="col-10">
+                    <h1>{{ context.course['TITLE'] }} ({{ context.course['COURSE_ID'] }})</h1>
+                </div>
+                <div class="col-2">
+                    <h4>CRN: {{ context.course_details['CRN_ID'] }}</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
                     <h3>Instructor: {{ context.course['INSTRUCTOR'] }}</h3>
                 </div>
-                <div class="col-3">
-                    <h4>CRN: {{ context.course_details['CRN_ID'] }}>
-                </div>
-                <div class="col-3">
+
+                <div class="col-md-3 col-sm-6">
                     <h4>Credit Hours: {{ context.course['CREDIT_HRS'] }}</h4>
                 </div>
-                <p>Attributes: <span class="highlight-text">{{ context.course['COURSE_ATTR'] }}</span></p>
-                <p>{{ context.course_details['COURSE_DESC'] }}</p>
-                <p>Meets on {{ context.course['COURSE_DAYS'] }} from {{ context.course['COURSE_TIME'] }} in {{ context.course_details['COURSE_MEETINGS'][0]['course_meet_building'] }} {{context.course_details['COURSE_MEETINGS'][0]['course_meet_room']}}.</p>
-                <p>Starts on {{ context.course_details['START_DATE'] }} and ends on {{ context.course_details['END_DATE'] }}</p>
-
-                <p>CO REQ: {{ context.course_details['CO_REQ'] }} </p>
-                <p>MAJOR EXCLUDE: {{ context.course_details['MAJOR_EXCLUDE'] }} </p>
-                <p>MAJOR INCLUDE: {{ context.course_details['MAJOR_INCLUDE'] }} </p>
-                <p>SC PROG EXCLUDE: {{ context.course_details['SC_PROG_EXCLUDE'] }} </p>
-                <p>SC PROG INCLUDE: {{ context.course_details['SC_PROG_INCLUDE'] }} </p>
-                <!--<p>SUBJECT CODE: {{ context.course_details['SUBJECT_CODE'] }} </p>
-                <p>TERM CODE: {{ context.course_details['TERM_CODE'] }} </p>
-                <p>WAIT AVAIL: {{ context.course_details['WAIT_AVAIL'] }} </p>
-                <p>WAIT CAPACITY: {{ context.course_details['WAIT_CAPACITY'] }} </p>-->
-
-                <h1>Course Information</h1>
-                <!--<p>COURSE LEVEL: {{ context.course['COURSE_LEVEL'] }} </p>
-                <p>IS_CROSSLISTED: {{ context.course['IS_CROSSLISTED'] }}</p>
-                <p>IS_OPEN: {{ context.course['IS_OPEN'] }}</p>
-                <p>PART_OF_TERM: {{ context.course['PART_OF_TERM'] }}</p>
-                <p>PROJ_ENR: {{ context.course['PROJ_ENR'] }}</p>
-                <p>SEATS_AVAIL: {{ context.course['SEATS_AVAIL'] }}</p>-->
-                <!--<p>SUBJECT_CODE: {{ context.course['SUBJECT_CODE'] }}</p>-->
-
-                <a class="button" href="url_for('index') }}">Home</a>
             </div>
+            <p>Attributes: 
+                {% for attr in context.course['COURSE_ATTR'] % }
+                 <span class="highlight-text">{{ context.course['COURSE_ATTR'] }}</span> 
+                {% endfor %}
+            </p>
+            <p>Meets on {{ context.course['COURSE_DAYS'] }} from {{ context.course['COURSE_TIME'] }} in {{ context.course_details['COURSE_MEETINGS'][0]['course_meet_building'] }} {{context.course_details['COURSE_MEETINGS'][0]['course_meet_room']}}.</p>
+            <p><i>{{ context.course_details['COURSE_DESC'] }}</i></p>
+            
+            <p>Starts on {{ context.course_details['START_DATE'] }} and ends on {{ context.course_details['END_DATE'] }}</p>
+
+            <div class="row">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <p>MAJOR EXCLUDE: {{ context.course_details['MAJOR_EXCLUDE'] }} </p>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <p>MAJOR INCLUDE: {{ context.course_details['MAJOR_INCLUDE'] }} </p>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <p>SC PROG EXCLUDE: {{ context.course_details['SC_PROG_EXCLUDE'] }} </p>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <p>CO REQ: {{ context.course_details['CO_REQ'] }} </p>
+                </div>
+            </div>
+
+            
+            
+            
+            
+            <p>SC PROG INCLUDE: {{ context.course_details['SC_PROG_INCLUDE'] }} </p>
+            <!--<p>SUBJECT CODE: {{ context.course_details['SUBJECT_CODE'] }} </p>
+            <p>TERM CODE: {{ context.course_details['TERM_CODE'] }} </p>
+            <p>WAIT AVAIL: {{ context.course_details['WAIT_AVAIL'] }} </p>
+            <p>WAIT CAPACITY: {{ context.course_details['WAIT_CAPACITY'] }} </p>-->
+            <!--<p>COURSE LEVEL: {{ context.course['COURSE_LEVEL'] }} </p>
+            <p>IS_CROSSLISTED: {{ context.course['IS_CROSSLISTED'] }}</p>
+            <p>IS_OPEN: {{ context.course['IS_OPEN'] }}</p>
+            <p>PART_OF_TERM: {{ context.course['PART_OF_TERM'] }}</p>
+            <p>PROJ_ENR: {{ context.course['PROJ_ENR'] }}</p>
+            <p>SEATS_AVAIL: {{ context.course['SEATS_AVAIL'] }}</p>-->
+            <!--<p>SUBJECT_CODE: {{ context.course['SUBJECT_CODE'] }}</p>-->
+
+            <a class="button" href="{{ url_for('index') }}">Home</a>
         </div>
-    </section>
+    </div>
+</section>
 
 {% endblock content %}
 

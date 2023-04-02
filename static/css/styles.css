@@ -299,4 +299,5 @@ img {
 .highlight-text {
 	padding: 1em;
 	background-color: var(--c-background-tertiary);
+	border-radius: 8px;
 }
