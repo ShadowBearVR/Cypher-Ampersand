@@ -280,6 +280,18 @@ def fun_stats():
 
     return render_template('fun-stats.html', context=context)
 
+@app.route('/isc-assistant')
+def fun_stats():
+    print(f'URL Reached - /isc-assistant')
+
+    #results = get_fun_stats_data()
+
+    context = {
+        #'results': results
+    }
+
+    return render_template('isc-assistant.html', context=context)
+
 ## ERROR HANDLING ##
 
 @app.errorhandler(403)
