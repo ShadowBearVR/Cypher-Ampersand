@@ -61,7 +61,7 @@
                                         {% endif %}
 
                                         <td>
-                                            <a class="button" href="{{ url_for('course_details', term=context.inputs.term_selection, crn=result.CRN_ID) }}" target="_blank">Details</a>
+                                            <a class="button special-button" href="{{ url_for('course_details', term=context.inputs.term_selection, crn=result.CRN_ID) }}" target="_blank">Details</a>
                                         </td>
                                     </tr>
                                     {% endfor %}

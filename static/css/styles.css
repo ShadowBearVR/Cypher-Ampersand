@@ -310,6 +310,15 @@ img {
 	color: var(--c-accent-primary);
 }
 
+.special-button {
+	background-color: var(--c-background-tertiary);
+}
+
+.special-button:focus, .special-button:hover {
+	color: #fff;
+	background-color: var(--c-accent-primary);
+}
+
 .search {
 	position: relative;
 	display: flex;
