@@ -29,8 +29,8 @@
                 </div>
             </div>
             <p>Attributes: 
-                {% for attr in context.course['COURSE_ATTR'] % }
-                 <span class="highlight-text">{{ context.course['COURSE_ATTR'] }}</span> 
+                {% for attr in context.course['COURSE_ATTR'] %}
+                 <span class="highlight-text">{{ attr }}</span> 
                 {% endfor %}
             </p>
             <p>Meets on {{ context.course['COURSE_DAYS'] }} from {{ context.course['COURSE_TIME'] }} in {{ context.course_details['COURSE_MEETINGS'][0]['course_meet_building'] }} {{context.course_details['COURSE_MEETINGS'][0]['course_meet_room']}}.</p>
@@ -39,26 +39,38 @@
             <p>Starts on {{ context.course_details['START_DATE'] }} and ends on {{ context.course_details['END_DATE'] }}</p>
 
             <div class="row">
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <p>MAJOR EXCLUDE: {{ context.course_details['MAJOR_EXCLUDE'] }} </p>
+                <div class="col-lg-3 col-m-6 col-xs-12">
+                    <p>Major Include:<br>
+                    {% for major in context.course_details['MAJOR_INCLUDE'] %}
+                        {{major}}
+                    {% endfor %}
+                    </p>
                 </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <p>MAJOR INCLUDE: {{ context.course_details['MAJOR_INCLUDE'] }} </p>
+                <div class="col-lg-3 col-m-6 col-xs-12">
+                    <p>Major Exclude:<br>
+                        {% for major in context.course_details['MAJOR_EXCLUDE'] %}
+                            {{major}}
+                        {% endfor %}
+                    </p>
                 </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <p>SC PROG EXCLUDE: {{ context.course_details['SC_PROG_EXCLUDE'] }} </p>
+                <div class="col-lg-3 col-m-6 col-xs-12">
+                    <p>Social Class Include: <br>
+                        {% for social_class in context.course_details['SC_PROG_INCLUDE'] %}
+                            {{social_class}}
+                        {% endfor %}
+                    </p>
                 </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <p>CO REQ: {{ context.course_details['CO_REQ'] }} </p>
+                <div class="col-lg-3 col-m-6 col-xs-12">
+                    <p>Social Class Exclude: <br>
+                        {% for social_class in context.course_details['SC_PROG_EXCLUDE'] %}
+                            {{social_class}}
+                        {% endfor %}
+                    </p>
                 </div>
             </div>
 
-            
-            
-            
-            
-            <p>SC PROG INCLUDE: {{ context.course_details['SC_PROG_INCLUDE'] }} </p>
-            <!--<p>SUBJECT CODE: {{ context.course_details['SUBJECT_CODE'] }} </p>
+            <!--<p>CO REQ: {{ context.course_details['CO_REQ'] }} </p>
+            <p>SUBJECT CODE: {{ context.course_details['SUBJECT_CODE'] }} </p>
             <p>TERM CODE: {{ context.course_details['TERM_CODE'] }} </p>
             <p>WAIT AVAIL: {{ context.course_details['WAIT_AVAIL'] }} </p>
             <p>WAIT CAPACITY: {{ context.course_details['WAIT_CAPACITY'] }} </p>-->

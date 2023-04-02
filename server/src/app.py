@@ -156,6 +156,46 @@ def course_details(term, crn):
     course_details = get_course_details(term, crn)
     course = get_course(term, crn)
 
+    if course_details.get('START_DATE') is not None:
+        date_str = course_details['START_DATE']
+        # Convert date string to datetime object
+        datetime_obj = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%S")
+        # Convert datetime object to formatted string
+        formatted_date_str = datetime_obj.strftime("%A, %B %d, %Y")
+        course_details['START_TIME'] = formatted_date_str
+
+    if course_details.get('END_DATE') is not None:
+        date_str = course_details['END_DATE']
+        # Convert date string to datetime object
+        datetime_obj = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%S")
+        # Convert datetime object to formatted string
+        formatted_date_str = datetime_obj.strftime("%A, %B %d, %Y")
+        course_details['END_DATE'] = formatted_date_str
+
+    if course.get('COURSE_DAYS') is not None:
+        day_dict = {
+            "M": "Monday",
+            "T": "Tuesday",
+            "W": "Wednesday",
+            "R": "Thursday",
+            "F": "Friday"
+        }
+        input_str = course['COURSE_DAYS']
+        output_str = ", ".join([day_dict[day] for day in input_str])
+        course['COURSE_DAYS'] = outut_str
+
+    if course.get('COURSE_TIME') is not None:
+        input_str = course['COURSE_TIME']
+        start_time_str, end_time_str = input_str.split("-")
+
+        start_time = datetime.strptime(start_time_str, "%H%M").strftime("%-I:%M%P").lower()
+        end_time = datetime.strptime(end_time_str, "%H%M").strftime("%-I:%M%P").lower()
+
+        output_str = f"{start_time} - {end_time}"
+        course['COURSE_TIME'] = output_str
+
+
+
     context = {
         'course_details': course_details,
         'course': course
