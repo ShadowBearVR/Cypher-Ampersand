@@ -376,24 +376,24 @@ def get_and_update_course_details_table(db, term, crn):
 
             course_meetings.append(course_meeting)
 
-    if (not course_details.get('MAJOR') or course_details['MAJOR']['Exclude'] is None):
+    if (not course_details.get('MAJOR') or course_details['MAJOR'].get('Exclude')):
         major_exclude = []
     else:
         major_exclude = course_details['MAJOR']['Exclude']
     
-    if (not course_details.get('MAJOR') or  course_details['MAJOR']['Include'] is None):
+    if (not course_details.get('MAJOR') or  course_details['MAJOR'].get('Include'))
         major_include = []
     else:
         major_include = course_details['MAJOR']['Include']
 
     pre_req = course_details['PREREQ']
 
-    if (not course_details.get('SCPROG') or  course_details['SCPROG']['Exclude'] is None):
+    if (not course_details.get('SCPROG') or not course_details['SCPROG'].get('Exclude')):
         sc_prog_exclude = []
     else:
         sc_prog_exclude = course_details['SCPROG']['Exclude']
     
-    if (not course_details.get('SCPROG') or course_details['SCPROG']['Include'] is None):
+    if (not course_details.get('SCPROG') or not course_details['SCPROG'].get('Include')):
         sc_prog_include = []
     else:
         sc_prog_include = course_details['SCPROG']['Include']
@@ -751,6 +751,14 @@ def get_course_details(term, crn):
     course_details_dict = get_and_update_course_details_table(db, term, crn)
 
     return course_details_dict
+
+## FUN FUNCTIONS ##
+
+def get_fun_stats_data():
+
+    results = []
+
+    return results
         
 ## EXTERNAL QUERY FUNCTIONS ##
 

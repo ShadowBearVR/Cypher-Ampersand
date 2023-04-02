@@ -206,7 +206,17 @@ def campus_routing():
             }
             return render_template('error.html', context=context)
 
-   
+@app.route('/fun-stats')
+def fun_stats():
+    print(f'URL Reached - /fun-stats')
+
+    results = get_fun_stats_data()
+
+    context = {
+        'results': results
+    }
+
+    return render_template('fun-stats.html', context=context)
 
 ## ERROR HANDLING ##
 

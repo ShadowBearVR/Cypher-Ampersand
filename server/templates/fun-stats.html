@@ -1,0 +1,27 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Fun Stats {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <section class="vh-100 d-flex align-items-center justify-content-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center d-flex align-items-center justify-content-center">
+                    <div>
+                        <h1>Fun Stats</h1>
+                        <p>This page would have been funner... if NoSQL was funner...</p>
+                        <a class="btn btn-primary animate-hover" href="{{ url_for('index') }}">Return to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
