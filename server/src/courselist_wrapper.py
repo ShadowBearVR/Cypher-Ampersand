@@ -379,24 +379,24 @@ def get_and_update_course_details_table(db, term, crn):
     if (not course_details.get('MAJOR') or course_details['MAJOR']['Exclude'] is None):
         major_exclude = []
     else:
-        major_exclude = course_details['MAJOR']['Exclude'].split(', ')
+        major_exclude = course_details['MAJOR']['Exclude']
     
     if (not course_details.get('MAJOR') or  course_details['MAJOR']['Include'] is None):
         major_include = []
     else:
-        major_include = course_details['MAJOR']['Include'].split(', ')
+        major_include = course_details['MAJOR']['Include']
 
     pre_req = course_details['PREREQ']
 
     if (not course_details.get('SCPROG') or  course_details['SCPROG']['Exclude'] is None):
         sc_prog_exclude = []
     else:
-        sc_prog_exclude = course_details['SCPROG']['Exclude'].split(', ')
+        sc_prog_exclude = course_details['SCPROG']['Exclude']
     
     if (not course_details.get('SCPROG') or course_details['SCPROG']['Include'] is None):
         sc_prog_include = []
     else:
-        sc_prog_include = course_details['SCPROG']['Include'].split(', ')
+        sc_prog_include = course_details['SCPROG']['Include']
 
 
     crn_id = course_details['SSBSECT_CRN']
@@ -755,6 +755,25 @@ def get_all_credit_hours():
     return credit_hours_dict
 
 ## EXTERNAL DETAIL FUNCTIONS ##
+
+def get_course(term, crn):
+
+    courses_table_name = f'courses-{term}'
+
+    db = firestore.client()
+    query = db.collection(courses_table_name)
+
+    query = query.where(u'CRN_ID', u'==', crn)
+
+    courses_docs = collection.get()
+
+    courses_dicts = []
+
+    for course_doc in courses_docs:
+        course_dict = course_doc.to_dict()
+        courses_dicts.append(course_dict)
+
+    return courses_dicts[0]
 
 def get_course_details(term, crn):
 

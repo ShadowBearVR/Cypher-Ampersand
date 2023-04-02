@@ -76,10 +76,19 @@ def results():
             instructor_selections = request.form.getlist('instructor_selections')
             credit_hours_selections = request.form.getlist('credit_hours_selections')
 
+            print('attr_selections', attr_selections)
+            print('level_selections', level_selections)
+
+            if (not attr_selections):
+                attr_selections = ['ALL']
+
+            if (not level_selections):
+                level_selections = ['ALL']
+
             # If 'ALL' is included in a multi select dropdown,
             # the multi select is ignored as a potential filter.
 
-            if ('ALL' not in attr_selections and 'All' not in level_selections):
+            if ('ALL' not in attr_selections and 'ALL' not in level_selections):
                 context = {
                     'error_title': 'Incompatible Selection',
                     'error_message': 'Either Attribute or Course Level must be ALL'
@@ -118,6 +127,8 @@ def results():
                 'credit_hours_selections': credit_hours_selections,
             }
 
+            print('inputs', inputs)
+
             results = get_results_for_query(inputs)
 
             output = {
@@ -143,9 +154,11 @@ def course_details(term, crn):
     print(f'URL Reached - /course-details/{term}/{crn}')
 
     course_details = get_course_details(term, crn)
+    course = get_course(term, crn)
 
     context = {
-        'course_details': course_details
+        'course_details': course_details,
+        'course': course
     }
 
     return render_template('course-details.html', context=context)
