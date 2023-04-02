@@ -1,19 +1,23 @@
 [
    {
       "BUILDING_NAME":"Adair Hall",
-      "BUILDING_ADDRESS":"251 Ukrop Way Williamsburg, VA"
+      "BUILDING_ADDRESS":"251 Ukrop Way Williamsburg, VA",
+      "ID": "147"
    },
    {
       "BUILDING_NAME":"Alan B. Miller Hall (Business School)",
-      "BUILDING_ADDRESS":"101 Ukrop Way Williamsburg, VA"
+      "BUILDING_ADDRESS":"101 Ukrop Way Williamsburg, VA",
+      "ID": "134"
    },
    {
       "BUILDING_NAME":"Andrews Hall",
-      "BUILDING_ADDRESS":"605 Jamestown Rd Williamsburg, VA"
+      "BUILDING_ADDRESS":"605 Jamestown Rd Williamsburg, VA",
+      "ID": "142"
    },
    {
       "BUILDING_NAME":"Boswell Hall (formerly Morton Hall)",
-      "BUILDING_ADDRESS":"100 Ukrop Way Williamsburg, VA"
+      "BUILDING_ADDRESS":"100 Ukrop Way Williamsburg, VA",
+      "ID": "146"
    },
    {
       "BUILDING_NAME":"Campus Living Center",
@@ -25,11 +29,13 @@
    },
    {
       "BUILDING_NAME":"Ceramics Studio (Old Power Plant)",
-      "BUILDING_ADDRESS":"113 Grigsby Drive Williamsburg, VA"
+      "BUILDING_ADDRESS":"113 Grigsby Drive Williamsburg, VA",
+      "ID": "159"
    },
    {
       "BUILDING_NAME":"Chancellors Hall (formerly Tyler Hall)",
-      "BUILDING_ADDRESS":"300 James Blair Dr Williamsburg, VA"
+      "BUILDING_ADDRESS":"300 James Blair Dr Williamsburg, VA",
+      "ID": "151"
    },
    {
       "BUILDING_NAME":"Davis House",
@@ -45,23 +51,28 @@
    },
    {
       "BUILDING_NAME":"Global Research Institute",
-      "BUILDING_ADDRESS":"427 Scotland St Williamsburg, VA"
+      "BUILDING_ADDRESS":"427 Scotland St Williamsburg, VA",
+      "ID": "164"
    },
    {
       "BUILDING_NAME":"Integrated Science Center (ISC)",
-      "BUILDING_ADDRESS":"540 Landrum Dr Williamsburg, VA"
+      "BUILDING_ADDRESS":"540 Landrum Dr Williamsburg, VA",
+      "ID": "158"
    },
    {
       "BUILDING_NAME":"James Blair Hall",
-      "BUILDING_ADDRESS":"250 James Blair Dr Williamsburg, VA"
+      "BUILDING_ADDRESS":"250 James Blair Dr Williamsburg, VA",
+      "ID": "152"
    },
    {
       "BUILDING_NAME":"Jones Hall",
-      "BUILDING_ADDRESS":"200 Ukrop Way Williamsburg, VA"
+      "BUILDING_ADDRESS":"200 Ukrop Way Williamsburg, VA",
+      "ID": "144"
    },
    {
       "BUILDING_NAME":"Keck Environmental Field Lab",
-      "BUILDING_ADDRESS":"200 Wake Dr Williamsburg, VA"
+      "BUILDING_ADDRESS":"200 Wake Dr Williamsburg, VA",
+      "ID": "157"
    },
    {
       "BUILDING_NAME":"Kimball Theatre",
@@ -73,7 +84,8 @@
    },
    {
       "BUILDING_NAME":"Matoaka Art Studio",
-      "BUILDING_ADDRESS":"141 Ukrop Way Williamsburg, VA"
+      "BUILDING_ADDRESS":"141 Ukrop Way Williamsburg, VA",
+      "ID": "143"
    },
    {
       "BUILDING_NAME":"McGlothlin-Street Hall",
@@ -105,15 +117,19 @@
    },
    {
       "BUILDING_NAME":"Small Hall",
-      "BUILDING_ADDRESS":"300 Ukrop Way Williamsburg, VA"
+      "BUILDING_ADDRESS":"300 Ukrop Way Williamsburg, VA",
+      "ID": "145"
    },
    {
       "BUILDING_NAME":"Stryker House",
-      "BUILDING_ADDRESS":"424 Scotland Street Williamsburg, VA"
+      "BUILDING_ADDRESS":"424 Scotland Street Williamsburg, VA",
+      "ID": "165"
    },
    {
       "BUILDING_NAME":"Tucker Hall",
-      "BUILDING_ADDRESS":"350 James Blair Dr Williamsburg, VA"
+      "BUILDING_ADDRESS":"350 James Blair Dr Williamsburg, VA",
+      "ID": "154"
+
    },
    {
       "BUILDING_NAME":"VIMS - Administration Building (Eastern Shore Laboratory)",
@@ -217,7 +233,8 @@
    },
    {
       "BUILDING_NAME":"Western Union Building",
-      "BUILDING_ADDRESS":"121 Richmond Rd Williamsburg, VA"
+      "BUILDING_ADDRESS":"121 Richmond Rd Williamsburg, VA",
+      "ID": "162"
    },
    {
       "BUILDING_NAME":"William & Mary Peninsula Center",
@@ -225,11 +242,13 @@
    },
    {
       "BUILDING_NAME":"Wren Building",
-      "BUILDING_ADDRESS":"111 Jamestown Rd Williamsburg, VA"
+      "BUILDING_ADDRESS":"111 Jamestown Rd Williamsburg, VA",
+      "ID": "156"
    },
    {
       "BUILDING_NAME":"Wren Dependencies North",
-      "BUILDING_ADDRESS":"111B Jamestown Rd Williamsburg, VA"
+      "BUILDING_ADDRESS":"111B Jamestown Rd Williamsburg, VA",
+      "ID": "155"
    },
    {
       "BUILDING_NAME":"Wren Dependencies South",
