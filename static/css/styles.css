@@ -214,7 +214,7 @@ img {
 	outline: 0;
 }
 
-button {
+.button {
 	font: inherit;
 	color: inherit;
 	text-decoration: none;
@@ -232,16 +232,16 @@ button {
 	background-color: var(--c-background-primary);
 }
 
-button .icon {
+.button .icon {
 	margin-right: 0.5rem;
 	font-size: 1.25em;
 }
 
-button span {
+.button span {
 	font-weight: 500;
 }
 
-button:hover, button:focus {
+.button:hover, .button:focus {
 	border-color: var(--c-accent-primary);
 	color: var(--c-accent-primary);
 }
@@ -294,4 +294,9 @@ button:hover, button:focus {
 	color: var(--c-text-action);
 	padding: 0;
 	height: 40px;
+}
+
+.highlight-text {
+	padding: 1em;
+	background-color: var(--c-background-tertiary);
 }
