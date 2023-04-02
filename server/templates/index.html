@@ -56,7 +56,7 @@
                     <select class="form-select" id="attr_selections" name="attr_selections" onChange="changedSelectedAttr(this)" required multiple>
                         <option selected value="ALL">ALL</option>
                         {% for attr_type in context.attr_list %}
-                            <optgroup label="Group">
+                            <optgroup label="{{ attr_type['label'] }}">
                             {% for attr in attr_type['attributes'] %}
                             <option value="{{ attr['ATTR_CODE'] }}">{{ attr['ATTR_DESC'] }} ({{ attr['ATTR_CODE'] }})</option>
                             {% endfor %}
