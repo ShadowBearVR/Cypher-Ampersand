@@ -185,14 +185,16 @@ def course_details(term, crn):
         course['COURSE_DAYS'] = output_str
 
     if course.get('COURSE_TIME') is not None:
-        input_str = course['COURSE_TIME']
-        start_time_str, end_time_str = input_str.split("-")
+        if '-' in course.get('COURSE_TIME'):
+            input_str = course['COURSE_TIME']
+            print(f'Input str is "{input_str}"')
+            start_time_str, end_time_str = input_str.split("-")
 
-        start_time = datetime.strptime(start_time_str, "%H%M").strftime("%-I:%M%P").lower()
-        end_time = datetime.strptime(end_time_str, "%H%M").strftime("%-I:%M%P").lower()
+            start_time = datetime.strptime(start_time_str, "%H%M").strftime("%-I:%M%P").lower()
+            end_time = datetime.strptime(end_time_str, "%H%M").strftime("%-I:%M%P").lower()
 
-        output_str = f"{start_time} - {end_time}"
-        course['COURSE_TIME'] = output_str
+            output_str = f"{start_time} - {end_time}"
+            course['COURSE_TIME'] = output_str
 
 
 

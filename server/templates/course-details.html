@@ -33,7 +33,11 @@
                  <span class="highlight-text">{{ attr }}</span> 
                 {% endfor %}
             </p>
-            <p>Meets on {{ context.course['COURSE_DAYS'] }} from {{ context.course['COURSE_TIME'] }} in {{ context.course_details['COURSE_MEETINGS'][0]['course_meet_building'] }} {{context.course_details['COURSE_MEETINGS'][0]['course_meet_room']}}.</p>
+            <p>Meets on {{ context.course['COURSE_DAYS'] }} from {{ context.course['COURSE_TIME'] }}
+            {% if context.course_details['COURSE_MEETINGS'] %}
+                in {{ context.course_details['COURSE_MEETINGS'][0]['course_meet_building'] }} {{context.course_details['COURSE_MEETINGS'][0]['course_meet_room']}}
+            {% endif %}
+            </p>
             <p><i>{{ context.course_details['COURSE_DESC'] }}</i></p>
             
             <p>Starts on {{ context.course_details['START_DATE'] }} and ends on {{ context.course_details['END_DATE'] }}</p>

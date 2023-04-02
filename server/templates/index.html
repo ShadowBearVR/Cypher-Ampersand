@@ -9,20 +9,10 @@
     
 <div>
     <div class="container-fluid">
-
-
         <h1>Welcome to Ampersand Courselist!</h1>
-
-        <p> Server Time: {{ context.server_time }} </p>
-
+        <!--<p> Server Time: {{ context.server_time }} </p>-->
         <br>
-
         <h2> Search Your Classes </h2>
-        
-        <p><a href="" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">Hover class</a></p>
-
-        <p><a href="" data-bs-toggle="tooltip" data-bs-placement="left" title="Tooltipple on top">Hover class 2</a></p>
-
         <br>
 
         {% if context.error_message != None %}
@@ -135,7 +125,7 @@
                 <!-- Building / Room -->
 
             </div>
-            <button type="submit">Submit</button>
+            <button class="button" type="submit">Submit</button>
         </form>
 
         <!-- Random Button -->
