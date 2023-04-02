@@ -18,9 +18,12 @@
                 {{ context.inputs.building_2_selection }}
                 {{ context.inputs.building_2_id }}</p>
 
+                <meta id="result_var" content="{{ context.inputs.building_1_id }}">
+                <meta id="result_var2" content="{{ context.inputs.building_2_id }}">
+
                 <br>
 
-                <p>PRETTY PICTURE HERE</p>
+                {% include 'includes/campus_map.html' %}
 
                 <br>
 
@@ -29,10 +32,28 @@
                 <p>Distance Estimate: {{ context.output.results.travel_distance_estimate }}</p>
                 <p>Time Estimate: {{ context.output.results.travel_time_estimate }}</p>
 
-                <button onclick="location.href='url_for('campus_routing') }}">Return to Campus Routing</button>
+                <a class="button" href="{{ url_for('campus_routing') }}">Return to Campus Routing</a>
             </div>
         </div>
     </section>
+
+<script>
+function highlightBuildings(buildingID) {
+    console.log('trying to hightlight'.concat("", buildingID));
+    if(buildingID == "000") {
+        console.log("No match found");
+    }
+    document.getElementById("lod-".concat("", buildingID)).classList.add('highlight');
+}
+window.addEventListener('load', 
+  function() { 
+    console.log('loaded');
+    highlightBuildings(document.getElementById("result_var").getAttribute('content'));
+    highlightBuildings(document.getElementById("result_var2").getAttribute('content'));
+    alert('hello!');
+  }, false);
+
+</script>
 
 {% endblock content %}
 

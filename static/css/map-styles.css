@@ -1,0 +1,13 @@
+        .svg-background{fill:#fff;}
+        .svg-streams,.svg-thick-road,.svg-thin-road{fill:none;stroke-linecap:round;stroke-linejoin:round;}
+        .svg-streams{stroke:#7ca0c6;}
+        .svg-streams,.svg-thin-road{stroke-width:3px;}
+        .svg-lakes{fill:#7ca0c6;}
+        .svg-thick-road,.svg-thin-road{stroke:#b3b3b3;}
+        .svg-thick-road{stroke-width:6px;}
+        .svg-administration{fill:#64ccc9;}
+        .svg-housing{fill:#b9975b;}
+        .svg-events{fill:#115740;}
+        .svg-recreation{fill:#789d4a;}
+        .svg-academic{fill:#e56a54;}
+        .highlight{fill:#0000ff;}
