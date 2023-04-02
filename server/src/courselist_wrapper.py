@@ -639,6 +639,18 @@ def get_all_atrributes():
         'C400'
     ]
 
+    knowledge_attr = [
+        'ALV',
+        'NQR',
+        'CSI'
+    ]
+
+    req_attr = [
+        'MATH',
+        'ARTS',
+        'FLP'
+    ]
+
     attr_dicts = [
         {},
         {}
@@ -650,16 +662,35 @@ def get_all_atrributes():
     }
 
     attr_dicts[1] = {
+        'label': 'Knowledge Domains',
+        'attributes': []
+    }
+
+    attr_dicts[2] = {
+        'label': 'Profiency Requirements',
+        'attributes': []
+    }
+
+    attr_dicts[3] = {
         'label': 'General',
         'attributes': []
     }
 
     for attr_doc in attr_docs:
         attr_dict = attr_doc.to_dict()
+
+        dict_index = 0
+
         if attr_dict['ATTR_CODE'] in coll_attr:
-            attr_dicts[0]['attributes'].append(attr_dict)
+            dict_index = 0
+        elif attr_dict['ATTR_CODE'] in knowledge_attr:
+            dict_index = 1
+        elif attr_dict['ATTR_CODE'] in req_attr:
+            dict_index = 2
         else:
-            attr_dicts[1]['attributes'].append(attr_dict)
+            dict_index = 3
+
+        attr_dicts[dict_index]['attributes'].append(attr_dict)
 
     return attr_dicts
 
