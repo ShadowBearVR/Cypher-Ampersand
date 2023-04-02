@@ -11,50 +11,49 @@
 
         <h1>Campus Router</h1>
         <div class="row">
-        </div>
+            <div class="col-lg-6">
+                <p>Wondering how long it'll take to walk between your classes? Enter in the two buildings to see them highlighted on the map and get an accurate time to walk between them powered by Google Maps.</p>
+                <br>
+                <h4>Select the two academic buildings below:</h4>
 
-        <p> Curious how long it will take you to get from Building A to Building B? This Website can help. </p>
+                {% if context.error_message != None %}
+                    <h2> {{ context.error_message }} </h2>
+                {% endif %}
 
-        <br>
+                <form method="post" action="{{ url_for('campus_routing') }}">
+                    <div class="form-group">
 
-        <h2> Select the buildings you want a travel time estimate for below. </h2>
+                        <!-- Building 1 -->
 
-        <br>
+                        <div class="mb-3">
+                            <label for="building_1_selection">Building 1</label>
+                            <select class="form-select" id="building_1_selection" name="building_1_selection" required>
+                                {% for building in context.academic_buildings_list %}
+                                    <option value="{{ building['BUILDING_NAME'] }}">{{ building['BUILDING_NAME'] }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
 
-        {% if context.error_message != None %}
-            <h2> {{ context.error_message }} </h2>
-        {% endif %}
+                        <!-- Building 2 -->
 
-        {% include 'includes/campus_map.html' %}
-
-        <form method="post" action="{{ url_for('campus_routing') }}">
-            <div class="form-group">
-
-                <!-- Building 1 -->
-
-                <div class="mb-3">
-                    <label for="building_1_selection">Building 1</label>
-                    <select class="form-select" id="building_1_selection" name="building_1_selection" required>
-                        {% for building in context.academic_buildings_list %}
-                            <option value="{{ building['BUILDING_NAME'] }}">{{ building['BUILDING_NAME'] }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <!-- Building 2 -->
-
-                <div class="mb-3">
-                    <label for="building_2_selection">Building 2</label>
-                    <select class="form-select" id="building_2_selection" name="building_2_selection" required>
-                        {% for building in context.academic_buildings_list %}
-                            <option value="{{ building['BUILDING_NAME'] }}">{{ building['BUILDING_NAME'] }}</option>
-                        {% endfor %}
-                    </select>
+                        <div class="mb-3">
+                            <label for="building_2_selection">Building 2</label>
+                            <select class="form-select" id="building_2_selection" name="building_2_selection" required>
+                                {% for building in context.academic_buildings_list %}
+                                    <option value="{{ building['BUILDING_NAME'] }}">{{ building['BUILDING_NAME'] }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <button class="button" type="submit">Submit</button>
+                </form>
+            </div>
+            <div class="col-lg-6">
+                <div class="campus-map-holder">
+                    {% include 'includes/campus_map.html' %}
                 </div>
             </div>
-            <button type="submit">Submit</button>
-        </form>
-        <a class="button" href="{{ url_for('index') }}">Return to Campus Routing</a>
+        <!--<a class="button" href="{{ url_for('index') }}">Return to Campus Routing</a>-->
     </div>
 </div>
 
