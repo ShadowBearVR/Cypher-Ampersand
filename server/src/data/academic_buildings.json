@@ -7,7 +7,7 @@
    {
       "BUILDING_NAME":"Alan B. Miller Hall (Business School)",
       "BUILDING_ADDRESS":"101 Ukrop Way Williamsburg, VA",
-      "ID": "134"
+      "ID": "148"
    },
    {
       "BUILDING_NAME":"Andrews Hall",
@@ -43,7 +43,8 @@
    },
    {
       "BUILDING_NAME":"Ewell Hall",
-      "BUILDING_ADDRESS":"221 Jamestown Rd Williamsburg, VA"
+      "BUILDING_ADDRESS":"221 Jamestown Rd Williamsburg, VA",
+      "ID": "153"
    },
    {
       "BUILDING_NAME":"Gabriel Galt House (Dillard Complex)",
@@ -89,7 +90,9 @@
    },
    {
       "BUILDING_NAME":"McGlothlin-Street Hall",
-      "BUILDING_ADDRESS":"251 Jamestown Rd Williamsburg, VA"
+      "BUILDING_ADDRESS":"251 Jamestown Rd Williamsburg, VA",
+      "ID": "149"
+
    },
    {
       "BUILDING_NAME":"Patrick Galt House (Dillard Complex)",
@@ -229,7 +232,9 @@
    },
    {
       "BUILDING_NAME":"Washington Hall",
-      "BUILDING_ADDRESS":"241 Jamestown Rd Williamsburg, VA"
+      "BUILDING_ADDRESS":"241 Jamestown Rd Williamsburg, VA",
+      "ID": "150"
+
    },
    {
       "BUILDING_NAME":"Western Union Building",
