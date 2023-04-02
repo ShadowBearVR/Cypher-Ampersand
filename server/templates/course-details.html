@@ -16,7 +16,7 @@
                     <h1>{{ context.course['TITLE'] }} ({{ context.course['COURSE_ID'] }})</h1>
                 </div>
                 <div class="col-2">
-                    <h4>CRN: {{ context.course_details['CRN_ID'] }}</h4>
+                    <h4>CRN: <span class="highlight-text">{{ context.course_details['CRN_ID'] }}</span> </h4>
                 </div>
             </div>
             <div class="row">
@@ -39,28 +39,28 @@
             <p>Starts on {{ context.course_details['START_DATE'] }} and ends on {{ context.course_details['END_DATE'] }}</p>
 
             <div class="row">
-                <div class="col-lg-3 col-m-6 col-xs-12">
+                <div class="col-lg-3 col-md-6 col-s-12">
                     <p>Major Include:<br>
                     {% for major in context.course_details['MAJOR_INCLUDE'] %}
                         {{major}}
                     {% endfor %}
                     </p>
                 </div>
-                <div class="col-lg-3 col-m-6 col-xs-12">
+                <div class="col-lg-3 col-md-6 col-s-12">
                     <p>Major Exclude:<br>
                         {% for major in context.course_details['MAJOR_EXCLUDE'] %}
                             {{major}}
                         {% endfor %}
                     </p>
                 </div>
-                <div class="col-lg-3 col-m-6 col-xs-12">
+                <div class="col-lg-3 col-md-6 col-s-12">
                     <p>Social Class Include: <br>
                         {% for social_class in context.course_details['SC_PROG_INCLUDE'] %}
                             {{social_class}}
                         {% endfor %}
                     </p>
                 </div>
-                <div class="col-lg-3 col-m-6 col-xs-12">
+                <div class="col-lg-3 col-md-6 col-s-12">
                     <p>Social Class Exclude: <br>
                         {% for social_class in context.course_details['SC_PROG_EXCLUDE'] %}
                             {{social_class}}
