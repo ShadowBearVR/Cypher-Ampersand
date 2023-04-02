@@ -76,10 +76,16 @@ def results():
             instructor_selections = request.form.getlist('instructor_selections')
             credit_hours_selections = request.form.getlist('credit_hours_selections')
 
+            if (attr_selections is None):
+                attr_selections = ['ALL']
+
+            if (level_selections is None):
+                level_selections = ['ALL']
+
             # If 'ALL' is included in a multi select dropdown,
             # the multi select is ignored as a potential filter.
 
-            if ('ALL' not in attr_selections and 'All' not in level_selections):
+            if ('ALL' not in attr_selections and 'ALL' not in level_selections):
                 context = {
                     'error_title': 'Incompatible Selection',
                     'error_message': 'Either Attribute or Course Level must be ALL'
