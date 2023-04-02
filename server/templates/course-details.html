@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col-12 text-center d-flex align-items-center justify-content-center">
                     <div>
-                        <h1>Course Details</h1>
+                        <h1>Course Detail Information</h1>
                         <p>CO REQ: {{ context.course_details['CO_REQ'] }} </p>
                         <p>COURSE DESC: {{ context.course_details['COURSE_DESC'] }} </p>
                         <p>COURSE_MEETINGS: {{ context.course_details['COURSE_MEETINGS'] }} </p>
@@ -28,6 +28,14 @@
                         <p>TERM CODE: {{ context.course_details['TERM_CODE'] }} </p>
                         <p>WAIT AVAIL: {{ context.course_details['WAIT_AVAIL'] }} </p>
                         <p>WAIT CAPACITY: {{ context.course_details['WAIT_CAPACITY'] }} </p>
+
+                        <h1>Course Information</h1>
+                        <p>COURSE ATTR: {{ context.course['COURSE_ATTR'] }} </p>
+                        <p>COURSE DAYS: {{ context.course['COURSE_DAYS'] }} </p>
+                        <p>COURSE ID: {{ context.course['COURSE_ID'] }} </p>
+                        <p>COURSE LEVEL: {{ context.course['COURSE_LEVEL'] }} </p>
+                        <p>COURSE TIME: {{ context.course['COURSE_TIME'] }} </p>
+                        <p>CREDIT_HRS: {{ context.course['CREDIT_HRS']}}
 
                         <a class="btn btn-primary animate-hover" href="{{ url_for('index') }}">Return to Home</a>
                     </div>
