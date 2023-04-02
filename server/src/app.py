@@ -162,7 +162,7 @@ def course_details(term, crn):
         datetime_obj = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%S")
         # Convert datetime object to formatted string
         formatted_date_str = datetime_obj.strftime("%A, %B %d, %Y")
-        course_details['START_TIME'] = formatted_date_str
+        course_details['START_DATE'] = formatted_date_str
 
     if course_details.get('END_DATE') is not None:
         date_str = course_details['END_DATE']
@@ -182,7 +182,7 @@ def course_details(term, crn):
         }
         input_str = course['COURSE_DAYS']
         output_str = ", ".join([day_dict[day] for day in input_str])
-        course['COURSE_DAYS'] = outut_str
+        course['COURSE_DAYS'] = output_str
 
     if course.get('COURSE_TIME') is not None:
         input_str = course['COURSE_TIME']
