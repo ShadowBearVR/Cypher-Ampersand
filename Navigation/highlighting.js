@@ -81,8 +81,8 @@ function createNeighborList() {
     var pathGroup = document.getElementById('Paths')
     var paths = pathGroup.children
 
-    var roomGroup = document.getElementById('RoomPoints');
-    var rooms = roomGroup.children;
+    //var roomGroup = document.getElementById('RoomPoints');
+    //var rooms = roomGroup.children;
 
     for (let i = 0; i < paths.length; i++) {
         let thisPath = new Path(paths[i].id, [paths[i].x1.baseVal.value, paths[i].y1.baseVal.value], [paths[i].x2.baseVal.value, paths[i].y2.baseVal.value])
@@ -115,14 +115,14 @@ function createNeighborList() {
             }
 		}
 
-        for (let k = 0; k < rooms.length; k++) {
+        /*for (let k = 0; k < rooms.length; k++) {
               var roomCoords = [rooms[k].cx.baseVal.value, rooms[k].cy.baseVal.value];
               if(compareDistance(thisPath.start, roomCoords) || compareDistance(thisPath.end, roomCoords)) {
                 pathDict[paths[i].id].addRoom(rooms[k].id);
                 roomConnectors[rooms[k].id] = paths[i].id;
                 
 			  }
-		}
+		}*/
     }
 
     console.log(pathDict)
@@ -192,7 +192,7 @@ function highlightRooms(pathID, active) {
 
 startingPathID = null;
 
-function displayName(pathObj) {
+function mouseOver(pathObj) {
     startingPathID = pathObj.id;
     document.getElementById('path-name').firstChild.data = pathObj.id;
     colorPath(pathObj.id);
@@ -201,7 +201,7 @@ function displayName(pathObj) {
     }
 }
 
-function toNormal(pathObj) {
+function mouseOut(pathObj) {
     startingPathID = null;
     document.getElementById('path-name').firstChild.data = "blank";
     document.getElementById(pathObj.id).classList.remove("trav");
@@ -211,7 +211,7 @@ function toNormal(pathObj) {
 
 var endingPathID = null;
 
-function clicked(element) {
+function mouseDown(element) {
     if(endingPathID) {
         document.getElementById(endingPathID).classList.remove("ending-path");
         endingPathID = null;
