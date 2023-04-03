@@ -12,9 +12,11 @@
         <h1>ISC Assistant</h1>
         <div class="row">
             <div class="col-12">
-                <p>Wondering how long it'll take to walk between your classes? Enter in the two buildings to see them highlighted on the map and get an accurate time to walk between them powered by Google Maps.</p>
+                <p>Having trouble navigating the maze that is ISC? Look no further than this useful little assistant. Click any two points on the path for the first floor of ISC and see the route to walk to get to your destination. This is built off of a powerful node-based path system which would allow for a great deal of inclusions in the future. This includes linking multiple floors, selecting based on room number, and even dictating the entire path verbally by providing an instruction to each path component of the map and reading those back.</p>
                 <br>
-                <h4>Select the two academic buildings below:</h4>
+                <div class="campus-map-holder">
+                    {% include 'includes/isc_map.html' %}
+                </div>
             </div>
         </div>
     </div>

@@ -63,6 +63,18 @@ border: 3px solid var(--c-border-primary);
 	padding: 2em;
 }
 
+/* ISC MAP*/
+  .isc-path{fill:none;stroke:#bbb;stroke-linecap:square;stroke-linejoin:bevel;stroke-width:5px;}
+  .trav{stroke:#ff0000;}
+  .neighbor{stroke:#00ff00;}
+  .neighbor-room{fill:#ff0000;}
+  .highlight-room{fill:var(--c-accent-secondary);}
+  .highlight-path{stroke:var(--c-accent-secondary);}
+  .starting-room{fill:#B9975B;}
+  .starting-path{stroke:#B9975B !important;}
+  .ending-room{fill:#B9975B;}
+  .ending-path{stroke:#B9975B !important;}
+
 /* SVG */
  .svg-background{
     fill:#fff;

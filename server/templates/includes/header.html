@@ -11,7 +11,7 @@
             <nav class="header-navigation-links">
                 <a {% if request.path == url_for('index') %} class="active" {% endif %} href="{{ url_for('index') }}">Home</a>
                 <a {% if request.path == url_for('campus_routing') %} class="active" {% endif %} href="{{ url_for('campus_routing') }}">Campus Routing</a>
-                <a {% if request.path == url_for('isc_assistant') %} class="active" {% endif %} href="{{ url_for('isc_assitant') }}">ISC Assistant</a>
+                <a {% if request.path == url_for('isc_assistant') %} class="active" {% endif %} href="{{ url_for('isc_assistant') }}">ISC Assistant</a>
             </nav>
             <!--<div class="header-navigation-actions">
                 <a href="#" class="icon-button">

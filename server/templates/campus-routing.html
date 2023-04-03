@@ -26,7 +26,7 @@
                         <!-- Building 1 -->
 
                         <div class="mb-3">
-                            <label for="building_1_selection">Building 1</label>
+                            <label for="building_1_selection">Starting Building</label>
                             <select class="form-select" id="building_1_selection" name="building_1_selection" required>
                                 {% for building in context.academic_buildings_list %}
                                     <option value="{{ building['BUILDING_NAME'] }}">{{ building['BUILDING_NAME'] }}</option>
@@ -37,7 +37,7 @@
                         <!-- Building 2 -->
 
                         <div class="mb-3">
-                            <label for="building_2_selection">Building 2</label>
+                            <label for="building_2_selection">Ending Building</label>
                             <select class="form-select" id="building_2_selection" name="building_2_selection" required>
                                 {% for building in context.academic_buildings_list %}
                                     <option value="{{ building['BUILDING_NAME'] }}">{{ building['BUILDING_NAME'] }}</option>
@@ -45,7 +45,9 @@
                             </select>
                         </div>
                     </div>
-                    <button class="button" type="submit">Submit</button>
+                    <div class="row justify-content-center align-items-center">
+                        <button class="button .special-button" type="submit">Submit</button>
+                    </div>
                 </form>
             </div>
             <div class="col-lg-6">

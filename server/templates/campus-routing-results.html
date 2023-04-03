@@ -10,27 +10,23 @@
     <section class="d-flex align-items-center justify-content-center">
         <div class="container">
             <div>
-                <h1>Input</h1>
-                <p>Building 1: {{ context.inputs.building_1_name }} 
-                {{ context.inputs.building_1_selection }}
-                {{ context.inputs.building_1_id }}</p>
-                <p>Building 2: {{ context.inputs.building_2_name }} 
-                {{ context.inputs.building_2_selection }}
-                {{ context.inputs.building_2_id }}</p>
-
+                <h1>Walking Route Between</h1>
+                <h4>Starting Building: {{ context.inputs.building_1_name }}</h3> 
+                <p>Address: <i>{{ context.inputs.building_1_selection }}</i></p>
+                <h4>Ending Building: {{ context.inputs.building_2_name }}</h3> 
+                <p>Address: <i>{{ context.inputs.building_2_selection }}</i></p>
+                
                 <meta id="result_var" content="{{ context.inputs.building_1_id }}">
                 <meta id="result_var2" content="{{ context.inputs.building_2_id }}">
 
+                <h2>Route</h2>
+                <p>Distance Estimate: {{ context.output.results.travel_distance_estimate }}</p>
+                <p>Time Estimate: {{ context.output.results.travel_time_estimate }} to walk</p>
                 <br>
 
                 {% include 'includes/campus_map.html' %}
 
                 <br>
-
-                <h1>Route</h1>
-
-                <p>Distance Estimate: {{ context.output.results.travel_distance_estimate }}</p>
-                <p>Time Estimate: {{ context.output.results.travel_time_estimate }}</p>
 
                 <a class="button" href="{{ url_for('campus_routing') }}">Return to Campus Routing</a>
             </div>

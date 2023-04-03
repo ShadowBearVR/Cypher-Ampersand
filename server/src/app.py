@@ -281,7 +281,7 @@ def fun_stats():
     return render_template('fun-stats.html', context=context)
 
 @app.route('/isc-assistant')
-def fun_stats():
+def isc_assistant():
     print(f'URL Reached - /isc-assistant')
 
     #results = get_fun_stats_data()

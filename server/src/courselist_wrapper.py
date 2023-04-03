@@ -353,7 +353,6 @@ def get_and_update_course_details_table(db, term, crn):
     # Get new course details JSON
     course_details = open_api_get_course_details(term, crn).json()
 
-    co_req = course_details['COREQ']
     course_desc = course_details['COURSEDESC'][0][0]
 
     if (not course_details.get('CRSMEET')):
@@ -375,6 +374,11 @@ def get_and_update_course_details_table(db, term, crn):
             }
 
             course_meetings.append(course_meeting)
+
+    if (not course_details.get('COREQ')):
+        co_req = []
+    else:
+        co_req = course_details['COREQ']
 
     if (not course_details.get('MAJOR') or not course_details['MAJOR'].get('Exclude')):
         major_exclude = []
